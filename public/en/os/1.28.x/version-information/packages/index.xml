@@ -1,0 +1,1544 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bottlerocket – Package Versions</title>
+    <link>//localhost:1313/en/os/1.28.x/version-information/packages/</link>
+    <description>Recent content in Package Versions on Bottlerocket</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    
+	  <atom:link href="//localhost:1313/en/os/1.28.x/version-information/packages/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Os: 1.28.0</title>
+      <link>//localhost:1313/en/os/1.28.x/version-information/packages/1.28.0/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/os/1.28.x/version-information/packages/1.28.0/</guid>
+      <description>
+        
+        
+        &lt;table&gt;
+	&lt;th&gt;package&lt;/th&gt;
+	&lt;th&gt;version&lt;/th&gt;
+	&lt;th&gt;patches&lt;/th&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;amazon-ecs-cni-plugins&lt;/td&gt;
+		&lt;td&gt;2020.09.0&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;0001-bottlerocket-default-filesystem-locations.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;amazon-ssm-agent&lt;/td&gt;
+		&lt;td&gt;3.3.987.0&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;0001-agent-Add-config-to-make-shell-optional.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;amazon-vpc-cni-plugins&lt;/td&gt;
+		&lt;td&gt;1.3&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;aws-iam-authenticator&lt;/td&gt;
+		&lt;td&gt;0.6.26&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;aws-otel-collector&lt;/td&gt;
+		&lt;td&gt;0.41.1&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;0001-change-logger-and-extraconfig-file-paths.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;aws-signing-helper&lt;/td&gt;
+		&lt;td&gt;1.2.0&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;bash&lt;/td&gt;
+		&lt;td&gt;5.2.32&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;bash-4.4-no-loadable-builtins.patch&lt;/li&gt;
+					
+						&lt;li&gt;bash-5.0-patch-1.patch&lt;/li&gt;
+					
+						&lt;li&gt;bash-5.0-patch-2.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;binutils&lt;/td&gt;
+		&lt;td&gt;2.38&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;chrony&lt;/td&gt;
+		&lt;td&gt;4.5&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;cni&lt;/td&gt;
+		&lt;td&gt;1.2.3&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;cni-plugins&lt;/td&gt;
+		&lt;td&gt;1.5.1&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;conntrack-tools&lt;/td&gt;
+		&lt;td&gt;1.4.8&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;0001-disable-RPC-helper.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;containerd&lt;/td&gt;
+		&lt;td&gt;1.7.22&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;coreutils&lt;/td&gt;
+		&lt;td&gt;9.5&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;dbus-broker&lt;/td&gt;
+		&lt;td&gt;36&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;0001-c-utf8-disable-strict-aliasing-optimizations.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;docker-cli&lt;/td&gt;
+		&lt;td&gt;25.0.5&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;0001-non-tcp-host-header.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;docker-engine&lt;/td&gt;
+		&lt;td&gt;25.0.6&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;0001-Change-default-capabilities-using-daemon-config.patch&lt;/li&gt;
+					
+						&lt;li&gt;0002-oci-inject-kmod-in-all-containers.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;docker-init&lt;/td&gt;
+		&lt;td&gt;19.03.15&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;e2fsprogs&lt;/td&gt;
+		&lt;td&gt;1.47.1&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;early-boot-config&lt;/td&gt;
+		&lt;td&gt;0.1&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;ecr-credential-provider&lt;/td&gt;
+		&lt;td&gt;1.25.16&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;ecr-credential-provider-1.27&lt;/td&gt;
+		&lt;td&gt;1.27.9&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;ecr-credential-provider-1.29&lt;/td&gt;
+		&lt;td&gt;1.29.6&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;ecr-credential-provider-1.30&lt;/td&gt;
+		&lt;td&gt;1.30.3&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;ecr-credential-provider-1.31&lt;/td&gt;
+		&lt;td&gt;1.31.0&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;ecs-agent&lt;/td&gt;
+		&lt;td&gt;1.86.3&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;0001-bottlerocket-default-filesystem-locations.patch&lt;/li&gt;
+					
+						&lt;li&gt;0002-bottlerocket-remove-unsupported-capabilities.patch&lt;/li&gt;
+					
+						&lt;li&gt;0003-bottlerocket-bind-introspection-to-localhost.patch&lt;/li&gt;
+					
+						&lt;li&gt;0004-bottlerocket-fix-procfs-path-on-host.patch&lt;/li&gt;
+					
+						&lt;li&gt;0005-bottlerocket-change-execcmd-directories-for-Bottlero.patch&lt;/li&gt;
+					
+						&lt;li&gt;0006-containermetadata-don-t-use-dataDirOnHost-for-metada.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;ecs-gpu-init&lt;/td&gt;
+		&lt;td&gt;0&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;ethtool&lt;/td&gt;
+		&lt;td&gt;6.1&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;filesystem&lt;/td&gt;
+		&lt;td&gt;1&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;findutils&lt;/td&gt;
+		&lt;td&gt;4.10.0&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;glibc&lt;/td&gt;
+		&lt;td&gt;2.38&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;0001-stdlib-Improve-tst-realpath-compatibility-with-sourc.patch&lt;/li&gt;
+					
+						&lt;li&gt;0002-x86-Fix-for-cache-computation-on-AMD-legacy-cpus.patch&lt;/li&gt;
+					
+						&lt;li&gt;0003-nscd-Do-not-rebuild-getaddrinfo-bug-30709.patch&lt;/li&gt;
+					
+						&lt;li&gt;0004-x86-Fix-incorrect-scope-of-setting-shared_per_thread.patch&lt;/li&gt;
+					
+						&lt;li&gt;0005-x86_64-Fix-build-with-disable-multiarch-BZ-30721.patch&lt;/li&gt;
+					
+						&lt;li&gt;0006-i686-Fix-build-with-disable-multiarch.patch&lt;/li&gt;
+					
+						&lt;li&gt;0007-malloc-Enable-merging-of-remainders-in-memalign-bug-.patch&lt;/li&gt;
+					
+						&lt;li&gt;0008-malloc-Remove-bin-scanning-from-memalign-bug-30723.patch&lt;/li&gt;
+					
+						&lt;li&gt;0009-sysdeps-tst-bz21269-fix-test-parameter.patch&lt;/li&gt;
+					
+						&lt;li&gt;0010-sysdeps-tst-bz21269-handle-ENOSYS-skip-appropriately.patch&lt;/li&gt;
+					
+						&lt;li&gt;0011-sysdeps-tst-bz21269-fix-Wreturn-type.patch&lt;/li&gt;
+					
+						&lt;li&gt;0012-io-Fix-record-locking-contants-for-powerpc64-with-__.patch&lt;/li&gt;
+					
+						&lt;li&gt;0013-libio-Fix-oversized-__io_vtables.patch&lt;/li&gt;
+					
+						&lt;li&gt;0014-elf-Do-not-run-constructors-for-proxy-objects.patch&lt;/li&gt;
+					
+						&lt;li&gt;0015-elf-Always-call-destructors-in-reverse-constructor-o.patch&lt;/li&gt;
+					
+						&lt;li&gt;0016-elf-Remove-unused-l_text_end-field-from-struct-link_.patch&lt;/li&gt;
+					
+						&lt;li&gt;0017-elf-Move-l_init_called_next-to-old-place-of-l_text_e.patch&lt;/li&gt;
+					
+						&lt;li&gt;0018-NEWS-Add-the-2.38.1-bug-list.patch&lt;/li&gt;
+					
+						&lt;li&gt;0019-CVE-2023-4527-Stack-read-overflow-with-large-TCP-res.patch&lt;/li&gt;
+					
+						&lt;li&gt;0020-getaddrinfo-Fix-use-after-free-in-getcanonname-CVE-2.patch&lt;/li&gt;
+					
+						&lt;li&gt;0021-iconv-restore-verbosity-with-unrecognized-encoding-n.patch&lt;/li&gt;
+					
+						&lt;li&gt;0022-string-Fix-tester-build-with-fortify-enable-with-gcc.patch&lt;/li&gt;
+					
+						&lt;li&gt;0023-manual-jobs.texi-Add-missing-item-EPERM-for-getpgid.patch&lt;/li&gt;
+					
+						&lt;li&gt;0024-Fix-leak-in-getaddrinfo-introduced-by-the-fix-for-CV.patch&lt;/li&gt;
+					
+						&lt;li&gt;0025-Document-CVE-2023-4806-and-CVE-2023-5156-in-NEWS.patch&lt;/li&gt;
+					
+						&lt;li&gt;0026-Propagate-GLIBC_TUNABLES-in-setxid-binaries.patch&lt;/li&gt;
+					
+						&lt;li&gt;0027-tunables-Terminate-if-end-of-input-is-reached-CVE-20.patch&lt;/li&gt;
+					
+						&lt;li&gt;0028-Revert-elf-Remove-unused-l_text_end-field-from-struc.patch&lt;/li&gt;
+					
+						&lt;li&gt;0029-Revert-elf-Always-call-destructors-in-reverse-constr.patch&lt;/li&gt;
+					
+						&lt;li&gt;0030-Revert-elf-Move-l_init_called_next-to-old-place-of-l.patch&lt;/li&gt;
+					
+						&lt;li&gt;0031-sysdeps-sem_open-Clear-O_CREAT-when-semaphore-file-i.patch&lt;/li&gt;
+					
+						&lt;li&gt;0032-elf-Fix-wrong-break-removal-from-8ee878592c.patch&lt;/li&gt;
+					
+						&lt;li&gt;0033-LoongArch-Delete-excessively-allocated-memory.patch&lt;/li&gt;
+					
+						&lt;li&gt;0034-elf-Fix-TLS-modid-reuse-generation-assignment-BZ-290.patch&lt;/li&gt;
+					
+						&lt;li&gt;0035-elf-Add-TLS-modid-reuse-test-for-bug-29039.patch&lt;/li&gt;
+					
+						&lt;li&gt;0036-x86-64-Fix-the-dtv-field-load-for-x32-BZ-31184.patch&lt;/li&gt;
+					
+						&lt;li&gt;0037-x86-64-Fix-the-tcb-field-load-for-x32-BZ-31185.patch&lt;/li&gt;
+					
+						&lt;li&gt;0038-NEWS-Mention-bug-fixes-for-29039-30694-30709-30721.patch&lt;/li&gt;
+					
+						&lt;li&gt;0039-NEWS-Mention-bug-fixes-for-30745-30843.patch&lt;/li&gt;
+					
+						&lt;li&gt;0040-getaddrinfo-translate-ENOMEM-to-EAI_MEMORY-bug-31163.patch&lt;/li&gt;
+					
+						&lt;li&gt;0041-libio-Check-remaining-buffer-size-in-_IO_wdo_write-b.patch&lt;/li&gt;
+					
+						&lt;li&gt;0042-syslog-Fix-heap-buffer-overflow-in-__vsyslog_interna.patch&lt;/li&gt;
+					
+						&lt;li&gt;0043-syslog-Fix-heap-buffer-overflow-in-__vsyslog_interna.patch&lt;/li&gt;
+					
+						&lt;li&gt;0044-syslog-Fix-integer-overflow-in-__vsyslog_internal-CV.patch&lt;/li&gt;
+					
+						&lt;li&gt;0045-x86_64-Optimize-ffsll-function-code-size.patch&lt;/li&gt;
+					
+						&lt;li&gt;0046-S390-Fix-building-with-disable-mutli-arch-BZ-31196.patch&lt;/li&gt;
+					
+						&lt;li&gt;0047-sparc-Fix-broken-memset-for-sparc32-BZ-31068.patch&lt;/li&gt;
+					
+						&lt;li&gt;0048-sparc64-Remove-unwind-information-from-signal-return.patch&lt;/li&gt;
+					
+						&lt;li&gt;0049-sparc-Fix-sparc64-memmove-length-comparison-BZ-31266.patch&lt;/li&gt;
+					
+						&lt;li&gt;0050-sparc-Remove-unwind-information-from-signal-return-s.patch&lt;/li&gt;
+					
+						&lt;li&gt;0051-arm-Remove-wrong-ldr-from-_dl_start_user-BZ-31339.patch&lt;/li&gt;
+					
+						&lt;li&gt;0052-malloc-Use-__get_nprocs-on-arena_get2-BZ-30945.patch&lt;/li&gt;
+					
+						&lt;li&gt;0053-S390-Do-not-clobber-r7-in-clone-BZ-31402.patch&lt;/li&gt;
+					
+						&lt;li&gt;0054-linux-Use-rseq-area-unconditionally-in-sched_getcpu-.patch&lt;/li&gt;
+					
+						&lt;li&gt;0055-LoongArch-Correct-__ieee754-_-_scalb-__ieee754-_-_sc.patch&lt;/li&gt;
+					
+						&lt;li&gt;0056-Add-HWCAP2_MOPS-from-Linux-6.5-to-AArch64-bits-hwcap.patch&lt;/li&gt;
+					
+						&lt;li&gt;0057-AArch64-Add-support-for-MOPS-memcpy-memmove-memset.patch&lt;/li&gt;
+					
+						&lt;li&gt;0058-AArch64-Cleanup-ifuncs.patch&lt;/li&gt;
+					
+						&lt;li&gt;0059-AArch64-Cleanup-emag-memset.patch&lt;/li&gt;
+					
+						&lt;li&gt;0060-AArch64-Add-memset_zva64.patch&lt;/li&gt;
+					
+						&lt;li&gt;0061-AArch64-Remove-Falkor-memcpy.patch&lt;/li&gt;
+					
+						&lt;li&gt;0062-aarch64-correct-CFI-in-rawmemchr-bug-31113.patch&lt;/li&gt;
+					
+						&lt;li&gt;0063-aarch64-fix-check-for-SVE-support-in-assembler.patch&lt;/li&gt;
+					
+						&lt;li&gt;0064-AArch64-Check-kernel-version-for-SVE-ifuncs.patch&lt;/li&gt;
+					
+						&lt;li&gt;0065-powerpc-Fix-ld.so-address-determination-for-PCREL-mo.patch&lt;/li&gt;
+					
+						&lt;li&gt;0066-iconv-ISO-2022-CN-EXT-fix-out-of-bound-writes-when-w.patch&lt;/li&gt;
+					
+						&lt;li&gt;0067-sparc-Remove-64-bit-check-on-sparc32-wordsize-BZ-275.patch&lt;/li&gt;
+					
+						&lt;li&gt;0068-login-Check-default-sizes-of-structs-utmp-utmpx-last.patch&lt;/li&gt;
+					
+						&lt;li&gt;0069-login-structs-utmp-utmpx-lastlog-_TIME_BITS-independ.patch&lt;/li&gt;
+					
+						&lt;li&gt;0070-nptl-Fix-tst-cancel30-on-kernels-without-ppoll_time6.patch&lt;/li&gt;
+					
+						&lt;li&gt;9001-move-ldconfig-cache-to-ephemeral-storage.patch&lt;/li&gt;
+					
+						&lt;li&gt;glibc-cs-path.patch&lt;/li&gt;
+					
+						&lt;li&gt;HACK-only-build-and-install-localedef.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;grep&lt;/td&gt;
+		&lt;td&gt;3.11&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;grub&lt;/td&gt;
+		&lt;td&gt;2.06&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;0001-setup-Add-root-device-argument-to-grub-setup.patch&lt;/li&gt;
+					
+						&lt;li&gt;0002-gpt-start-new-GPT-module.patch&lt;/li&gt;
+					
+						&lt;li&gt;0003-gpt-rename-misnamed-header-location-fields.patch&lt;/li&gt;
+					
+						&lt;li&gt;0004-gpt-record-size-of-of-the-entries-table.patch&lt;/li&gt;
+					
+						&lt;li&gt;0005-gpt-consolidate-crc32-computation-code.patch&lt;/li&gt;
+					
+						&lt;li&gt;0006-gpt-add-new-repair-function-to-sync-up-primary-and-b.patch&lt;/li&gt;
+					
+						&lt;li&gt;0007-gpt-add-write-function-and-gptrepair-command.patch&lt;/li&gt;
+					
+						&lt;li&gt;0008-gpt-add-a-new-generic-GUID-type.patch&lt;/li&gt;
+					
+						&lt;li&gt;0009-gpt-new-gptprio.next-command-for-selecting-priority-.patch&lt;/li&gt;
+					
+						&lt;li&gt;0010-gpt-split-out-checksum-recomputation.patch&lt;/li&gt;
+					
+						&lt;li&gt;0011-gpt-move-gpt-guid-printing-function-to-common-librar.patch&lt;/li&gt;
+					
+						&lt;li&gt;0012-gpt-switch-partition-names-to-a-16-bit-type.patch&lt;/li&gt;
+					
+						&lt;li&gt;0013-tests-add-some-partitions-to-the-gpt-unit-test-data.patch&lt;/li&gt;
+					
+						&lt;li&gt;0014-gpt-add-search-by-partition-label-and-uuid-commands.patch&lt;/li&gt;
+					
+						&lt;li&gt;0015-gpt-clean-up-little-endian-crc32-computation.patch&lt;/li&gt;
+					
+						&lt;li&gt;0016-gpt-minor-cleanup.patch&lt;/li&gt;
+					
+						&lt;li&gt;0017-gpt-add-search-by-disk-uuid-command.patch&lt;/li&gt;
+					
+						&lt;li&gt;0018-gpt-do-not-use-disk-sizes-GRUB-will-reject-as-invali.patch&lt;/li&gt;
+					
+						&lt;li&gt;0019-gpt-add-verbose-debug-logging.patch&lt;/li&gt;
+					
+						&lt;li&gt;0020-gpt-improve-validation-of-GPT-headers.patch&lt;/li&gt;
+					
+						&lt;li&gt;0021-gpt-refuse-to-write-to-sector-0.patch&lt;/li&gt;
+					
+						&lt;li&gt;0022-gpt-properly-detect-and-repair-invalid-tables.patch&lt;/li&gt;
+					
+						&lt;li&gt;0023-gptrepair_test-fix-typo-in-cleanup-trap.patch&lt;/li&gt;
+					
+						&lt;li&gt;0024-gptprio_test-check-GPT-is-repaired-when-appropriate.patch&lt;/li&gt;
+					
+						&lt;li&gt;0025-gpt-fix-partition-table-indexing-and-validation.patch&lt;/li&gt;
+					
+						&lt;li&gt;0026-gpt-prefer-disk-size-from-header-over-firmware.patch&lt;/li&gt;
+					
+						&lt;li&gt;0027-gpt-add-helper-for-picking-a-valid-header.patch&lt;/li&gt;
+					
+						&lt;li&gt;0028-gptrepair-fix-status-checking.patch&lt;/li&gt;
+					
+						&lt;li&gt;0029-gpt-use-inline-functions-for-checking-status-bits.patch&lt;/li&gt;
+					
+						&lt;li&gt;0030-gpt-allow-repair-function-to-noop.patch&lt;/li&gt;
+					
+						&lt;li&gt;0031-gpt-do-not-use-an-enum-for-status-bit-values.patch&lt;/li&gt;
+					
+						&lt;li&gt;0032-gpt-check-header-and-entries-status-bits-together.patch&lt;/li&gt;
+					
+						&lt;li&gt;0033-gpt-be-more-careful-about-relocating-backup-header.patch&lt;/li&gt;
+					
+						&lt;li&gt;0034-gpt-selectively-update-fields-during-repair.patch&lt;/li&gt;
+					
+						&lt;li&gt;0035-gpt-always-revalidate-when-recomputing-checksums.patch&lt;/li&gt;
+					
+						&lt;li&gt;0036-gpt-include-backup-in-sync-check-in-revalidation.patch&lt;/li&gt;
+					
+						&lt;li&gt;0037-gpt-read-entries-table-at-the-same-time-as-the-heade.patch&lt;/li&gt;
+					
+						&lt;li&gt;0038-gpt-report-all-revalidation-errors.patch&lt;/li&gt;
+					
+						&lt;li&gt;0039-gpt-rename-and-update-documentation-for-grub_gpt_upd.patch&lt;/li&gt;
+					
+						&lt;li&gt;0040-gpt-write-backup-GPT-first-skip-if-inaccessible.patch&lt;/li&gt;
+					
+						&lt;li&gt;0041-gptprio-Use-Bottlerocket-boot-partition-type-GUID.patch&lt;/li&gt;
+					
+						&lt;li&gt;0042-util-mkimage-Bump-EFI-PE-header-size-to-accommodate-.patch&lt;/li&gt;
+					
+						&lt;li&gt;0043-util-mkimage-avoid-adding-section-table-entry-outsid.patch&lt;/li&gt;
+					
+						&lt;li&gt;0044-efi-return-virtual-size-of-section-found-by-grub_efi.patch&lt;/li&gt;
+					
+						&lt;li&gt;0045-mkimage-pgp-move-single-public-key-into-its-own-sect.patch&lt;/li&gt;
+					
+						&lt;li&gt;0046-Revert-sb-Add-fallback-to-EFI-LoadImage-if-shim_lock.patch&lt;/li&gt;
+					
+						&lt;li&gt;0047-Revert-UBUNTU-Move-verifiers-after-decompressors.patch&lt;/li&gt;
+					
+						&lt;li&gt;0048-add-flag-to-only-search-root-dev.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;host-ctr&lt;/td&gt;
+		&lt;td&gt;0&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;iproute&lt;/td&gt;
+		&lt;td&gt;6.4.0&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;0001-skip-libelf-check.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;iptables&lt;/td&gt;
+		&lt;td&gt;1.8.10&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;iputils&lt;/td&gt;
+		&lt;td&gt;20240905&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;kernel-5.10&lt;/td&gt;
+		&lt;td&gt;5.10.228&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;1001-Makefile-add-prepare-target-for-external-modules.patch&lt;/li&gt;
+					
+						&lt;li&gt;1002-initramfs-unlink-INITRAMFS_FORCE-from-CMDLINE_-EXTEN.patch&lt;/li&gt;
+					
+						&lt;li&gt;1003-af_unix-increase-default-max_dgram_qlen-to-512.patch&lt;/li&gt;
+					
+						&lt;li&gt;2000-kbuild-move-module-strip-compression-code-into-scrip.patch&lt;/li&gt;
+					
+						&lt;li&gt;2001-kbuild-add-support-for-zstd-compressed-modules.patch&lt;/li&gt;
+					
+						&lt;li&gt;5001-Revert-netfilter-nf_tables-drop-map-element-referenc.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;kernel-5.15&lt;/td&gt;
+		&lt;td&gt;5.15.168&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;1001-Makefile-add-prepare-target-for-external-modules.patch&lt;/li&gt;
+					
+						&lt;li&gt;1002-Revert-kbuild-hide-tools-build-targets-from-external.patch&lt;/li&gt;
+					
+						&lt;li&gt;1003-initramfs-unlink-INITRAMFS_FORCE-from-CMDLINE_-EXTEN.patch&lt;/li&gt;
+					
+						&lt;li&gt;1004-af_unix-increase-default-max_dgram_qlen-to-512.patch&lt;/li&gt;
+					
+						&lt;li&gt;1100-netfilter-xtables-fix-typo-causing-some-targets-not-.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;kernel-6.1&lt;/td&gt;
+		&lt;td&gt;6.1.115&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;1001-Makefile-add-prepare-target-for-external-modules.patch&lt;/li&gt;
+					
+						&lt;li&gt;1002-Revert-kbuild-hide-tools-build-targets-from-external.patch&lt;/li&gt;
+					
+						&lt;li&gt;1003-initramfs-unlink-INITRAMFS_FORCE-from-CMDLINE_-EXTEN.patch&lt;/li&gt;
+					
+						&lt;li&gt;1004-af_unix-increase-default-max_dgram_qlen-to-512.patch&lt;/li&gt;
+					
+						&lt;li&gt;1005-Revert-Revert-drm-fb_helper-improve-CONFIG_FB-depend.patch&lt;/li&gt;
+					
+						&lt;li&gt;1100-io_uring-always-lock-__io_cqring_overflow_flush.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;kexec-tools&lt;/td&gt;
+		&lt;td&gt;2.0.29&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;keyutils&lt;/td&gt;
+		&lt;td&gt;1.6.1&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;kmod&lt;/td&gt;
+		&lt;td&gt;31&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;kmod-5.10-nvidia&lt;/td&gt;
+		&lt;td&gt;1.0.0&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;kmod-5.15-nvidia&lt;/td&gt;
+		&lt;td&gt;1.0.0&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;kmod-6.1-nvidia&lt;/td&gt;
+		&lt;td&gt;1.0.0&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;kubernetes-1.23&lt;/td&gt;
+		&lt;td&gt;1.23.17&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;kubernetes-1.24&lt;/td&gt;
+		&lt;td&gt;1.24.17&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;kubernetes-1.25&lt;/td&gt;
+		&lt;td&gt;1.25.16&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;kubernetes-1.26&lt;/td&gt;
+		&lt;td&gt;1.26.15&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;kubernetes-1.27&lt;/td&gt;
+		&lt;td&gt;1.27.16&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;kubernetes-1.28&lt;/td&gt;
+		&lt;td&gt;1.28.14&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;kubernetes-1.29&lt;/td&gt;
+		&lt;td&gt;1.29.9&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;kubernetes-1.30&lt;/td&gt;
+		&lt;td&gt;1.30.5&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;kubernetes-1.31&lt;/td&gt;
+		&lt;td&gt;1.31.1&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libacl&lt;/td&gt;
+		&lt;td&gt;2.3.2&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libattr&lt;/td&gt;
+		&lt;td&gt;2.5.2&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libaudit&lt;/td&gt;
+		&lt;td&gt;3.1.5&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libbpf&lt;/td&gt;
+		&lt;td&gt;1.4.5&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libcap&lt;/td&gt;
+		&lt;td&gt;2.7&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;9001-dont-test-during-install.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libdbus&lt;/td&gt;
+		&lt;td&gt;1.15.12&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libelf&lt;/td&gt;
+		&lt;td&gt;0.191&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libexpat&lt;/td&gt;
+		&lt;td&gt;2.6.4&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libffi&lt;/td&gt;
+		&lt;td&gt;3.4.6&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libgcc&lt;/td&gt;
+		&lt;td&gt;0&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libglib&lt;/td&gt;
+		&lt;td&gt;2.78.4&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libinih&lt;/td&gt;
+		&lt;td&gt;58&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libiw&lt;/td&gt;
+		&lt;td&gt;29&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;wireless-tools-29-makefile.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libkcapi&lt;/td&gt;
+		&lt;td&gt;1.4.0&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libmnl&lt;/td&gt;
+		&lt;td&gt;1.0.5&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libncurses&lt;/td&gt;
+		&lt;td&gt;6.5&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;ncurses-config.patch&lt;/li&gt;
+					
+						&lt;li&gt;ncurses-libs.patch&lt;/li&gt;
+					
+						&lt;li&gt;ncurses-urxvt.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libnetfilter_conntrack&lt;/td&gt;
+		&lt;td&gt;1.0.9&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libnetfilter_cthelper&lt;/td&gt;
+		&lt;td&gt;1.0.1&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libnetfilter_cttimeout&lt;/td&gt;
+		&lt;td&gt;1.0.1&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libnetfilter_queue&lt;/td&gt;
+		&lt;td&gt;1.0.5&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libnfnetlink&lt;/td&gt;
+		&lt;td&gt;1.0.2&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libnftnl&lt;/td&gt;
+		&lt;td&gt;1.2.7&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libnl&lt;/td&gt;
+		&lt;td&gt;3.10.0&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libnvidia-container&lt;/td&gt;
+		&lt;td&gt;1.17.3&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;0001-use-shared-libtirpc.patch&lt;/li&gt;
+					
+						&lt;li&gt;0002-use-prefix-from-environment.patch&lt;/li&gt;
+					
+						&lt;li&gt;0003-keep-debug-symbols.patch&lt;/li&gt;
+					
+						&lt;li&gt;0004-Use-NVIDIA_PATH-to-look-up-binaries.patch&lt;/li&gt;
+					
+						&lt;li&gt;0005-makefile-avoid-ldconfig-when-cross-compiling.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libnvme&lt;/td&gt;
+		&lt;td&gt;1.1&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libpcre&lt;/td&gt;
+		&lt;td&gt;10.44&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libseccomp&lt;/td&gt;
+		&lt;td&gt;2.5.5&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libselinux&lt;/td&gt;
+		&lt;td&gt;3.6&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libsemanage&lt;/td&gt;
+		&lt;td&gt;3.6&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;0001-remove-bzip2-dependency.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libsepol&lt;/td&gt;
+		&lt;td&gt;3.6&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;0001-libsepol-cil-Check-common-perms-when-verifiying-all.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libstd-rust&lt;/td&gt;
+		&lt;td&gt;0&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libtirpc&lt;/td&gt;
+		&lt;td&gt;1.3.5&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;liburcu&lt;/td&gt;
+		&lt;td&gt;0.14.0&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libxcrypt&lt;/td&gt;
+		&lt;td&gt;4.4.36&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libz&lt;/td&gt;
+		&lt;td&gt;1.3.1&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;libzstd&lt;/td&gt;
+		&lt;td&gt;1.5.6&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;linux-firmware&lt;/td&gt;
+		&lt;td&gt;20230625&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;0001-linux-firmware-snd-remove-firmware-for-snd-audio-dev.patch&lt;/li&gt;
+					
+						&lt;li&gt;0002-linux-firmware-video-Remove-firmware-for-video-broad.patch&lt;/li&gt;
+					
+						&lt;li&gt;0003-linux-firmware-bt-wifi-Remove-firmware-for-Bluetooth.patch&lt;/li&gt;
+					
+						&lt;li&gt;0004-linux-firmware-scsi-Remove-firmware-for-SCSI-devices.patch&lt;/li&gt;
+					
+						&lt;li&gt;0005-linux-firmware-usb-remove-firmware-for-USB-Serial-PC.patch&lt;/li&gt;
+					
+						&lt;li&gt;0006-linux-firmware-ethernet-Remove-firmware-for-ethernet.patch&lt;/li&gt;
+					
+						&lt;li&gt;0007-linux-firmware-Remove-firmware-for-Accelarator-devic.patch&lt;/li&gt;
+					
+						&lt;li&gt;0008-linux-firmware-gpu-Remove-firmware-for-GPU-devices.patch&lt;/li&gt;
+					
+						&lt;li&gt;0009-linux-firmware-various-Remove-firmware-for-various-d.patch&lt;/li&gt;
+					
+						&lt;li&gt;0010-linux-firmware-amd-ucode-Remove-amd-microcode.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;login&lt;/td&gt;
+		&lt;td&gt;0.0.1&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;makedumpfile&lt;/td&gt;
+		&lt;td&gt;1.7.5&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;0000-fix-strip-invocation-for-TARGET-env-variable.patch&lt;/li&gt;
+					
+						&lt;li&gt;0001-do-not-overlink-with-bzip2.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;mdadm&lt;/td&gt;
+		&lt;td&gt;4.3&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;0001-report-monitor-output-to-syslog.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;microcode&lt;/td&gt;
+		&lt;td&gt;0&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;netdog&lt;/td&gt;
+		&lt;td&gt;0.1.1&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;nvidia-container-toolkit&lt;/td&gt;
+		&lt;td&gt;1.17.3&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;nvidia-k8s-device-plugin&lt;/td&gt;
+		&lt;td&gt;0.16.2&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;nvme-cli&lt;/td&gt;
+		&lt;td&gt;2.10.2&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;oci-add-hooks&lt;/td&gt;
+		&lt;td&gt;1.0.0&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;open-vm-tools&lt;/td&gt;
+		&lt;td&gt;12.3.5&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;0001-no_cflags_werror.patch&lt;/li&gt;
+					
+						&lt;li&gt;0002-dont-force-cppflags.patch&lt;/li&gt;
+					
+						&lt;li&gt;0003-Update-shutdown-code-to-work-for-Bottlerocket.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;os&lt;/td&gt;
+		&lt;td&gt;0&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;pciutils&lt;/td&gt;
+		&lt;td&gt;3.13.0&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;pigz&lt;/td&gt;
+		&lt;td&gt;2.8&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;policycoreutils&lt;/td&gt;
+		&lt;td&gt;3.6&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;procps&lt;/td&gt;
+		&lt;td&gt;4.0.4&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;rdma-core&lt;/td&gt;
+		&lt;td&gt;54&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;readline&lt;/td&gt;
+		&lt;td&gt;8.2&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;readline-8.2-shlib.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;release&lt;/td&gt;
+		&lt;td&gt;0&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;runc&lt;/td&gt;
+		&lt;td&gt;1.1.14&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;selinux-policy&lt;/td&gt;
+		&lt;td&gt;0&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;shim&lt;/td&gt;
+		&lt;td&gt;15.8&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;socat&lt;/td&gt;
+		&lt;td&gt;1.8.0.0&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;0001-xioopts-conditionally-compile-applyopts_termios_valu.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;soci-snapshotter&lt;/td&gt;
+		&lt;td&gt;0.7.0&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;static-pods&lt;/td&gt;
+		&lt;td&gt;0.1&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;strace&lt;/td&gt;
+		&lt;td&gt;6.11&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;systemd&lt;/td&gt;
+		&lt;td&gt;252.22&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;1001-sd-netlink-make-calc_elapse-return-USEC_INFINITY-whe.patch&lt;/li&gt;
+					
+						&lt;li&gt;1002-sd-netlink-make-the-default-timeout-configurable-by-.patch&lt;/li&gt;
+					
+						&lt;li&gt;9001-use-absolute-path-for-var-run-symlink.patch&lt;/li&gt;
+					
+						&lt;li&gt;9002-core-add-separate-timeout-for-system-shutdown.patch&lt;/li&gt;
+					
+						&lt;li&gt;9003-machine-id-setup-generate-stable-ID-under-Xen-and-VM.patch&lt;/li&gt;
+					
+						&lt;li&gt;9004-units-mount-tmp-with-noexec.patch&lt;/li&gt;
+					
+						&lt;li&gt;9005-mount-setup-apply-noexec-to-more-mounts.patch&lt;/li&gt;
+					
+						&lt;li&gt;9006-mount-setup-mount-etc-with-specific-label.patch&lt;/li&gt;
+					
+						&lt;li&gt;9007-pkg-config-stop-hardcoding-prefix-to-usr.patch&lt;/li&gt;
+					
+						&lt;li&gt;9008-sysctl-do-not-set-rp_filter-via-wildcard.patch&lt;/li&gt;
+					
+						&lt;li&gt;9009-sysusers-set-root-shell-to-sbin-nologin.patch&lt;/li&gt;
+					
+						&lt;li&gt;9010-units-keep-modprobe-service-units-running.patch&lt;/li&gt;
+					
+						&lt;li&gt;9011-systemd-networkd-Conditionalize-hostnamed-timezoned-.patch&lt;/li&gt;
+					
+						&lt;li&gt;9012-core-mount-increase-mount-rate-limit-burst-to-25.patch&lt;/li&gt;
+					
+						&lt;li&gt;9013-sd-dhcp-lease-parse-multiple-domains-in-option-15.patch&lt;/li&gt;
+					
+						&lt;li&gt;9014-meson-make-gpt-auto-generator-selectable-at-build-ti.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;util-linux&lt;/td&gt;
+		&lt;td&gt;2.40.2&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;wicked&lt;/td&gt;
+		&lt;td&gt;0.6.68&lt;/td&gt;
+		&lt;td&gt;
+			
+				&lt;ul&gt;
+					
+						&lt;li&gt;0001-dhcp6-refresh-ipv6-flags-on-staring-in-auto-mode.patch&lt;/li&gt;
+					
+						&lt;li&gt;1001-avoid-gcrypt-dependency.patch&lt;/li&gt;
+					
+						&lt;li&gt;1002-exclude-unused-components.patch&lt;/li&gt;
+					
+						&lt;li&gt;1003-ship-mkconst-and-schema-sources-for-runtime-use.patch&lt;/li&gt;
+					
+						&lt;li&gt;1004-adjust-safeguard-for-dhcp6-defer-timeout.patch&lt;/li&gt;
+					
+						&lt;li&gt;1005-client-validate-ethernet-namespace-node.patch&lt;/li&gt;
+					
+						&lt;li&gt;1006-server-discover-hardware-address-of-unconfigured-int.patch&lt;/li&gt;
+					
+						&lt;li&gt;1007-dhpc6-don-t-cancel-transmission-if-random-delay-happ.patch&lt;/li&gt;
+					
+						&lt;li&gt;1008-dhcp6-reduce-maximum-initial-solicitation-delay-to-1.patch&lt;/li&gt;
+					
+				&lt;/ul&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+	&lt;tr&gt;
+		&lt;td&gt;xfsprogs&lt;/td&gt;
+		&lt;td&gt;6.9.0&lt;/td&gt;
+		&lt;td&gt;
+			
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	
+&lt;/table&gt;
+
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

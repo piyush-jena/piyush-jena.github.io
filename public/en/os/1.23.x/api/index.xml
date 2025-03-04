@@ -1,0 +1,1772 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bottlerocket – API</title>
+    <link>//localhost:1313/en/os/1.23.x/api/</link>
+    <description>Recent content in API on Bottlerocket</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    
+	  <atom:link href="//localhost:1313/en/os/1.23.x/api/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Os: API Endpoint Reference</title>
+      <link>//localhost:1313/en/os/1.23.x/api/endpoints/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/os/1.23.x/api/endpoints/</guid>
+      <description>
+        
+        
+        &lt;p&gt;The following output is generated from &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket/blob/develop/sources/api/openapi.yaml&#34;&gt;Bottlerocket&amp;rsquo;s OpenAPI Spec&lt;/a&gt;.&lt;/p&gt;
+&lt;hr&gt;
+
+&lt;div id=&#34;ohpen_swagger_ui&#34;&gt;&lt;/div&gt;
+&lt;script&gt;
+  window.onload = function () {
+    const ui = SwaggerUIBundle({
+      url: &#34;/external/openapi/1.22.x/openapi.yaml&#34;,
+      dom_id: &#39;#ohpen_swagger_ui&#39;,
+      presets: [
+        SwaggerUIBundle.presets.apis,
+        SwaggerUIStandalonePreset
+      ]
+    });
+    window.ui = ui;
+  };
+&lt;/script&gt;
+
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Os: Reporting</title>
+      <link>//localhost:1313/en/os/1.23.x/api/reporting/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/os/1.23.x/api/reporting/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Operating systems are complicated; inspecting and reporting data about the OS is a common but tedious task that needs repeating as configurations change.
+Manually gathering this data for Bottlerocket has additional complications due to API abstracted settings and indirect access to the host.&lt;/p&gt;
+&lt;p&gt;The Bottlerocket report API provides a mechanism to automate operating system-level reporting.
+You can run reports that self-evaluate the OS based on the current state of the system compared to known standards.&lt;/p&gt;
+&lt;h2 id=&#34;center-for-internet-security-cis-benchmark&#34;&gt;Center for Internet Security (CIS) Benchmark&lt;/h2&gt;
+&lt;p&gt;You can currently generate reports on your Bottlerocket nodes against two different CIS benchmarks:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;//localhost:1313/en/os/1.23.x/api/reporting/cis/&#34;&gt;Bottlerocket CIS Benchmark&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;//localhost:1313/en/os/1.23.x/api/reporting/cis-k8s/&#34;&gt;Kubernetes CIS Benchmark&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;running-a-report&#34;&gt;Running a report&lt;/h2&gt;
+&lt;p&gt;You will need to be running the &lt;a href=&#34;//localhost:1313/en/os/1.23.x/concepts/shell-less-host/#control-container&#34;&gt;control container&lt;/a&gt; or, alternately, mount the &lt;code&gt;apiclient&lt;/code&gt; binary and the Bottlerocket API unix socket into a container as well as have the appropriate SELinux permissions.&lt;/p&gt;
+&lt;p&gt;First, create an interactive shell session on the control container or container with &lt;code&gt;apiclient&lt;/code&gt;.
+From the shell run:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apiclient report &amp;lt;report identifier&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This will evaluate the current node to a particular report and return the results in a human-readable format.&lt;/p&gt;
+&lt;p&gt;If you intend to process the report with some other piece of software,  add the flag &lt;code&gt;-f&lt;/code&gt; with the value of &lt;code&gt;json&lt;/code&gt;  for a JSON representation of the report:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Returns evaluation of the report in JSON format&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apiclient report &amp;lt;report identifier&amp;gt; -f json
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;evaluation-results&#34;&gt;Evaluation Results&lt;/h2&gt;
+&lt;p&gt;Evaluation of each item on the report will result in one of three outcomes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;PASS&lt;/code&gt;: Evaluated item is in compliance with the benchmark.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;FAIL&lt;/code&gt;: Evaluated item is not in compliance with the benchmark.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;SKIP&lt;/code&gt;: The item could not be automatically evaluated.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;all-available-reports&#34;&gt;All Available Reports&lt;/h2&gt;
+&lt;div id=&#34;problemReport&#34;&gt;
+    &lt;hr /&gt;
+    &lt;small&gt;
+        See a problem with this page? &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-project-website/issues/new/choose&#34; target=&#34;#&#34;&gt;File an issue&lt;/a&gt;. All feedback is appreciated.&lt;br /&gt;
+        You can also directly contribute a change to the &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-project-website/tree/main/content/en/os/1.23.x/api/reporting/_index.markdown&#34; target=&#34;#&#34;&gt;source file of this page on GitHub&lt;/a&gt;.
+    &lt;/small&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$(document).ready(function() {
+    $(&#39;#problemReport&#39;).detach().appendTo(&#39;.td-content&#39;);
+});
+&lt;/script&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Os: Settings Index</title>
+      <link>//localhost:1313/en/os/1.23.x/api/settings-index/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/os/1.23.x/api/settings-index/</guid>
+      <description>
+        
+        
+        &lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/autoscaling/#should-wait&#34;&gt;
+        settings.autoscaling.should-wait 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/aws/#config&#34;&gt;
+        settings.aws.config 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/aws/#credentials&#34;&gt;
+        settings.aws.credentials 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/aws/#profile&#34;&gt;
+        settings.aws.profile 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/aws/#region&#34;&gt;
+        settings.aws.region 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/boot/#init-parameters&#34;&gt;
+        settings.boot.init-parameters 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/boot/#kernel-parameters&#34;&gt;
+        settings.boot.kernel-parameters 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/boot/#reboot-to-reconcile&#34;&gt;
+        settings.boot.reboot-to-reconcile 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/bootstrap-commands/#name_commands&#34;&gt;
+        settings.bootstrap-commands.&amp;lt;name&amp;gt;.commands 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/bootstrap-commands/#name_essential&#34;&gt;
+        settings.bootstrap-commands.&amp;lt;name&amp;gt;.essential 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/bootstrap-commands/#name_mode&#34;&gt;
+        settings.bootstrap-commands.&amp;lt;name&amp;gt;.mode 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/bootstrap-containers/#name_essential&#34;&gt;
+        settings.bootstrap-containers.&amp;lt;name&amp;gt;.essential 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/bootstrap-containers/#name_mode&#34;&gt;
+        settings.bootstrap-containers.&amp;lt;name&amp;gt;.mode 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/bootstrap-containers/#name_source&#34;&gt;
+        settings.bootstrap-containers.&amp;lt;name&amp;gt;.source 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/bootstrap-containers/#name_user-data&#34;&gt;
+        settings.bootstrap-containers.&amp;lt;name&amp;gt;.user-data 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/cloudformation/#logical-resource-id&#34;&gt;
+        settings.cloudformation.logical-resource-id 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/cloudformation/#should-signal&#34;&gt;
+        settings.cloudformation.should-signal 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/cloudformation/#stack-name&#34;&gt;
+        settings.cloudformation.stack-name 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/container-registry/#credentials&#34;&gt;
+        settings.container-registry.credentials 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/container-registry/#mirrors&#34;&gt;
+        settings.container-registry.mirrors 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/container-runtime/#enable-unprivileged-icmp&#34;&gt;
+        settings.container-runtime.enable-unprivileged-icmp 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/container-runtime/#enable-unprivileged-ports&#34;&gt;
+        settings.container-runtime.enable-unprivileged-ports 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/container-runtime/#max-concurrent-downloads&#34;&gt;
+        settings.container-runtime.max-concurrent-downloads 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/container-runtime/#max-container-log-line-size&#34;&gt;
+        settings.container-runtime.max-container-log-line-size 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/dns/#name-servers&#34;&gt;
+        settings.dns.name-servers 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/dns/#search-list&#34;&gt;
+        settings.dns.search-list 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/ecs/#allow-privileged-containers&#34;&gt;
+        settings.ecs.allow-privileged-containers 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/ecs/#awsvpc-block-imds&#34;&gt;
+        settings.ecs.awsvpc-block-imds 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/ecs/#backend-host&#34;&gt;
+        settings.ecs.backend-host 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/ecs/#cluster&#34;&gt;
+        settings.ecs.cluster 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/ecs/#container-stop-timeout&#34;&gt;
+        settings.ecs.container-stop-timeout 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/ecs/#enable-container-metadata&#34;&gt;
+        settings.ecs.enable-container-metadata 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/ecs/#enable-spot-instance-draining&#34;&gt;
+        settings.ecs.enable-spot-instance-draining 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/ecs/#image-cleanup-age&#34;&gt;
+        settings.ecs.image-cleanup-age 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/ecs/#image-cleanup-delete-per-cycle&#34;&gt;
+        settings.ecs.image-cleanup-delete-per-cycle 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/ecs/#image-cleanup-enabled&#34;&gt;
+        settings.ecs.image-cleanup-enabled 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/ecs/#image-cleanup-wait&#34;&gt;
+        settings.ecs.image-cleanup-wait 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/ecs/#image-pull-behavior&#34;&gt;
+        settings.ecs.image-pull-behavior 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/ecs/#instance-attributes&#34;&gt;
+        settings.ecs.instance-attributes 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/ecs/#logging-drivers&#34;&gt;
+        settings.ecs.logging-drivers 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/ecs/#loglevel&#34;&gt;
+        settings.ecs.loglevel 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/ecs/#metadata-service-burst&#34;&gt;
+        settings.ecs.metadata-service-burst 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/ecs/#metadata-service-rps&#34;&gt;
+        settings.ecs.metadata-service-rps 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/ecs/#reserved-memory&#34;&gt;
+        settings.ecs.reserved-memory 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/ecs/#task-cleanup-wait&#34;&gt;
+        settings.ecs.task-cleanup-wait 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/host-containers/#container_enabled&#34;&gt;
+        settings.host-containers.&amp;lt;container&amp;gt;.enabled 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/host-containers/#container_source&#34;&gt;
+        settings.host-containers.&amp;lt;container&amp;gt;.source 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/host-containers/#container_superpowered&#34;&gt;
+        settings.host-containers.&amp;lt;container&amp;gt;.superpowered 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/host-containers/#container_user-data&#34;&gt;
+        settings.host-containers.&amp;lt;container&amp;gt;.user-data 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kernel/#lockdown&#34;&gt;
+        settings.kernel.lockdown 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kernel/#modules_allowed&#34;&gt;
+        settings.kernel.modules.&amp;lt;name&amp;gt;.allowed 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kernel/#modules_autoload&#34;&gt;
+        settings.kernel.modules.&amp;lt;name&amp;gt;.autoload 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kernel/#sysctl&#34;&gt;
+        settings.kernel.sysctl 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubelet-device-plugin/#nvidia-device-id-strategy&#34;&gt;
+        settings.kubelet-device-plugin.nvidia.device-id-strategy 
+    &lt;/a&gt;
+&lt;/code&gt;
+
+&lt;span class=&#34;badge badge-secondary&#34;&gt;New for 1.23.x&lt;/span&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubelet-device-plugin/#nvidia-device-list-strategy&#34;&gt;
+        settings.kubelet-device-plugin.nvidia.device-list-strategy 
+    &lt;/a&gt;
+&lt;/code&gt;
+
+&lt;span class=&#34;badge badge-secondary&#34;&gt;New for 1.23.x&lt;/span&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubelet-device-plugin/#nvidia-pass-device-specs&#34;&gt;
+        settings.kubelet-device-plugin.nvidia.pass-device-specs 
+    &lt;/a&gt;
+&lt;/code&gt;
+
+&lt;span class=&#34;badge badge-secondary&#34;&gt;New for 1.23.x&lt;/span&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#allowed-unsafe-sysctls&#34;&gt;
+        settings.kubernetes.allowed-unsafe-sysctls 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#api-server&#34;&gt;
+        settings.kubernetes.api-server 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#authentication-mode&#34;&gt;
+        settings.kubernetes.authentication-mode 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#bootstrap-token&#34;&gt;
+        settings.kubernetes.bootstrap-token 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#cloud-provider&#34;&gt;
+        settings.kubernetes.cloud-provider 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#cluster-certificate&#34;&gt;
+        settings.kubernetes.cluster-certificate 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#cluster-dns-ip&#34;&gt;
+        settings.kubernetes.cluster-dns-ip 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#cluster-domain&#34;&gt;
+        settings.kubernetes.cluster-domain 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#cluster-name&#34;&gt;
+        settings.kubernetes.cluster-name 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#container-log-max-files&#34;&gt;
+        settings.kubernetes.container-log-max-files 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#container-log-max-size&#34;&gt;
+        settings.kubernetes.container-log-max-size 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#cpu-cfs-quota-enforced&#34;&gt;
+        settings.kubernetes.cpu-cfs-quota-enforced 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#cpu-manager-policy&#34;&gt;
+        settings.kubernetes.cpu-manager-policy 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#cpu-manager-policy-options&#34;&gt;
+        settings.kubernetes.cpu-manager-policy-options 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#cpu-manager-reconcile-period&#34;&gt;
+        settings.kubernetes.cpu-manager-reconcile-period 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#credential-providers&#34;&gt;
+        settings.kubernetes.credential-providers 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#customid_enabled&#34;&gt;
+        settings.kubernetes.static-pods.&amp;lt;custom identifier&amp;gt;.enabled 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#customid_manifest&#34;&gt;
+        settings.kubernetes.static-pods.&amp;lt;custom identifier&amp;gt;.manifest 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#event-burst&#34;&gt;
+        settings.kubernetes.event-burst 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#event-qps&#34;&gt;
+        settings.kubernetes.event-qps 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#eviction-hard&#34;&gt;
+        settings.kubernetes.eviction-hard 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#eviction-max-pod-grace-period&#34;&gt;
+        settings.kubernetes.eviction-max-pod-grace-period 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#eviction-soft&#34;&gt;
+        settings.kubernetes.eviction-soft 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#eviction-soft-grace-period&#34;&gt;
+        settings.kubernetes.eviction-soft-grace-period 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#hostname-override&#34;&gt;
+        settings.kubernetes.hostname-override 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#image-gc-high-threshold-percent&#34;&gt;
+        settings.kubernetes.image-gc-high-threshold-percent 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#image-gc-low-threshold-percent&#34;&gt;
+        settings.kubernetes.image-gc-low-threshold-percent 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#kube-api-burst&#34;&gt;
+        settings.kubernetes.kube-api-burst 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#kube-api-qps&#34;&gt;
+        settings.kubernetes.kube-api-qps 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#kube-reserved&#34;&gt;
+        settings.kubernetes.kube-reserved 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#log-level&#34;&gt;
+        settings.kubernetes.log-level 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#max-pods&#34;&gt;
+        settings.kubernetes.max-pods 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#memory-manager-policy&#34;&gt;
+        settings.kubernetes.memory-manager-policy 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#memory-manager-reserved-memory&#34;&gt;
+        settings.kubernetes.memory-manager-reserved-memory 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#node-ip&#34;&gt;
+        settings.kubernetes.node-ip 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#node-labels&#34;&gt;
+        settings.kubernetes.node-labels 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#node-taints&#34;&gt;
+        settings.kubernetes.node-taints 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#pod-infra-container-image&#34;&gt;
+        settings.kubernetes.pod-infra-container-image 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#pod-pids-limit&#34;&gt;
+        settings.kubernetes.pod-pids-limit 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#provider-id&#34;&gt;
+        settings.kubernetes.provider-id 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#registry-burst&#34;&gt;
+        settings.kubernetes.registry-burst 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#registry-qps&#34;&gt;
+        settings.kubernetes.registry-qps 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#seccomp-default&#34;&gt;
+        settings.kubernetes.seccomp-default 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#server-certificate&#34;&gt;
+        settings.kubernetes.server-certificate 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#server-key&#34;&gt;
+        settings.kubernetes.server-key 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#server-tls-bootstrap&#34;&gt;
+        settings.kubernetes.server-tls-bootstrap 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#shutdown-grace-period&#34;&gt;
+        settings.kubernetes.shutdown-grace-period 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#shutdown-grace-period-for-critical-pods&#34;&gt;
+        settings.kubernetes.shutdown-grace-period-for-critical-pods 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#standalone-mode&#34;&gt;
+        settings.kubernetes.standalone-mode 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#system-reserved&#34;&gt;
+        settings.kubernetes.system-reserved 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#topology-manager-policy&#34;&gt;
+        settings.kubernetes.topology-manager-policy 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/kubernetes/#topology-manager-scope&#34;&gt;
+        settings.kubernetes.topology-manager-scope 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/metrics/#metrics-url&#34;&gt;
+        settings.metrics.metrics-url 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/metrics/#send-metrics&#34;&gt;
+        settings.metrics.send-metrics 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/metrics/#service-checks&#34;&gt;
+        settings.metrics.service-checks 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/motd/#%25!s%28int=0%29&#34;&gt;
+        settings.motd
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/network/#hostname&#34;&gt;
+        settings.network.hostname 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/network/#hosts&#34;&gt;
+        settings.network.hosts 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/network/#https-proxy&#34;&gt;
+        settings.network.https-proxy 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/network/#no-proxy&#34;&gt;
+        settings.network.no-proxy 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/ntp/#time-servers&#34;&gt;
+        settings.ntp.time-servers 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_audit-control&#34;&gt;
+        settings.oci-defaults.capabilities.audit-control 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_audit-read&#34;&gt;
+        settings.oci-defaults.capabilities.audit-read 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_audit-write&#34;&gt;
+        settings.oci-defaults.capabilities.audit-write 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_block-suspend&#34;&gt;
+        settings.oci-defaults.capabilities.block-suspend 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_bpf&#34;&gt;
+        settings.oci-defaults.capabilities.bpf 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_checkpoint-restore&#34;&gt;
+        settings.oci-defaults.capabilities.checkpoint-restore 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_chown&#34;&gt;
+        settings.oci-defaults.capabilities.chown 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_dac-override&#34;&gt;
+        settings.oci-defaults.capabilities.dac-override 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_dac-read-search&#34;&gt;
+        settings.oci-defaults.capabilities.dac-read-search 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_fowner&#34;&gt;
+        settings.oci-defaults.capabilities.fowner 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_fsetid&#34;&gt;
+        settings.oci-defaults.capabilities.fsetid 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_ipc-lock&#34;&gt;
+        settings.oci-defaults.capabilities.ipc-lock 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_ipc-owner&#34;&gt;
+        settings.oci-defaults.capabilities.ipc-owner 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_kill&#34;&gt;
+        settings.oci-defaults.capabilities.kill 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_lease&#34;&gt;
+        settings.oci-defaults.capabilities.lease 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_linux-immutable&#34;&gt;
+        settings.oci-defaults.capabilities.linux-immutable 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_mac-admin&#34;&gt;
+        settings.oci-defaults.capabilities.mac-admin 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_mac-override&#34;&gt;
+        settings.oci-defaults.capabilities.mac-override 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_mknod&#34;&gt;
+        settings.oci-defaults.capabilities.mknod 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_net-admin&#34;&gt;
+        settings.oci-defaults.capabilities_net-admin 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_net-bind-service&#34;&gt;
+        settings.oci-defaults.capabilities.net-bind-service 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_net-broadcast&#34;&gt;
+        settings.oci-defaults.capabilities.net-broadcast 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_net-raw&#34;&gt;
+        settings.oci-defaults.capabilities.net-raw 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_perfmon&#34;&gt;
+        settings.oci-defaults.capabilities.perfmon 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_setfcap&#34;&gt;
+        settings.oci-defaults.capabilities.setfcap 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_setgid&#34;&gt;
+        settings.oci-defaults.capabilities.setgid 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_setpcap&#34;&gt;
+        settings.oci-defaults.capabilities.setpcap 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_setuid&#34;&gt;
+        settings.oci-defaults.capabilities.setuid 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_sys-admin&#34;&gt;
+        settings.oci-defaults.capabilities.sys-admin 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_sys-boot&#34;&gt;
+        settings.oci-defaults.capabilities.sys-boot 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_sys-chroot&#34;&gt;
+        settings.oci-defaults.capabilities.sys-chroot 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_sys-module&#34;&gt;
+        settings.oci-defaults.capabilities.sys-module 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_sys-nice&#34;&gt;
+        settings.oci-defaults.capabilities.sys-nice 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_sys-pacct&#34;&gt;
+        settings.oci-defaults.capabilities.sys-pacct 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_sys-ptrace&#34;&gt;
+        settings.oci-defaults.capabilities.sys-ptrace 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_sys-rawio&#34;&gt;
+        settings.oci-defaults.capabilities.sys-rawio 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_sys-resource&#34;&gt;
+        settings.oci-defaults.capabilities.sys-resource 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_sys-time&#34;&gt;
+        settings.oci-defaults.capabilities.sys-time 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_sys-tty-config&#34;&gt;
+        settings.oci-defaults.capabilities.sys-tty-config 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_syslog&#34;&gt;
+        settings.oci-defaults.capabilities.syslog 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#capabilities_wake-alarm&#34;&gt;
+        settings.oci-defaults.capabilities.wake-alarm 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#resource-limits_max-address-space&#34;&gt;
+        settings.oci-defaults.resource-limits.max-address-space 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#resource-limits_max-core-file-size&#34;&gt;
+        settings.oci-defaults.resource-limits.max-core-file-size 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#resource-limits_max-cpu-time&#34;&gt;
+        settings.oci-defaults.resource-limits.max-cpu-time 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#resource-limits_max-data-size&#34;&gt;
+        settings.oci-defaults.resource-limits.max-data-size 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#resource-limits_max-file-locks&#34;&gt;
+        settings.oci-defaults.resource-limits.max-file-locks 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#resource-limits_max-file-size&#34;&gt;
+        settings.oci-defaults.resource-limits.max-file-size 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#resource-limits_max-locked-memory&#34;&gt;
+        settings.oci-defaults.resource-limits.max-locked-memory 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#resource-limits_max-msgqueue-size&#34;&gt;
+        settings.oci-defaults.resource-limits.max-msgqueue-size 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#resource-limits_max-nice-priority&#34;&gt;
+        settings.oci-defaults.resource-limits.max-nice-priority 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#resource-limits_max-open-files&#34;&gt;
+        settings.oci-defaults.resource-limits.max-open-files 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#resource-limits_max-pending-signals&#34;&gt;
+        settings.oci-defaults.resource-limits.max-pending-signals 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#resource-limits_max-processes&#34;&gt;
+        settings.oci-defaults.resource-limits.max-processes 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#resource-limits_max-realtime-priority&#34;&gt;
+        settings.oci-defaults.resource-limits.max-realtime-priority 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#resource-limits_max-realtime-timeout&#34;&gt;
+        settings.oci-defaults.resource-limits.max-realtime-timeout 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#resource-limits_max-resident-set&#34;&gt;
+        settings.oci-defaults.resource-limits.max-resident-set 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-defaults/#resource-limits_max-stack-size&#34;&gt;
+        settings.oci-defaults.resource-limits.max-stack-size 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/oci-hooks/#log4j-hotpatch-enabled&#34;&gt;
+        settings.oci-hooks.log4j-hotpatch-enabled 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/pki/#pki_bundle-name_data&#34;&gt;
+        settings.pki.&amp;lt;bundle-name&amp;gt;.data 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/pki/#pki_bundle-name_trusted&#34;&gt;
+        settings.pki.&amp;lt;bundle-name&amp;gt;.trusted 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/updates/#ignore-waves&#34;&gt;
+        settings.updates.ignore-waves 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/updates/#metadata-base-url&#34;&gt;
+        settings.updates.metadata-base-url 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/updates/#seed&#34;&gt;
+        settings.updates.seed 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/updates/#targets-base-url&#34;&gt;
+        settings.updates.targets-base-url 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+    
+
+&lt;code&gt;
+    &lt;a href=&#34;../settings/updates/#version-lock&#34;&gt;
+        settings.updates.version-lock 
+    &lt;/a&gt;
+&lt;/code&gt;
+&lt;br /&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Os: Settings Reference</title>
+      <link>//localhost:1313/en/os/1.23.x/api/settings/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/os/1.23.x/api/settings/</guid>
+      <description>
+        
+        
+        
+      </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,707 @@
+@import '_home_svg.scss';
+.btn-lg, .btn-group-lg > .btn {
+    border-radius: 6px;
+}
+.d-lg-block.d-none {
+    display: none !important;
+}
+
+._td-navbar {
+    background-color: $dark-teal;
+}
+._td-sidebar {
+    background-color: $tan;
+}
+._td-sidebar-nav .td-sidebar-link.tree-root {
+    color: $tan-link;
+}
+.td-main, .td-section, .td-page {
+    .td-sidebar {
+        border-right: 2px solid $tan;
+    }
+    .td-sidebar-nav .td-sidebar-link.tree-root {
+        border-color: $dark-teal;
+    }
+    .td-sidebar-nav__section-title a {
+        color: $dark;
+    }
+    .td-sidebar-nav a:hover { color: $dark-teal; }
+}
+.navbar-brand .font-weight-bold { font-weight: 500 !important; }
+.td-home, .td-main, .td-section, .td-page {
+    .td-navbar { 
+        background: linear-gradient($dark 0%, $dark-blue 10%, $dark-blue 100%);
+        //border-bottom: 1px dotted $light-blue;  
+    }
+}
+
+$link-color: $light-link;
+.td-home, .td-main, .td-section, .td-page {
+    footer.bg-dark {
+        background-color: $dark-teal !important;
+    }
+} 
+
+.td-box--dark-blue {
+    background-color: $dark-blue;
+    color: $light;
+    a {
+        color: $dark-blue-link;
+    }
+}
+.td-box--light-teal {
+    background-color: $light-teal;
+    color: $light-teal-link;
+    a {
+        color: $light-teal-link;
+    }
+}
+.td-box--tan {
+    background-color: $tan;
+    color: $tan-text;
+    a {
+        color: $tan-link;
+    }
+}
+.td-box--dark-orange {
+    background-color: $dark-orange;
+    color: $dark-orange-text;
+    a {
+        color: $dark-orange-link;
+    }
+}
+.td-box--light-blue {
+    background-color: $light-blue;
+    color: $light-blue-text;
+    a {
+        color: $light-blue-link;
+    }
+}
+
+
+.td-main .br-import {
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
+    @include media-breakpoint-up(md) { 
+        padding-top: 5.5rem; 
+    }
+    &.td-content {
+        pre,
+        .highlight,
+        .lead,
+        h1,
+        h2,
+        ul,
+        ol,
+        p,
+        blockquote,
+        dl dd,
+        .footnotes,
+        .alert {
+            max-width: inherit;
+        }
+    }
+}
+
+.featured-figure {
+    background-color: rgba(0,0,0,0.05);
+    border-radius: 4px;
+    margin-bottom: 1em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    &.docs-figure {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+/* component diagram syles */
+@mixin svg-disabled-container {
+    fill: none;
+    stroke: #fff;
+    stroke-dasharray:0.916384, 0.916384;
+}
+#svg_admin { @include svg-disabled-container; }
+
+@mixin svg-disabled-container-label {
+    fill-opacity: 0.50;
+}
+
+#svg_admin_label tspan { @include svg-disabled-container-label; }
+
+@mixin svg-disabled-component { fill-opacity: 0.25; }
+.hide-control-and-admin-container {
+    #svg_control, #svg_control_label tspan, 
+    #svg_admin, #svg_admin_label tspan { display: none; }
+}
+.disabled-diagram-component-systemd { #svg_systemd { @include svg-disabled-component; } }
+.disabled-diagram-component-kernel { #svg_kernel { @include svg-disabled-component; } }
+.disabled-diagram-component-containerd-left { #svg_containerd_left  { @include svg-disabled-component; } }
+.disabled-diagram-component-containerd-right { #svg_containerd_right { @include svg-disabled-component; } }
+.disabled-diagram-component-kubelet { #svg_kubelet  { @include svg-disabled-component; } }
+.disabled-diagram-component-control-container { 
+    #svg_control  { @include svg-disabled-component; @include svg-disabled-container; } 
+    #svg_control_label tspan { @include svg-disabled-container-label; }
+}
+.disabled-diagram-component-pods { 
+    #svg_pods_label, #svg_pods { @include svg-disabled-component; } 
+}
+
+.show_ecs {
+    .ecs {
+        display: inherit;
+    }
+    #svg_pods_label,
+    #svg_pods {
+        display: none;
+    }
+}
+.ecs {
+    display: none;
+}
+.containers {
+   fill:#ff9636;
+}
+.host-containers {
+   fill: #ffffff;
+   fill-opacity: 0.25;
+}
+.container-labels {
+    font-size:14.1111px;
+    text-align:center;
+    text-anchor:middle;
+    fill:#000000;
+    tspan {
+        font-size:14.1111px;
+        fill:#000000;
+        stroke-width:1.556;
+    }
+}
+
+.containers {
+    &.user-containers {
+        fill: $dark-orange;
+    }
+    &.containerd {
+        fill: $light-orange;
+    }
+}
+#svg_kubelet {
+   fill: $dark-teal;
+}
+#svg_systemd {
+   fill: $light-blue;
+}
+#svg_kernel {
+   fill: $dark-blue;
+}
+
+
+#svg_ecs_agent {
+   fill: $light-teal;
+}
+#svg_ecs_agent_label tspan,
+#svg_containerd_left_label tspan,
+#svg_containerd_right_label tspan,
+#svg_kubelet_label tspan,
+#svg_systemd_label tspan,
+#svg_kernel_label tspan {
+   fill: $light;
+}
+
+#svgSecureBootDiagram {
+    .check-text,
+    .nvram-text,
+    .root-fs-text,
+    .boot-text,
+    .efi-text,
+    .arrow-box-text {
+        text-anchor: middle;
+        font-size: 12px;
+    }
+    .arrow-box {
+        fill: $light-blue;
+    }
+    .arrow-box-text {
+        fill: $light-blue-text;
+    }
+    .boot-box {
+        fill: $dark-teal;
+        stroke: $light-teal
+    }
+    .boot-text {
+        fill: $dark-teal-text;
+    }
+    .sig-box {
+        fill: $light-orange;
+    }
+    .shaded-background {
+        fill: $tan;
+    }
+    .root-fs-box {
+        fill: $light-teal;
+    }
+    .root-fs-text {
+        fill: $white;
+    }
+    .nvram-box {
+        fill: $dark-blue;
+        stroke: none;
+    }
+    .nvram-text {
+        fill: $dark-blue-text
+    }
+    .boot-process-outline-box,
+    .grouper-lines,
+    .connector-arrow,
+    .connector-line,
+    .connector-line-dashed {
+        fill: none;
+        stroke: $dark;
+        stroke-miterlimit: 10;
+        pointer-events: stroke;
+    }
+    #efiBoundary1,
+    .boot-process-outline-box {
+        stroke-opacity: 0.2;
+    }
+    .connector-line-dashed {
+        stroke-dasharray: 3 3;
+    }
+    .connector-arrow {
+        fill: $dark;
+    }
+    .sig-checkmark {
+        fill: $dark-orange;
+        stroke: none;
+    }
+}
+
+.disabled-diagram-component-host-containers { 
+    #svg_control_label,
+    #svg_admin_label tspan,
+    #svg_host_container_label, 
+    #svg_host_container { @include svg-disabled-component; } 
+}
+
+.diagram-eks-a {
+    #svg_control_label tspan { @include svg-disabled-container-label; }
+    #svg_admin_label tspan { fill-opacity: 1; }
+    #svg_admin { fill: $light; opacity: 1; stroke: none }
+    #svg_control { @include svg-disabled-container; }
+}
+
+.package-by-variant-table{
+    overflow-x: auto;
+    thead, .variant-col {
+        white-space: nowrap;
+    }
+    th.angled {
+        height: 250px;
+        div {
+            transform: rotate(270deg);
+            width: 20px;
+        }
+    }
+    .dot-chart {
+        text-align: center;
+    }
+    .variant-col {
+        text-align: right;
+    }
+}
+
+input:checked + label a.td-sidebar-link__page {
+    font-weight: 600;
+}
+
+.td-sidebar-nav .td-sidebar-link__section,
+.td-sidebar-nav .td-sidebar-link__page {
+    //font-family: $td-fonts-serif
+    font-weight: 300;
+}
+
+.td-sidebar-nav__section-title,
+header,
+.h1,.h2,.h3,.h4,.h5,.h6,
+h1,h2,h3,h4,h5,h6 {
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
+}
+
+.td-box--dark-blue {
+    a.btn {
+        background-color: transparent;
+        color: $light;
+        border: 2px solid $light;
+        font-weight: 300 !important;
+        font-family: 'IBM Plex Sans Condensed', sans-serif;
+    }
+}
+
+/* this is used to replace the existing section index on section listing pages. Only the explicit one will be shown. */
+.suppress_section_listing .section-index {
+    display: none;
+    &.subsection-list {
+        display: inherit;
+    }
+}
+@include media-breakpoint-down(md) {
+    .td-sidebar-nav__section .ul-1 ul {
+        padding-left: 0.5rem;
+    }
+}
+
+/* swagger ui pages show some confusing references, we can hide them with CSS */
+.swagger-ui {
+    pre.errors-wrapper,
+    hgroup.main a {
+        display: none;
+    }
+    pre {
+        background-color: transparent;
+    }
+}
+
+/* custom css for bottlerocket settings rendering */
+.reference {
+    .setting-individual + .setting-individual {
+        padding-top: 1em;
+        border-top: 1px dotted $light-blue;
+        margin-bottom: 3em;
+    }
+}
+
+.topics {
+    .tag-group {
+        
+        padding-top: 1em;
+        margin-bottom: 4em;
+        h4 {
+            padding-top: 1em;
+        }
+        
+        & + .tag-group {
+            border-top: 1px dotted $light-blue;
+        }
+
+    }
+}
+
+
+
+@include media-breakpoint-down(md) {
+    .td-content .highlight {
+        max-width:unset;
+    }
+}
+
+/* make nav even along left */
+nav.foldable-nav .ul-1 > li {
+    margin-left: -1.5rem;
+}
+
+/* fix "Documentation in English" issue, remove once we do i18n */
+.dropdown-toggle {
+    display: none;
+}
+
+nav.foldable-nav .with-child, nav.foldable-nav .without-child {
+    padding-left: 1.25em;
+    
+}
+
+/* bootstrap containers diagram styles */
+.bootstrap-container-diagram {
+    .sequence-arrow-line{
+        fill: none;
+        stroke: $dark;
+    }
+    .sequence-arrow-point {
+        fill: $dark;
+        stroke: $dark;
+    }
+    .systemd-box {
+        fill: $light-blue;
+        stroke: none;
+    }
+
+    .bootstrap-containers-rect {
+        fill: $tan;
+        stroke: $light-teal;
+        stroke-dasharray: 3 3;
+    }
+    .bootstrap-containers-label-back {
+        fill: $tan;
+        stroke: none;
+    }
+    rect.next-boot-stage {
+        fill: $light-teal;
+        stroke: none;
+    }
+
+
+    path.exit-flag {
+        fill: $dark-blue;
+    }
+
+    rect.container-b4,
+    rect.container-b3,
+    rect.container-b2,
+    rect.container-b1 {
+        fill: $dark-orange;
+    }
+    .systemd-box-text,
+    .bootstrap-containers-text,
+    text.exit-flag,
+    text.mode-to-off,
+    text.boot-halt,
+    text.next-boot-stage,
+    text.container-b4,
+    text.container-b3,
+    text.container-b2,
+    text.container-b1 {
+        fill: $dark;
+        text-anchor: middle;
+        font-size: 12px;
+        font-family: $td-fonts-serif
+    }
+    .systemd-box-text {
+        fill: $light-blue-text;
+        
+    }
+    .bootstrap-containers-text {
+        fill: $dark;
+    }
+    text.exit-flag {
+        fill: $white;
+    }
+    text.next-boot-stage {
+        fill: $light-teal-text;
+    }
+    text.container-b4,
+    text.container-b3,
+    text.container-b2,
+    text.container-b1 {
+        fill: $white
+    }
+}
+
+
+/* style bottom links */
+footer .text-links {
+    a span {
+        color: white;
+        text-decoration:  underline;
+    }
+
+    a:not(:first-child)::before {
+        color: $light-teal-link;
+        content: " / ";
+    }
+}
+
+.suppress-additional-index {
+    .section-index + .section-index {
+        display: none;
+    }
+}
+
+nav.foldable-nav .with-child.depad {
+    padding-left: 0;
+}
+
+.start-align-labels.brupop-diagram {
+    .outer-label {
+        &.active-volume-label,
+        &.outer-label {
+            text-anchor: start;
+        }
+    }
+}
+.ecs-updater-diagram {
+    text {
+        text-anchor: middle;
+        font-size: 12px;
+    }
+    .aws-service rect,
+    .fargate-task rect {
+        rx: 9; 
+    }
+    .fargate-task {
+        rect {
+            fill: $tan;
+        }
+        text {
+            fill: $dark-blue;
+        }
+    }
+    .aws-service {
+        rect {
+            fill: $dark-orange;           
+        }
+        text {
+            
+            fill: $white;
+        }
+    }
+    .shared-responsibility-boundary {
+        fill: none;
+        stroke: $dark;
+        stroke-width: 2px;
+        stroke-miterlimit: 10;
+        stroke-dasharray: 2 6;
+    }
+
+    .line-arrow-connector {
+        .mid-label,
+        .label {
+            text-anchor: middle;
+        }
+
+        .mid-label {
+            font-size: 11px;
+            font-weight: 100;
+        }
+    }
+}
+
+.ecs-updater-diagram,
+.brupop-diagram,
+.brupop-state-machine {
+    .line-arrow-connector {
+        stroke-miterlimit: 10;
+        stroke: $dark-blue;
+        .connector {
+            fill: none;
+            pointer-events : stroke;
+            &.dotted {
+                stroke-dasharray: 1 2;
+            }
+        }
+        .arrow-head {
+            fill: $dark-blue;
+        }
+        
+    }
+
+    .mid-label,
+    .label {
+        font-size: 12px;
+        font-family: $td-fonts-serif;
+        font-weight: 300;
+
+        &.active-volume-label {
+            fill: $white;
+            text-anchor: middle;
+        }
+        &.outer-label {
+            fill: $dark-blue;
+            text-anchor: middle;
+        }
+
+    }
+}
+.brupop-state-machine {
+    .state {
+        fill: $tan;
+        rx: 9;
+        ry: 9;
+        pointer-events: all;
+    }
+}
+
+.brupop-diagram,
+.ecs-updater-diagram {
+    .aws-service .rect,
+    .node,
+    .agent,
+    .api-server,
+    .controller,
+    .unused-container,
+    .unused-volume,
+    .active-volume,
+    .control-container, 
+    .line-arrow-connector .arrow-head,
+    .ellipses,
+    .future-volume,
+    .label-backer,
+    .wait  {
+        pointer-events: all;
+    }
+}
+.ecs-updater-diagram,
+.brupop-diagram {
+    .node {
+        fill: $tan;
+        rx: 3;
+    }
+    .agent,
+    .api-server,
+    .controller,
+    .unused-container,
+    .unused-volume,
+    .active-volume,
+    .future-volume,
+    .control-container {
+        rx: 2;
+    }
+    .agent {
+        fill: $light-teal;
+    }
+
+    .label-backer,
+    .unused-container,
+    .unused-volume,
+    .control-container {
+        fill: $white;
+    }
+
+
+    .active-volume {
+        fill: $dark-blue;
+    }
+    .future-volume {
+        fill: url(#stripes);
+    }
+    
+    .wait {
+        stroke-width: 2px;
+        stroke: $light-blue;
+        fill: none;
+    }
+
+    .control-container {
+        fill: $light-blue;
+    }
+    .api-server {
+        fill: $dark-orange;
+    }
+    .controller {
+        fill: $light-blue;
+    }
+    .ellipses {
+        fill: $tan;
+        stroke: none;
+        rx: 5;
+        ry: 5; 
+    }
+    
+    #stripes {
+        width: 7;
+        height: 7; 
+        rect {
+            fill: $dark-blue;
+        }
+        line {
+            stroke: #ffffff;
+            opacity: 0.1;
+            stroke-width: 7px;
+        }
+    }
+
+}
+
+/* old docs notice */
+.pageinfo.olddocs {
+    margin-left: 0;
+    padding-bottom: 1.5rem;
+}

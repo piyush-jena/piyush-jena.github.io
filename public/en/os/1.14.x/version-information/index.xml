@@ -1,0 +1,289 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bottlerocket – Version Information</title>
+    <link>//localhost:1313/en/os/1.14.x/version-information/</link>
+    <description>Recent content in Version Information on Bottlerocket</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    
+	  <atom:link href="//localhost:1313/en/os/1.14.x/version-information/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Os: Package Versions</title>
+      <link>//localhost:1313/en/os/1.14.x/version-information/packages/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/os/1.14.x/version-information/packages/</guid>
+      <description>
+        
+        
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>Os: Variants &amp; Kernels</title>
+      <link>//localhost:1313/en/os/1.14.x/version-information/variants/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/os/1.14.x/version-information/variants/</guid>
+      <description>
+        
+        
+        &lt;p&gt;
+
+
+
+
+
+    
+    &lt;table class=&#34;table&#34;&gt;
+        &lt;thead&gt;
+            &lt;tr&gt;
+                &lt;th scope=&#34;col&#34;&gt;Variant&lt;/th&gt;
+                &lt;th scope=&#34;col&#34;&gt;Kernel Version&lt;/th&gt;
+                &lt;th scope=&#34;col&#34;&gt;Kernel Parameters&lt;/th&gt;
+            &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+            
+            &lt;tr&gt;
+                &lt;td&gt;&lt;code&gt;aws-dev-*-1.14.*&lt;/code&gt;&lt;/td&gt;
+                
+                &lt;td&gt;5.15&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;code&gt;console=tty0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;console=ttyS0,115200n8&lt;/code&gt;&lt;/br&gt;&lt;code&gt;crashkernel=2G-:256M&lt;/code&gt;&lt;/br&gt;&lt;code&gt;net.ifnames=0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;netdog.default-interface=eth0:dhcp4,dhcp6?&lt;/code&gt;&lt;/br&gt;&lt;code&gt;quiet&lt;/code&gt;&lt;/br&gt;&lt;/td&gt;
+                
+            &lt;/tr&gt;
+            
+            &lt;tr&gt;
+                &lt;td&gt;&lt;code&gt;aws-ecs-1-*-1.14.*&lt;/code&gt;&lt;/td&gt;
+                
+                &lt;td&gt;5.10&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;code&gt;console=tty0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;console=ttyS0,115200n8&lt;/code&gt;&lt;/br&gt;&lt;code&gt;net.ifnames=0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;netdog.default-interface=eth0:dhcp4,dhcp6?&lt;/code&gt;&lt;/br&gt;&lt;code&gt;quiet&lt;/code&gt;&lt;/br&gt;&lt;/td&gt;
+                
+            &lt;/tr&gt;
+            
+            &lt;tr&gt;
+                &lt;td&gt;&lt;code&gt;aws-ecs-1-nvidia-*-1.14.*&lt;/code&gt;&lt;/td&gt;
+                
+                &lt;td&gt;5.10&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;code&gt;console=tty0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;console=ttyS0,115200n8&lt;/code&gt;&lt;/br&gt;&lt;code&gt;net.ifnames=0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;netdog.default-interface=eth0:dhcp4,dhcp6?&lt;/code&gt;&lt;/br&gt;&lt;code&gt;quiet&lt;/code&gt;&lt;/br&gt;&lt;/td&gt;
+                
+            &lt;/tr&gt;
+            
+            &lt;tr&gt;
+                &lt;td&gt;&lt;code&gt;aws-k8s-1.23-*-1.14.*&lt;/code&gt;&lt;/td&gt;
+                
+                &lt;td&gt;5.10&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;code&gt;console=tty0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;console=ttyS0,115200n8&lt;/code&gt;&lt;/br&gt;&lt;code&gt;net.ifnames=0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;netdog.default-interface=eth0:dhcp4,dhcp6?&lt;/code&gt;&lt;/br&gt;&lt;code&gt;quiet&lt;/code&gt;&lt;/br&gt;&lt;/td&gt;
+                
+            &lt;/tr&gt;
+            
+            &lt;tr&gt;
+                &lt;td&gt;&lt;code&gt;aws-k8s-1.23-nvidia-*-1.14.*&lt;/code&gt;&lt;/td&gt;
+                
+                &lt;td&gt;5.10&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;code&gt;console=tty0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;console=ttyS0,115200n8&lt;/code&gt;&lt;/br&gt;&lt;code&gt;net.ifnames=0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;netdog.default-interface=eth0:dhcp4,dhcp6?&lt;/code&gt;&lt;/br&gt;&lt;code&gt;quiet&lt;/code&gt;&lt;/br&gt;&lt;/td&gt;
+                
+            &lt;/tr&gt;
+            
+            &lt;tr&gt;
+                &lt;td&gt;&lt;code&gt;aws-k8s-1.24-*-1.14.*&lt;/code&gt;&lt;/td&gt;
+                
+                &lt;td&gt;5.15&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;code&gt;console=tty0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;console=ttyS0,115200n8&lt;/code&gt;&lt;/br&gt;&lt;code&gt;net.ifnames=0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;netdog.default-interface=eth0:dhcp4,dhcp6?&lt;/code&gt;&lt;/br&gt;&lt;code&gt;quiet&lt;/code&gt;&lt;/br&gt;&lt;/td&gt;
+                
+            &lt;/tr&gt;
+            
+            &lt;tr&gt;
+                &lt;td&gt;&lt;code&gt;aws-k8s-1.24-nvidia-*-1.14.*&lt;/code&gt;&lt;/td&gt;
+                
+                &lt;td&gt;5.15&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;code&gt;console=tty0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;console=ttyS0,115200n8&lt;/code&gt;&lt;/br&gt;&lt;code&gt;net.ifnames=0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;netdog.default-interface=eth0:dhcp4,dhcp6?&lt;/code&gt;&lt;/br&gt;&lt;code&gt;quiet&lt;/code&gt;&lt;/br&gt;&lt;/td&gt;
+                
+            &lt;/tr&gt;
+            
+            &lt;tr&gt;
+                &lt;td&gt;&lt;code&gt;aws-k8s-1.25-*-1.14.*&lt;/code&gt;&lt;/td&gt;
+                
+                &lt;td&gt;5.15&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;code&gt;console=tty0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;console=ttyS0,115200n8&lt;/code&gt;&lt;/br&gt;&lt;code&gt;net.ifnames=0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;netdog.default-interface=eth0:dhcp4,dhcp6?&lt;/code&gt;&lt;/br&gt;&lt;code&gt;quiet&lt;/code&gt;&lt;/br&gt;&lt;/td&gt;
+                
+            &lt;/tr&gt;
+            
+            &lt;tr&gt;
+                &lt;td&gt;&lt;code&gt;aws-k8s-1.25-nvidia-*-1.14.*&lt;/code&gt;&lt;/td&gt;
+                
+                &lt;td&gt;5.15&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;code&gt;console=tty0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;console=ttyS0,115200n8&lt;/code&gt;&lt;/br&gt;&lt;code&gt;net.ifnames=0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;netdog.default-interface=eth0:dhcp4,dhcp6?&lt;/code&gt;&lt;/br&gt;&lt;code&gt;quiet&lt;/code&gt;&lt;/br&gt;&lt;/td&gt;
+                
+            &lt;/tr&gt;
+            
+            &lt;tr&gt;
+                &lt;td&gt;&lt;code&gt;aws-k8s-1.26-*-1.14.*&lt;/code&gt;&lt;/td&gt;
+                
+                &lt;td&gt;5.15&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;code&gt;console=tty0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;console=ttyS0,115200n8&lt;/code&gt;&lt;/br&gt;&lt;code&gt;net.ifnames=0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;netdog.default-interface=eth0:dhcp4,dhcp6?&lt;/code&gt;&lt;/br&gt;&lt;code&gt;quiet&lt;/code&gt;&lt;/br&gt;&lt;/td&gt;
+                
+            &lt;/tr&gt;
+            
+            &lt;tr&gt;
+                &lt;td&gt;&lt;code&gt;aws-k8s-1.26-nvidia-*-1.14.*&lt;/code&gt;&lt;/td&gt;
+                
+                &lt;td&gt;5.15&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;code&gt;console=tty0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;console=ttyS0,115200n8&lt;/code&gt;&lt;/br&gt;&lt;code&gt;net.ifnames=0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;netdog.default-interface=eth0:dhcp4,dhcp6?&lt;/code&gt;&lt;/br&gt;&lt;code&gt;quiet&lt;/code&gt;&lt;/br&gt;&lt;/td&gt;
+                
+            &lt;/tr&gt;
+            
+            &lt;tr&gt;
+                &lt;td&gt;&lt;code&gt;aws-k8s-1.27-*-1.14.*&lt;/code&gt;&lt;/td&gt;
+                
+                &lt;td&gt;5.15&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;code&gt;console=tty0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;console=ttyS0,115200n8&lt;/code&gt;&lt;/br&gt;&lt;code&gt;net.ifnames=0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;netdog.default-interface=eth0:dhcp4,dhcp6?&lt;/code&gt;&lt;/br&gt;&lt;code&gt;quiet&lt;/code&gt;&lt;/br&gt;&lt;/td&gt;
+                
+            &lt;/tr&gt;
+            
+            &lt;tr&gt;
+                &lt;td&gt;&lt;code&gt;aws-k8s-1.27-nvidia-*-1.14.*&lt;/code&gt;&lt;/td&gt;
+                
+                &lt;td&gt;5.15&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;code&gt;console=tty0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;console=ttyS0,115200n8&lt;/code&gt;&lt;/br&gt;&lt;code&gt;net.ifnames=0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;netdog.default-interface=eth0:dhcp4,dhcp6?&lt;/code&gt;&lt;/br&gt;&lt;code&gt;quiet&lt;/code&gt;&lt;/br&gt;&lt;/td&gt;
+                
+            &lt;/tr&gt;
+            
+            &lt;tr&gt;
+                &lt;td&gt;&lt;code&gt;metal-dev-*-1.14.*&lt;/code&gt;&lt;/td&gt;
+                
+                &lt;td&gt;5.15&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;code&gt;crashkernel=2G-:256M&lt;/code&gt;&lt;/br&gt;&lt;/td&gt;
+                
+            &lt;/tr&gt;
+            
+            &lt;tr&gt;
+                &lt;td&gt;&lt;code&gt;metal-k8s-1.23-*-1.14.*&lt;/code&gt;&lt;/td&gt;
+                
+                &lt;td&gt;5.10&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;code&gt;crashkernel=2G-:256M&lt;/code&gt;&lt;/br&gt;&lt;/td&gt;
+                
+            &lt;/tr&gt;
+            
+            &lt;tr&gt;
+                &lt;td&gt;&lt;code&gt;metal-k8s-1.24-*-1.14.*&lt;/code&gt;&lt;/td&gt;
+                
+                &lt;td&gt;5.15&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;code&gt;crashkernel=2G-:256M&lt;/code&gt;&lt;/br&gt;&lt;/td&gt;
+                
+            &lt;/tr&gt;
+            
+            &lt;tr&gt;
+                &lt;td&gt;&lt;code&gt;metal-k8s-1.25-*-1.14.*&lt;/code&gt;&lt;/td&gt;
+                
+                &lt;td&gt;5.15&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;code&gt;crashkernel=2G-:256M&lt;/code&gt;&lt;/br&gt;&lt;/td&gt;
+                
+            &lt;/tr&gt;
+            
+            &lt;tr&gt;
+                &lt;td&gt;&lt;code&gt;metal-k8s-1.26-*-1.14.*&lt;/code&gt;&lt;/td&gt;
+                
+                &lt;td&gt;5.15&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;code&gt;crashkernel=2G-:256M&lt;/code&gt;&lt;/br&gt;&lt;/td&gt;
+                
+            &lt;/tr&gt;
+            
+            &lt;tr&gt;
+                &lt;td&gt;&lt;code&gt;metal-k8s-1.27-*-1.14.*&lt;/code&gt;&lt;/td&gt;
+                
+                &lt;td&gt;5.15&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;code&gt;crashkernel=2G-:256M&lt;/code&gt;&lt;/br&gt;&lt;/td&gt;
+                
+            &lt;/tr&gt;
+            
+            &lt;tr&gt;
+                &lt;td&gt;&lt;code&gt;vmware-dev-*-1.14.*&lt;/code&gt;&lt;/td&gt;
+                
+                &lt;td&gt;5.15&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;code&gt;console=tty1&lt;/code&gt;&lt;/br&gt;&lt;code&gt;crashkernel=2G-:256M&lt;/code&gt;&lt;/br&gt;&lt;code&gt;net.ifnames=0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;netdog.default-interface=eth0:dhcp4,dhcp6?&lt;/code&gt;&lt;/br&gt;&lt;code&gt;quiet&lt;/code&gt;&lt;/br&gt;&lt;/td&gt;
+                
+            &lt;/tr&gt;
+            
+            &lt;tr&gt;
+                &lt;td&gt;&lt;code&gt;vmware-k8s-1.23-*-1.14.*&lt;/code&gt;&lt;/td&gt;
+                
+                &lt;td&gt;5.10&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;code&gt;console=tty1&lt;/code&gt;&lt;/br&gt;&lt;code&gt;crashkernel=2G-:256M&lt;/code&gt;&lt;/br&gt;&lt;code&gt;net.ifnames=0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;netdog.default-interface=eth0:dhcp4,dhcp6?&lt;/code&gt;&lt;/br&gt;&lt;code&gt;quiet&lt;/code&gt;&lt;/br&gt;&lt;/td&gt;
+                
+            &lt;/tr&gt;
+            
+            &lt;tr&gt;
+                &lt;td&gt;&lt;code&gt;vmware-k8s-1.24-*-1.14.*&lt;/code&gt;&lt;/td&gt;
+                
+                &lt;td&gt;5.15&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;code&gt;console=tty1&lt;/code&gt;&lt;/br&gt;&lt;code&gt;crashkernel=2G-:256M&lt;/code&gt;&lt;/br&gt;&lt;code&gt;net.ifnames=0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;netdog.default-interface=eth0:dhcp4,dhcp6?&lt;/code&gt;&lt;/br&gt;&lt;code&gt;quiet&lt;/code&gt;&lt;/br&gt;&lt;/td&gt;
+                
+            &lt;/tr&gt;
+            
+            &lt;tr&gt;
+                &lt;td&gt;&lt;code&gt;vmware-k8s-1.25-*-1.14.*&lt;/code&gt;&lt;/td&gt;
+                
+                &lt;td&gt;5.15&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;code&gt;console=tty1&lt;/code&gt;&lt;/br&gt;&lt;code&gt;crashkernel=2G-:256M&lt;/code&gt;&lt;/br&gt;&lt;code&gt;net.ifnames=0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;netdog.default-interface=eth0:dhcp4,dhcp6?&lt;/code&gt;&lt;/br&gt;&lt;code&gt;quiet&lt;/code&gt;&lt;/br&gt;&lt;/td&gt;
+                
+            &lt;/tr&gt;
+            
+            &lt;tr&gt;
+                &lt;td&gt;&lt;code&gt;vmware-k8s-1.26-*-1.14.*&lt;/code&gt;&lt;/td&gt;
+                
+                &lt;td&gt;5.15&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;code&gt;console=tty1&lt;/code&gt;&lt;/br&gt;&lt;code&gt;crashkernel=2G-:256M&lt;/code&gt;&lt;/br&gt;&lt;code&gt;net.ifnames=0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;netdog.default-interface=eth0:dhcp4,dhcp6?&lt;/code&gt;&lt;/br&gt;&lt;code&gt;quiet&lt;/code&gt;&lt;/br&gt;&lt;/td&gt;
+                
+            &lt;/tr&gt;
+            
+            &lt;tr&gt;
+                &lt;td&gt;&lt;code&gt;vmware-k8s-1.27-*-1.14.*&lt;/code&gt;&lt;/td&gt;
+                
+                &lt;td&gt;5.15&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;code&gt;console=tty1&lt;/code&gt;&lt;/br&gt;&lt;code&gt;crashkernel=2G-:256M&lt;/code&gt;&lt;/br&gt;&lt;code&gt;net.ifnames=0&lt;/code&gt;&lt;/br&gt;&lt;code&gt;netdog.default-interface=eth0:dhcp4,dhcp6?&lt;/code&gt;&lt;/br&gt;&lt;code&gt;quiet&lt;/code&gt;&lt;/br&gt;&lt;/td&gt;
+                
+            &lt;/tr&gt;
+            
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

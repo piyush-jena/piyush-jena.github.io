@@ -1,0 +1,10 @@
+{{- $project := .Get "project" -}}
+{{- $versionParam := .Get "v" -}}
+{{- $projectVersion := index $.Site.Data.versions.current $project -}}
+{{- $version := cond (eq (len $versionParam) 0 ) (print $projectVersion.major "." $projectVersion.minor ".x" ) $versionParam -}}
+{{- $refpage := .Get "page" }}
+{{- $concatenated_page := print "/" $project "/" $version $refpage }}
+{{- $lang := print $.Page.Language }}
+{{- $ref_link :=  relref . (dict "path" $concatenated_page "lang" $lang) }}
+{{- $hash := .Get "hash" -}}
+<a href="{{ $ref_link }}{{ $hash }}">{{.Inner}}</a>

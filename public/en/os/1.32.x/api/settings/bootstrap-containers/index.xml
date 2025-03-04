@@ -1,0 +1,18 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bottlerocket – bootstrap-containers</title>
+    <link>//localhost:1313/en/os/1.32.x/api/settings/bootstrap-containers/</link>
+    <description>Recent content in bootstrap-containers on Bottlerocket</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    
+	  <atom:link href="//localhost:1313/en/os/1.32.x/api/settings/bootstrap-containers/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+  </channel>
+</rss>

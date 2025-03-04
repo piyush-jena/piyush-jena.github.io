@@ -1,0 +1,55 @@
+{{- $current_version := index (split .Page.File.Dir "/") 1  -}}
+{{- $all_versions := slice  -}}
+{{- $current_version_index := -1  -}}
+{{- $new_badge := .Get "new_badge" }}
+
+{{- range (where .Site.Sections "Name" "OS")  -}}
+  {{- range $k, $v := .Sections  -}}
+    {{- if (eq $v.File.ContentBaseName $current_version)  -}}
+        {{- $current_version_index = $k  -}}
+    {{- end  -}}
+    {{- $all_versions = $all_versions | append $v.File.ContentBaseName  -}}
+  {{- end  -}}
+{{- end  -}}
+
+{{- $old_version := index $all_versions (math.Sub $current_version_index 1) -}}
+
+<br />
+
+{{- $settings_file_new := index $.Site.Data.settings $current_version -}}
+{{- $settings_file_old := index $.Site.Data.settings $old_version -}}
+
+{{- range $settings_category, $settings_ref := $settings_file_new -}}
+    {{- range $setting_name, $setting_details := $settings_ref.docs.ref -}} 
+    {{- $setting_info := dict -}}
+        {{- if reflect.IsSlice $setting_details -}}
+            {{- range $setting_details -}}
+                {{- $setting_info = merge $setting_info (
+                    dict    "setting_name" $setting_name
+                            "settings_category" $settings_category
+                            "name_override" .name_override
+                )  -}}
+            
+                {{- $old_category := index $settings_file_old $settings_category  -}} 
+                {{- if (eq $new_badge true) -}}
+                    {{- if isset $old_category "docs" -}}
+                        {{- $old_setting := index $old_category.docs.ref $setting_name  -}}
+                        {{- if not (isset (index (index $old_category "docs") "ref") $setting_name)  -}}
+                            {{- $setting_info = merge $setting_info (dict "new" (string $current_version))  -}}
+                        {{- end  -}}
+                    {{- else  -}}
+                        {{- $setting_info = merge $setting_info (dict "new" (string $current_version))  -}}
+                    {{- end  -}}
+                {{- end -}}
+            {{- end -}}
+        {{- else -}}
+            {{- $setting_info = merge $setting_info (
+                dict    "setting_name" $setting_name
+                        "settings_category" $settings_category
+                        "name_override" .name_override
+            )  -}}
+        {{- end -}}
+
+        {{ partial "setting-list-item.html" $setting_info }}<br />
+    {{- end -}}
+{{- end -}}

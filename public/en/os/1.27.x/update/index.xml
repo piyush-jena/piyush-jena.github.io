@@ -1,0 +1,181 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bottlerocket – Updating</title>
+    <link>//localhost:1313/en/os/1.27.x/update/</link>
+    <description>Recent content in Updating on Bottlerocket</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    
+	  <atom:link href="//localhost:1313/en/os/1.27.x/update/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Os: Guidelines for Updating In-Place</title>
+      <link>//localhost:1313/en/os/1.27.x/update/guidelines/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/os/1.27.x/update/guidelines/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;There are some guidelines and considerations to keep in mind when updating your Bottlerocket nodes &lt;em&gt;in-place&lt;/em&gt;.
+Some movements between versions are updates, some are not updates, and there are some caveats you may need to consider based on the history of the project.&lt;/p&gt;
+&lt;h2 id=&#34;update-paths&#34;&gt;Update Paths&lt;/h2&gt;
+&lt;p&gt;Certain movements between releases of Bottlerocket are accessible through an &lt;em&gt;in-place&lt;/em&gt; update path.&lt;/p&gt;
+&lt;h3 id=&#34;between-minor-or-patch-versions-of-the-same-variant&#34;&gt;Between Minor or Patch Versions of the Same Variant&lt;/h3&gt;
+&lt;p&gt;With the exception of moving between major versions and a &lt;a href=&#34;//localhost:1313/en/os/1.27.x/update/guidelines/#too-many-releases-between-versions&#34;&gt;caveat discussed below&lt;/a&gt;, it is possible to update &lt;em&gt;in-place&lt;/em&gt; from one released version of a variant to another released version of the same variant.
+In particular, the following update paths work:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Minor version to minor version (e.g. &lt;code&gt;1.10.0&lt;/code&gt; to &lt;code&gt;1.11.0&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Patch version to patch version (e.g. &lt;code&gt;1.9.1&lt;/code&gt; to &lt;code&gt;1.9.2&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Minor version to patch version (e.g. &lt;code&gt;1.10.0&lt;/code&gt; to &lt;code&gt;1.10.1&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Patch version to minor version (e.g. &lt;code&gt;1.10.1&lt;/code&gt; to &lt;code&gt;1.11.0&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Furthermore, skipping minor or patch versions of the same variant is allowed.
+Bottlerocket runs all update &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket/tree/develop/sources/api/migration#data-store-migration&#34;&gt;settings migrations&lt;/a&gt; between the initial and target versions in sequence if a version is skipped.
+So, for the &lt;code&gt;1.10.1&lt;/code&gt; to &lt;code&gt;1.12.0&lt;/code&gt; example, the &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket/tree/develop/sources/api/migration#data-store-migration&#34;&gt;settings migrations&lt;/a&gt; from &lt;code&gt;1.11.0&lt;/code&gt; and &lt;code&gt;1.11.1&lt;/code&gt; are run as part of the update to &lt;code&gt;1.12.0&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;caveats-and-limits&#34;&gt;Caveats and Limits&lt;/h2&gt;
+&lt;p&gt;You may need to consider the following caveats when updating your Bottlerocket nodes.&lt;/p&gt;
+&lt;h3 id=&#34;too-many-releases-between-versions&#34;&gt;Too Many Releases Between Versions&lt;/h3&gt;
+&lt;p&gt;There is a &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket/issues/2589&#34;&gt;known issue&lt;/a&gt; where Bottlerocket boots into a &amp;ldquo;no space left on device&amp;rdquo; error when updating between versions that are &amp;ldquo;too far apart&amp;rdquo; (too many intermediate releases &amp;ndash; minor or patch &amp;ndash; between the initial and target).
+For example, updating between versions &lt;code&gt;1.7.2&lt;/code&gt; and &lt;code&gt;1.11.0&lt;/code&gt; fails in this way.&lt;/p&gt;
+&lt;p&gt;The workaround is to update Bottlerocket only a couple releases at a time from your starting point, using version locking, until you reach the desired state.&lt;/p&gt;
+&lt;p&gt;This caveat is discussed in detail in &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket/issues/2589&#34;&gt;issue 2589&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Specifically, there is &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket/issues/2589#issuecomment-1344941291&#34;&gt;an important note regarding updating to the latest versions of Bottlerocket&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;updates-vs-other-movements&#34;&gt;Updates vs. Other Movements&lt;/h3&gt;
+&lt;p&gt;There are some movements between releases of Bottlerocket that are not accessible through an update path.
+Such movements are described below.&lt;/p&gt;
+&lt;h4 id=&#34;between-major-versions&#34;&gt;Between Major Versions&lt;/h4&gt;
+&lt;p&gt;It is not possible to update &lt;em&gt;in-place&lt;/em&gt; from one major version to another.
+Major versions are considered breaking changes.&lt;/p&gt;
+&lt;p&gt;In order to move between major versions, node replacement with the desired release is necessary.&lt;/p&gt;
+&lt;h4 id=&#34;across-different-variants&#34;&gt;Across Different Variants&lt;/h4&gt;
+&lt;p&gt;It is not possible to update &lt;em&gt;in-place&lt;/em&gt; from one variant to another.
+For example, moving from an &lt;code&gt;aws-k8s-1.22&lt;/code&gt; variant to an &lt;code&gt;aws-k8s-1.23&lt;/code&gt; variant is not an update path.&lt;/p&gt;
+&lt;p&gt;In order to move between Kubernetes versions (or any variant), you must replace the nodes in your cluster with new nodes running the desired variant.&lt;/p&gt;
+&lt;div id=&#34;problemReport&#34;&gt;
+    &lt;hr /&gt;
+    &lt;small&gt;
+        See a problem with this page? &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-project-website/issues/new/choose&#34; target=&#34;#&#34;&gt;File an issue&lt;/a&gt;. All feedback is appreciated.&lt;br /&gt;
+        You can also directly contribute a change to the &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-project-website/tree/main/content/en/os/1.27.x/update/guidelines/index.markdown&#34; target=&#34;#&#34;&gt;source file of this page on GitHub&lt;/a&gt;.
+    &lt;/small&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$(document).ready(function() {
+    $(&#39;#problemReport&#39;).detach().appendTo(&#39;.td-content&#39;);
+});
+&lt;/script&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Os: Locking to a Specific Release</title>
+      <link>//localhost:1313/en/os/1.27.x/update/locking-to-a-specific-release/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/os/1.27.x/update/locking-to-a-specific-release/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Locking your Bottlerocket nodes to a specific release is possible using the Bottlerocket Settings API.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;A quick explanation of the &lt;code&gt;apiclient&lt;/code&gt; command used below:&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Two settings are set: &lt;code&gt;updates.version-lock&lt;/code&gt; and &lt;code&gt;updates.ignore-waves&lt;/code&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;updates.version-lock&lt;/code&gt;: which version of Bottlerocket to lock to when &lt;code&gt;apiclient&lt;/code&gt; checks for updates.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;updates.ignore-waves&lt;/code&gt;: ignore the &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket/tree/develop/sources/updater/waves&#34;&gt;update waves behavior&lt;/a&gt; and update the Bottlerocket node immediately.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To create an SSM Command Document, follow the steps in the &lt;a href=&#34;https://docs.aws.amazon.com/systems-manager/latest/userguide/create-ssm-console.html&#34;&gt;AWS Systems Manager User Guide: &amp;ldquo;Create an SSM document (console)&amp;rdquo;&lt;/a&gt;.
+Remember to select &amp;ldquo;YAML&amp;rdquo; in the &amp;ldquo;Content&amp;rdquo; box, since the &lt;a href=&#34;//localhost:1313/en/os/1.27.x/update/locking-to-a-specific-release/#ssm-command-document-lock-to-a-specific-release&#34;&gt;SSM Command Document below&lt;/a&gt; is formatted in YAML.&lt;/p&gt;
+&lt;h2 id=&#34;ssm-command-document-lock-to-a-specific-release&#34;&gt;SSM Command Document: Lock to a Specific Release&lt;/h2&gt;
+&lt;p&gt;The following SSM Command Document is referred to in this documentation as &lt;code&gt;version-lock-bottlerocket-node&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;---
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;schemaVersion&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.2&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;description&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Lock a Bottlerocket host to a specific version via the Bottlerocket Settings API&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;parameters&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;TargetVersion&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;type&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;String&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;description&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;The target version of Bottlerocket to lock to (e.g. 1.12.0)&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;mainSteps&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  - &lt;span style=&#34;color:#f92672&#34;&gt;name&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;setTargetVersion&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;action&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;aws:runShellScript&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;inputs&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;timeoutSeconds&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;20&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;runCommand&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        - &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;apiclient set updates.version-lock=\&amp;#34;{{ TargetVersion }}\&amp;#34; updates.ignore-waves=true&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You should now have the above SSM Command Document available in the SSM &amp;ldquo;Owned by me&amp;rdquo; tab in the &amp;ldquo;Documents&amp;rdquo; section of the SSM Console.&lt;/p&gt;
+&lt;h2 id=&#34;applying-a-version-lock&#34;&gt;Applying a Version Lock&lt;/h2&gt;
+&lt;p&gt;In order to apply a version lock using SSM, follow these steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;First, tell your Bottlerocket nodes that you want them to lock to a specific version.
+&lt;ul&gt;
+&lt;li&gt;Apply the &lt;a href=&#34;//localhost:1313/en/os/1.27.x/update/locking-to-a-specific-release/#ssm-command-document-lock-to-a-specific-release&#34;&gt;&lt;code&gt;version-lock-bottlerocket-node&lt;/code&gt; SSM Command Document previously described&lt;/a&gt;.
+&lt;ul&gt;
+&lt;li&gt;In the &amp;ldquo;Command parameters&amp;rdquo; section of the Run Command page, remember to specify the full version of Bottlerocket that you want to lock to (e.g. &lt;code&gt;1.12.0&lt;/code&gt;, not &lt;code&gt;1.12&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;If you are using EKS, select all nodes in a given EKS cluster by specifying an instance tag in the &amp;ldquo;Target selection&amp;rdquo; section of the page.
+Specify &lt;code&gt;eks:cluster-name&lt;/code&gt; as the tag key, with the tag value set to your cluster name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Next, tell your Bottlerocket nodes to prepare to boot into that specific version.
+&lt;ul&gt;
+&lt;li&gt;Apply the &lt;a href=&#34;../methods/in-place/#ssm-command-document-check-for-and-apply-updates-to-a-bottlerocket-node&#34;&gt;&lt;code&gt;update-bottlerocket-node&lt;/code&gt; SSM Command Document&lt;/a&gt;, described in the &lt;a href=&#34;../methods/in-place/&#34;&gt;in-place update documentation&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Finally, reboot your Bottlerocket nodes into the version you locked to.
+&lt;ul&gt;
+&lt;li&gt;Apply the &lt;a href=&#34;../methods/in-place/#ssm-command-document-reboot-a-bottlerocket-node&#34;&gt;&lt;code&gt;reboot-bottlerocket-node&lt;/code&gt; SSM Command Document&lt;/a&gt;, described in the &lt;a href=&#34;../methods/in-place/&#34;&gt;in-place update documentation&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;removing-a-version-lock&#34;&gt;Removing a Version Lock&lt;/h2&gt;
+&lt;p&gt;In order to remove a version lock using SSM, &lt;a href=&#34;https://docs.aws.amazon.com/systems-manager/latest/userguide/create-ssm-console.html&#34;&gt;create&lt;/a&gt; and &lt;a href=&#34;https://docs.aws.amazon.com/systems-manager/latest/userguide/running-commands-console.html&#34;&gt;apply&lt;/a&gt; the following SSM Command Document to the Bottlerocket nodes you want to remove a Version Lock from (the SSM Command Document can be named &lt;code&gt;version-unlock-bottlerocket-node&lt;/code&gt; for example):&lt;/p&gt;
+&lt;h3 id=&#34;ssm-command-document-remove-a-version-lock&#34;&gt;SSM Command Document: Remove a Version Lock&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;---
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;schemaVersion&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.2&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;description&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Remove a Version Lock from a Bottlerocket host via the Bottlerocket Settings API&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;mainSteps&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  - &lt;span style=&#34;color:#f92672&#34;&gt;name&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;unsetTargetVersion&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;action&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;aws:runShellScript&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;inputs&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;timeoutSeconds&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;20&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;runCommand&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        - &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;apiclient set updates.version-lock=\&amp;#34;latest\&amp;#34; updates.ignore-waves=false&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div id=&#34;problemReport&#34;&gt;
+    &lt;hr /&gt;
+    &lt;small&gt;
+        See a problem with this page? &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-project-website/issues/new/choose&#34; target=&#34;#&#34;&gt;File an issue&lt;/a&gt;. All feedback is appreciated.&lt;br /&gt;
+        You can also directly contribute a change to the &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-project-website/tree/main/content/en/os/1.27.x/update/locking-to-a-specific-release/index.markdown&#34; target=&#34;#&#34;&gt;source file of this page on GitHub&lt;/a&gt;.
+    &lt;/small&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$(document).ready(function() {
+    $(&#39;#problemReport&#39;).detach().appendTo(&#39;.td-content&#39;);
+});
+&lt;/script&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Os: Update Methods</title>
+      <link>//localhost:1313/en/os/1.27.x/update/methods/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/os/1.27.x/update/methods/</guid>
+      <description>
+        
+        
+        
+      </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,699 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bottlerocket – 1.3.x (Current)</title>
+    <link>//localhost:1313/en/brupop/1.3.x/</link>
+    <description>Recent content in 1.3.x (Current) on Bottlerocket</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    
+	  <atom:link href="//localhost:1313/en/brupop/1.3.x/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Brupop: Concepts</title>
+      <link>//localhost:1313/en/brupop/1.3.x/concepts/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/brupop/1.3.x/concepts/</guid>
+      <description>
+        
+        
+        &lt;p&gt;You can update Bottlerocket in a couple of ways:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;node replacement&lt;/strong&gt; where new instances with a new version of the OS replace nodes with older versions of the OS,&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;in-place updates&lt;/strong&gt; where the node downloads and reboots into a new version of the OS while maintaining the same instance/machine.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;There is no single preferred nor advised method to update a node; both methods have pros and cons depending on your situation.&lt;/p&gt;
+&lt;p&gt;You can trigger an 
+
+&lt;a href=&#34;//localhost:1313/en/os/1.34.x/update/methods/in-place/#apiclient-commands&#34;&gt;in-place update manually with the API&lt;/a&gt;
+ or you can use the Bottlerocket Update Operator (Brupop).
+&lt;strong&gt;Brupop is a Kubernetes operator for managing in-place updates of Bottlerocket on Kubernetes.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;If you use Bottlerocket on ECS or intend to replace nodes in Kubernetes, Brupop is not for you.
+Even if you do plan to do in-place updates Brupop is not required as you can manage in-place updates in other ways.
+However, Brupop offers a declarative, automated way to manage in-place Bottlerocket updates.&lt;/p&gt;
+&lt;h2 id=&#34;controlled-updates&#34;&gt;Controlled updates&lt;/h2&gt;
+&lt;p&gt;Brupop uses the &lt;a href=&#34;https://kubernetes.io/docs/concepts/architecture/controller/&#34;&gt;Kubernetes controller pattern&lt;/a&gt; in an effort to safely update all the nodes whilst minimizing disruptions to workloads.
+To achieve this, Brupop does the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Controls the rate and flow of updates across the entire cluster,&lt;/li&gt;
+&lt;li&gt;First prevents new workloads from being scheduled to the node then drains existing workloads prior to updates,&lt;/li&gt;
+&lt;li&gt;Contains and prevents the propagation of update problems when the controller detects update failures.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; version=&#34;1.1&#34;
+    width=&#34;80%&#34;
+    viewBox=&#34;-0.5 -0.5 920 355&#34;&gt;
+    &lt;defs /&gt;
+    &lt;g class=&#34;brupop-diagram start-align-labels&#34;&gt;
+        &lt;rect x=&#34;360&#34; y=&#34;57&#34; width=&#34;210&#34; height=&#34;210&#34; class=&#34;node&#34; /&gt;
+        &lt;rect x=&#34;370&#34; y=&#34;67&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;agent&#34; /&gt;
+        &lt;rect x=&#34;410&#34; y=&#34;67&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;api-server&#34; /&gt;
+        &lt;rect x=&#34;450&#34; y=&#34;67&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;490&#34; y=&#34;67&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;530&#34; y=&#34;67&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34;   /&gt;
+        &lt;rect x=&#34;370&#34; y=&#34;167&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;unused-volume&#34; /&gt;
+        &lt;rect x=&#34;370&#34; y=&#34;217&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;unused-volume&#34;/&gt;
+        
+        &lt;rect x=&#34;120&#34; y=&#34;57&#34; width=&#34;210&#34; height=&#34;210&#34; class=&#34;node&#34; /&gt;
+        &lt;rect x=&#34;130&#34; y=&#34;67&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;agent&#34; /&gt;
+        &lt;rect x=&#34;170&#34; y=&#34;67&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;api-server&#34; /&gt;
+        &lt;rect x=&#34;210&#34; y=&#34;67&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;250&#34; y=&#34;67&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;290&#34; y=&#34;67&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;130&#34; y=&#34;167&#34; width=&#34;190&#34; height=&#34;40&#34;  class=&#34;unused-volume&#34;/&gt;
+        &lt;rect x=&#34;130&#34; y=&#34;217&#34; width=&#34;190&#34; height=&#34;40&#34;  class=&#34;unused-volume&#34;/&gt;
+
+        &lt;rect x=&#34;600&#34; y=&#34;57&#34; width=&#34;210&#34; height=&#34;210&#34; class=&#34;node&#34; /&gt;
+        &lt;rect x=&#34;610&#34; y=&#34;67&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;agent&#34; /&gt;
+        &lt;rect x=&#34;650&#34; y=&#34;67&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;api-server&#34; /&gt;
+        &lt;rect x=&#34;690&#34; y=&#34;67&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;730&#34; y=&#34;67&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34;  /&gt;
+        &lt;rect x=&#34;770&#34; y=&#34;67&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;controller&#34; /&gt;
+        &lt;rect x=&#34;610&#34; y=&#34;167&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;unused-volume&#34; /&gt;
+        &lt;rect x=&#34;610&#34; y=&#34;217&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;unused-volume&#34;/&gt;
+
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 120 329.5 L 100 329.5 L 100 112 L 123.63 112&#34; class=&#34;connector&#34;/&gt;
+            &lt;path d=&#34;M 128.88 112 L 121.88 115.5 L 123.63 112 L 121.88 108.5 Z&#34; class=&#34;arrow-head&#34;  /&gt;
+        &lt;/g&gt;
+        
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 210 329.5 L 583 329.5 L 583 112 L 603.63 112&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 608.88 112 L 601.88 115.5 L 603.63 112 L 601.88 108.5 Z&#34; class=&#34;arrow-head&#34;  /&gt;
+        &lt;/g&gt;
+       
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 165 305 L 165 285 L 346 285 L 346 112 L 363.63 112&#34; class=&#34;connector&#34;  /&gt;
+            &lt;path d=&#34;M 368.88 112 L 361.88 115.5 L 363.63 112 L 361.88 108.5 Z&#34; class=&#34;arrow-head&#34;  /&gt;
+        &lt;/g&gt;
+
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34; &gt;
+            &lt;text x=&#34;130&#34; y=&#34;320&#34; class=&#34;label outer-label&#34;&gt;Brupop Agent&lt;/text&gt;
+            &lt;text x=&#34;138&#34; y=&#34;340&#34; class=&#34;label outer-label&#34;&gt;(1x / node)&lt;/text&gt;
+        &lt;/g&gt;
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 67.5 97 L 67.5 47 L 185 47 L 185 60.63&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 185 65.88 L 181.5 58.88 L 185 60.63 L 188.5 58.88 Z&#34; class=&#34;arrow-head&#34;  /&gt;
+        &lt;/g&gt;
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 45 97 L 45 27 L 425 27 L 425 60.63&#34;  class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 425 65.88 L 421.5 58.88 L 425 60.63 L 428.5 58.88 Z&#34; class=&#34;arrow-head&#34;  /&gt;
+        &lt;/g&gt;
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 22.5 97 L 22.5 7 L 665 7 L 665 60.63&#34;  class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 665 65.88 L 661.5 58.88 L 665 60.63 L 668.5 58.88 Z&#34; class=&#34;arrow-head&#34;  /&gt;
+        &lt;/g&gt;
+        
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;text x=&#34;15&#34; y=&#34;115&#34; class=&#34;label outer-label&#34;&gt;API Server&lt;/text&gt;
+            &lt;text x=&#34;20&#34; y=&#34;145&#34; class=&#34;label outer-label&#34;&gt;(Default: &lt;/text&gt;
+            &lt;text x=&#34;12&#34; y=&#34;165&#34; class=&#34;label outer-label&#34;&gt;3x / cluster)&lt;/text&gt;
+        &lt;/g&gt;
+
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 875 88 L 875 37 L 785 37 L 785 60.63&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 785 65.88 L 781.5 58.88 L 785 60.63 L 788.5 58.88 Z&#34; class=&#34;arrow-head&#34; /&gt;
+        &lt;/g&gt;
+        
+        &lt;rect x=&#34;830&#34; y=&#34;88&#34; width=&#34;90&#34; height=&#34;52&#34; fill=&#34;none&#34; stroke=&#34;none&#34;  /&gt;
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;text x=&#34;845&#34; y=&#34;108&#34; class=&#34;label outer-label&#34;&gt;Controller&lt;/text&gt;
+            &lt;text x=&#34;840&#34; y=&#34;128&#34; class=&#34;label outer-label&#34;&gt;(1x / cluster)&lt;/text&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+&lt;p&gt;Brupop collects the state of each node with an agent.
+The Brupop Agent runs in a container on each node as a &lt;a href=&#34;https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/&#34;&gt;DaemonSet&lt;/a&gt;.
+This agent sends the state to an API Server.
+API Server instances run in the cluster itself and communicates with the Kubernetes API to record the state as a custom resource.&lt;/p&gt;
+&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; version=&#34;1.1&#34;
+    width=&#34;100%&#34; 
+    viewBox=&#34;-0.5 -0.5 799 241&#34;
+    &gt;
+    &lt;defs /&gt;
+    &lt;g class=&#34;brupop-diagram&#34;&gt;
+        &lt;rect x=&#34;28&#34; y=&#34;30&#34; width=&#34;210&#34; height=&#34;210&#34; class=&#34;node&#34; /&gt;
+        
+        &lt;rect x=&#34;78&#34; y=&#34;40&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;38&#34; y=&#34;40&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;agent&#34; /&gt;
+        &lt;rect x=&#34;118&#34; y=&#34;40&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34;  /&gt;
+        &lt;rect x=&#34;158&#34; y=&#34;40&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;198&#34; y=&#34;40&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;38&#34; y=&#34;140&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;active-volume&#34;  /&gt;
+
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;text x=&#34;133&#34; y=&#34;164&#34; class=&#34;label active-volume-label&#34;&gt;Bottlerocket Host&lt;/text&gt;
+        &lt;/g&gt;
+
+        &lt;rect x=&#34;38&#34; y=&#34;190&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;unused-volume&#34; /&gt;
+        &lt;rect x=&#34;368&#34; y=&#34;30&#34; width=&#34;210&#34; height=&#34;210&#34; class=&#34;node&#34; /&gt;
+        &lt;rect x=&#34;378&#34; y=&#34;40&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;418&#34; y=&#34;40&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;api-server&#34; /&gt;
+        &lt;rect x=&#34;458&#34; y=&#34;40&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;498&#34; y=&#34;40&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34;/&gt;
+        &lt;rect x=&#34;538&#34; y=&#34;40&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34;/&gt;
+
+        &lt;rect x=&#34;378&#34; y=&#34;140&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;unused-volume&#34; /&gt;
+        &lt;rect x=&#34;378&#34; y=&#34;190&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;unused-volume&#34; /&gt;
+
+        &lt;ellipse cx=&#34;278&#34; cy=&#34;135&#34; class=&#34;ellipses&#34;  /&gt;
+        &lt;ellipse cx=&#34;303&#34; cy=&#34;135&#34; class=&#34;ellipses&#34; /&gt;
+        &lt;ellipse cx=&#34;328&#34; cy=&#34;135&#34; class=&#34;ellipses&#34; /&gt;
+        &lt;rect x=&#34;638&#34; y=&#34;0&#34; width=&#34;160&#34; height=&#34;30&#34; fill=&#34;none&#34; stroke=&#34;none&#34; pointer-events=&#34;all&#34; /&gt;
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;text x=&#34;718&#34; y=&#34;19&#34; class=&#34;label outer-label&#34;&gt;Kubernetes Control Plane&lt;/text&gt;
+        &lt;/g&gt;
+
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 31.63 85 L 8 85 L 8 160 L 31.63 160&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 36.88 85 L 29.88 88.5 L 31.63 85 L 29.88 81.5 Z&#34; class=&#34;arrow-head&#34;  /&gt;
+            &lt;path d=&#34;M 36.88 160 L 29.88 163.5 L 31.63 160 L 29.88 156.5 Z&#34; class=&#34;arrow-head&#34; /&gt;
+        &lt;/g&gt;
+        
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 53 40 L 53 14 L 425.5 14 L 425.5 33.63&#34;  class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 425.5 38.88 L 422 31.88 L 425.5 33.63 L 429 31.88 Z&#34; class=&#34;arrow-head&#34; /&gt;
+        &lt;/g&gt;
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 440.5 40 L 440.5 15 L 631.63 15&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 636.88 15 L 629.88 18.5 L 631.63 15 L 629.88 11.5 Z&#34; class=&#34;arrow-head&#34; /&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+
+
+&lt;div class=&#34;alert alert-success&#34; role=&#34;alert&#34;&gt;
+&lt;h4 class=&#34;alert-heading&#34;&gt;Bottlerocket API Server vs Brupop API Server?&lt;/h4&gt;
+
+    
+Don’t confuse Bottlerocket’s 
+
+&lt;a href=&#34;//localhost:1313/en/os/1.34.x/concepts/api-driven/&#34;&gt;API Server&lt;/a&gt;
+ with Brupop’s API Server, these are two distinct things, just with the same name.
+In this part of the documentation, unless otherwise noted, assume that “API Server” refers to the Brupop API Server.
+
+
+&lt;/div&gt;
+
+&lt;p&gt;The Controller also runs in a container on the cluster where it regularly evaluates the information about the state of each node and the cluster as a whole; based on this information it supplies instructions to the individual agents about update actions.&lt;/p&gt;
+&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; version=&#34;1.1&#34;
+    width=&#34;100%&#34; viewBox=&#34;-0.5 -0.5 799 265&#34;&gt;
+    &lt;defs /&gt;
+    &lt;g class=&#34;brupop-diagram&#34;&gt;
+        &lt;rect x=&#34;27&#34; y=&#34;50&#34; width=&#34;210&#34; height=&#34;210&#34; class=&#34;node&#34; /&gt;
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 37 105 L 7 105 L 7 180 L 30.63 180&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 35.88 180 L 28.88 183.5 L 30.63 180 L 28.88 176.5 Z&#34; class=&#34;arrow-head&#34; /&gt;
+        &lt;/g&gt;
+        
+        &lt;rect x=&#34;37&#34; y=&#34;60&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;agent&#34; /&gt;
+        &lt;rect x=&#34;77&#34; y=&#34;60&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;117&#34; y=&#34;60&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34;/&gt;
+        &lt;rect x=&#34;157&#34; y=&#34;60&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;197&#34; y=&#34;60&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;37&#34; y=&#34;210&#34; width=&#34;190&#34; height=&#34;40&#34;  class=&#34;unused-volume&#34;  /&gt;
+
+        &lt;rect x=&#34;367&#34; y=&#34;50&#34; width=&#34;210&#34; height=&#34;210&#34; class=&#34;node&#34; /&gt;
+        &lt;rect x=&#34;377&#34; y=&#34;60&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;417&#34; y=&#34;60&#34; width=&#34;30&#34; height=&#34;90&#34;  class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;457&#34; y=&#34;60&#34; width=&#34;30&#34; height=&#34;90&#34;  class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;497&#34; y=&#34;60&#34; width=&#34;30&#34; height=&#34;90&#34;  class=&#34;unused-container&#34;/&gt;
+        &lt;rect x=&#34;537&#34; y=&#34;60&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;controller&#34; /&gt;
+
+        &lt;rect x=&#34;377&#34; y=&#34;160&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;unused-volume&#34; /&gt;
+        &lt;rect x=&#34;377&#34; y=&#34;210&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;unused-volume&#34; /&gt;
+        &lt;ellipse cx=&#34;327&#34; cy=&#34;155&#34; rx=&#34;5&#34; ry=&#34;5&#34; class=&#34;ellipses&#34; /&gt;
+        &lt;ellipse cx=&#34;302&#34; cy=&#34;155&#34; rx=&#34;5&#34; ry=&#34;5&#34; class=&#34;ellipses&#34; /&gt;
+        &lt;ellipse cx=&#34;277&#34; cy=&#34;155&#34; rx=&#34;5&#34; ry=&#34;5&#34; class=&#34;ellipses&#34; /&gt;
+
+        &lt;rect x=&#34;37&#34; y=&#34;160&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;active-volume&#34; /&gt;
+
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;text x=&#34;132&#34; y=&#34;184&#34; class=&#34;label active-volume-label&#34;&gt;Bottlerocket Host&lt;/text&gt;
+        &lt;/g&gt;
+
+        
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 544.5 60 L 544.5 20 L 52 20 L 52 53.63&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 52 58.88 L 48.5 51.88 L 52 53.63 L 55.5 51.88 Z&#34; class=&#34;arrow-head&#34; /&gt;
+            
+            &lt;path d=&#34;M 637 20 L 559.5 20 L 559.5 53.63&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 559.5 58.88 L 556 51.88 L 559.5 53.63 L 563 51.88 Z&#34; class=&#34;arrow-head&#34; /&gt;
+        &lt;/g&gt;        
+
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;text x=&#34;718&#34; y=&#34;25&#34; class=&#34;label outer-label&#34;&gt;Kubernetes Control Plane&lt;/text&gt;
+        &lt;/g&gt;
+
+    &lt;/g&gt;
+&lt;/svg&gt;
+&lt;h2 id=&#34;states&#34;&gt;States&lt;/h2&gt;
+&lt;p&gt;At any given point nodes are in one of five Brupop states: &lt;strong&gt;idle&lt;/strong&gt;, &lt;strong&gt;staged &amp;amp; performed update&lt;/strong&gt;, &lt;strong&gt;rebooted into update&lt;/strong&gt;, &lt;strong&gt;monitoring update&lt;/strong&gt; or &lt;strong&gt;error reset&lt;/strong&gt;.
+A node is never in more than one state.
+The state of each node is represented as a &lt;a href=&#34;https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/&#34;&gt;Kubernetes Custom Resource&lt;/a&gt; called a &lt;code&gt;BottlerocketShadow&lt;/code&gt; resource or &lt;code&gt;brs&lt;/code&gt;.&lt;/p&gt;
+
+&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; version=&#34;1.1&#34;
+    width=&#34;80%&#34; viewBox=&#34;-0.5 -0.5 776 240&#34;&gt;
+    &lt;defs /&gt;
+    &lt;g class=&#34;brupop-state-machine&#34;&gt;
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 147 207 L 220.63 207&#34; class=&#34;connector&#34;/&gt;
+            &lt;path d=&#34;M 225.88 207 L 218.88 210.5 L 220.63 207 L 218.88 203.5 Z&#34; class=&#34;arrow-head&#34; /&gt;
+
+            &lt;path d=&#34;M 20.63 207 L 7 207 L 7 7 L 767 7 L 767 207 L 747 207&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 25.88 207 L 18.88 210.5 L 20.63 207 L 18.88 203.5 Z&#34; class=&#34;arrow-head&#34; /&gt;
+
+            &lt;path d=&#34;M 347 207 L 420.63 207&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 425.88 207 L 418.88 210.5 L 420.63 207 L 418.88 203.5 Z&#34; class=&#34;arrow-head&#34; /&gt;
+
+            &lt;path d=&#34;M 287 177 L 287 87 L 420.63 87&#34; class=&#34;connector dotted&#34; /&gt;
+            &lt;path d=&#34;M 425.88 87 L 418.88 90.5 L 420.63 87 L 418.88 83.5 Z&#34; class=&#34;arrow-head&#34; /&gt;
+            &lt;path d=&#34;M 487 177 L 487 123.37&#34; class=&#34;connector dotted&#34; /&gt;
+            &lt;path d=&#34;M 487 118.12 L 490.5 125.12 L 487 123.37 L 483.5 125.12 Z&#34; class=&#34;arrow-head&#34; /&gt;
+
+            &lt;path d=&#34;M 547 207 L 620.63 207&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 625.88 207 L 618.88 210.5 L 620.63 207 L 618.88 203.5 Z&#34; class=&#34;arrow-head&#34; /&gt;
+
+            &lt;path d=&#34;M 687 177 L 687 87 L 553.37 87&#34; class=&#34;connector dotted&#34; /&gt;
+            &lt;path d=&#34;M 548.12 87 L 555.12 83.5 L 553.37 87 L 555.12 90.5 Z&#34; class=&#34;arrow-head&#34; /&gt;
+
+            &lt;path d=&#34;M 487 57 L 487 37 L 87 37 L 87 170.63&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 87 175.88 L 83.5 168.88 L 87 170.63 L 90.5 168.88 Z&#34; class=&#34;arrow-head&#34; /&gt;
+        &lt;/g&gt;
+        
+        
+        
+        &lt;rect x=&#34;27&#34; y=&#34;177&#34; width=&#34;120&#34; height=&#34;60&#34; class=&#34;state&#34; /&gt;
+        &lt;text x=&#34;87&#34; y=&#34;211&#34; class=&#34;label outer-label&#34;&gt;Idle&lt;/text&gt;
+
+        &lt;rect x=&#34;227&#34; y=&#34;177&#34; width=&#34;120&#34; height=&#34;60&#34; class=&#34;state&#34; /&gt;
+        &lt;text x=&#34;287&#34; y=&#34;201&#34; class=&#34;label outer-label&#34;&gt;Staged &amp; Performed&lt;/text&gt;
+        &lt;text x=&#34;287&#34; y=&#34;218&#34; class=&#34;label outer-label&#34;&gt;Update&lt;/text&gt;
+
+        &lt;rect x=&#34;427&#34; y=&#34;177&#34; width=&#34;120&#34; height=&#34;60&#34; class=&#34;state&#34; /&gt;
+        &lt;text x=&#34;487&#34; y=&#34;201&#34; class=&#34;label outer-label&#34;&gt;Rebooted&lt;/text&gt;
+        &lt;text x=&#34;487&#34; y=&#34;218&#34; class=&#34;label outer-label&#34;&gt;into Update&lt;/text&gt;
+
+        &lt;rect x=&#34;627&#34; y=&#34;177&#34; width=&#34;120&#34; height=&#34;60&#34; class=&#34;state&#34; /&gt;
+        &lt;text x=&#34;687&#34; y=&#34;201&#34; class=&#34;label outer-label&#34;&gt;Monitoring&lt;/text&gt;
+        &lt;text x=&#34;687&#34; y=&#34;218&#34; class=&#34;label outer-label&#34;&gt;Update&lt;/text&gt;
+
+        
+        &lt;rect x=&#34;427&#34; y=&#34;57&#34; width=&#34;120&#34; height=&#34;60&#34; class=&#34;state&#34; /&gt;
+        &lt;text x=&#34;487&#34; y=&#34;91&#34; class=&#34;label outer-label&#34;&gt;Error Reset&lt;/text&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+&lt;h3 id=&#34;idle&#34;&gt;Idle&lt;/h3&gt;
+&lt;p&gt;A node in the &lt;strong&gt;idle&lt;/strong&gt; state does not have a pending update in-process.
+Most of the time your nodes will remain in this state.&lt;/p&gt;
+&lt;h3 id=&#34;staged--performed-update&#34;&gt;Staged &amp;amp; Performed Update&lt;/h3&gt;
+&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; version=&#34;1.1&#34;
+    width=&#34;60%&#34; viewBox=&#34;-0.5 -0.5 490 271&#34; role=&#34;img&#34;&gt;
+
+    &lt;g class=&#34;brupop-diagram&#34;&gt;
+        &lt;defs&gt;
+            &lt;pattern patternUnits=&#34;userSpaceOnUse&#34; patternTransform=&#34;rotate(-45)&#34; id=&#34;stripes&#34; width=&#34;7&#34; height=&#34;7&#34; &gt;
+                &lt;rect x=&#34;0&#34; y=&#34;0&#34; width=&#34;7&#34; height=&#34;7&#34; /&gt;
+                &lt;line y1=&#34;7&#34;/&gt;
+                
+            &lt;/pattern&gt;
+        &lt;/defs&gt;
+        &lt;rect x=&#34;80&#34; y=&#34;50&#34; width=&#34;210&#34; height=&#34;210&#34; class=&#34;node&#34; /&gt;
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 97.5 60 L 97.5 20 L 353.63 20&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 358.88 20 L 351.88 23.5 L 353.63 20 L 351.88 16.5 Z&#34; class=&#34;arrow-head&#34; /&gt;
+
+            &lt;path d=&#34;M 112.5 60 L 112.5 40 L 350 40 L 350 230 L 286.37 230&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 281.12 230 L 288.12 226.5 L 286.37 230 L 288.12 233.5 Z&#34; class=&#34;arrow-head&#34; /&gt;
+
+            &lt;path d=&#34;M 15 26 L 15 230 L 83.63 230&#34;  class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 88.88 230 L 81.88 233.5 L 83.63 230 L 81.88 226.5 Z&#34; class=&#34;arrow-head&#34; /&gt;
+        &lt;/g&gt;
+        
+        
+        &lt;rect x=&#34;90&#34; y=&#34;60&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;agent&#34; /&gt;
+        &lt;rect x=&#34;130&#34; y=&#34;60&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;170&#34; y=&#34;60&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34;  /&gt;
+        &lt;rect x=&#34;210&#34; y=&#34;60&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34;  /&gt;
+        &lt;rect x=&#34;250&#34; y=&#34;60&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;90&#34; y=&#34;210&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;future-volume&#34;/&gt;
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;text x=&#34;185&#34; y=&#34;234&#34; class=&#34;label active-volume-label&#34;&gt;New Version&lt;/text&gt;
+        &lt;/g&gt;
+        &lt;rect x=&#34;90&#34; y=&#34;160&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;active-volume&#34; /&gt;
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;text x=&#34;185&#34; y=&#34;184&#34; class=&#34;label active-volume-label&#34;&gt;Running Version&lt;/text&gt;
+        &lt;/g&gt;
+
+        &lt;rect x=&#34;-30&#34; y=&#34;105&#34; width=&#34;90&#34; height=&#34;30&#34; class=&#34;label-backer&#34; transform=&#34;rotate(-90,15,120)&#34; /&gt;
+        &lt;g transform=&#34;translate(-0.5 -0.5) rotate(-90 15 120)&#34;&gt;
+            &lt;text x=&#34;16&#34; y=&#34;124&#34; class=&#34;label outer-label&#34;&gt;Download&lt;/text&gt;
+        &lt;/g&gt;
+
+
+        &lt;rect x=&#34;305&#34; y=&#34;135&#34; width=&#34;90&#34; height=&#34;40&#34; class=&#34;label-backer&#34; /&gt;
+
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+                &lt;text x=&#34;350&#34; y=&#34;152&#34; class=&#34;label outer-label&#34;&gt;Make&lt;/text&gt;
+                &lt;text x=&#34;350&#34; y=&#34;167&#34; class=&#34;label outer-label&#34;&gt;Boot Partition&lt;/text&gt;
+        &lt;/g&gt;
+        &lt;xrect x=&#34;360&#34; y=&#34;0&#34; width=&#34;130&#34; height=&#34;40&#34; fill=&#34;none&#34; stroke=&#34;none&#34; pointer-events=&#34;all&#34; /&gt;
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+                &lt;text   x=&#34;425&#34; y=&#34;24&#34; class=&#34;label outer-label&#34;&gt;Update state to&lt;/text&gt;
+                &lt;text   x=&#34;425&#34; y=&#34;44&#34; class=&#34;label outer-label&#34;&gt;Staged &amp;amp; Performed&lt;/text&gt;
+            &lt;/g&gt;
+        &lt;/g&gt;
+        &lt;rect x=&#34;360&#34; y=&#34;30&#34; width=&#34;130&#34; height=&#34;40&#34; fill=&#34;none&#34; stroke=&#34;none&#34; pointer-events=&#34;all&#34; /&gt;
+&lt;/svg&gt;
+&lt;p&gt;Bottlerocket uses multiple partitions to manage in-place updates.
+The OS runs from one partition and, when a new update is available, the update is downloaded and installed into the other.
+The Brupop controller periodically requests the agent to check for and download the most recent version of Bottlerocket.
+Once downloaded, Bottlerocket modifies the bootloader configuration to boot from the partition with the update and the agent changes the state to &lt;strong&gt;Staged &amp;amp; Performed Update&lt;/strong&gt; with the Brupop API server.&lt;/p&gt;
+&lt;h3 id=&#34;reboot-into-update&#34;&gt;Reboot into Update&lt;/h3&gt;
+&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; version=&#34;1.1&#34;
+    width=&#34;100%&#34; viewBox=&#34;-0.5 -0.5 741 299&#34;
+    style=&#34;background-color: rgb(255, 255, 255);&#34;&gt;
+    &lt;defs /&gt;
+    &lt;g class=&#34;brupop-diagram&#34;&gt;
+        &lt;defs&gt;
+            &lt;pattern patternUnits=&#34;userSpaceOnUse&#34; patternTransform=&#34;rotate(-45)&#34; id=&#34;stripes&#34; width=&#34;7&#34; height=&#34;7&#34; &gt;
+                &lt;rect x=&#34;0&#34; y=&#34;0&#34; width=&#34;7&#34; height=&#34;7&#34; /&gt;
+                &lt;line y1=&#34;7&#34;/&gt;
+            &lt;/pattern&gt;
+        &lt;/defs&gt;
+        &lt;rect x=&#34;0&#34; y=&#34;59&#34; width=&#34;210&#34; height=&#34;210&#34; class=&#34;node&#34; /&gt;
+        &lt;rect x=&#34;10&#34; y=&#34;69&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;agent&#34; /&gt;
+        &lt;rect x=&#34;50&#34; y=&#34;69&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;90&#34; y=&#34;69&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;130&#34; y=&#34;69&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;170&#34; y=&#34;69&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+
+        &lt;rect x=&#34;10&#34; y=&#34;219&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;future-volume&#34; /&gt;
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;text x=&#34;105&#34; y=&#34;243&#34; class=&#34;label active-volume-label&#34;&gt;New Version&lt;/text&gt;
+        &lt;/g&gt;
+
+        &lt;rect x=&#34;10&#34; y=&#34;169&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;active-volume&#34; /&gt;
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;text x=&#34;105&#34; y=&#34;193&#34; class=&#34;label active-volume-label&#34;&gt;Running Version&lt;/text&gt;
+        &lt;/g&gt;
+        
+        &lt;rect x=&#34;340&#34; y=&#34;59&#34; width=&#34;210&#34; height=&#34;210&#34; class=&#34;node&#34; /&gt;
+
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 365 69 L 365.04 39 L 603.63 39&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 608.88 39 L 601.88 42.5 L 603.63 39 L 601.88 35.5 Z&#34; class=&#34;arrow-head&#34; /&gt;
+        &lt;/g&gt;
+        
+        &lt;rect x=&#34;350&#34; y=&#34;69&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;agent&#34; /&gt;
+        &lt;rect x=&#34;390&#34; y=&#34;69&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;430&#34; y=&#34;69&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;470&#34; y=&#34;69&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;510&#34; y=&#34;69&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+
+        &lt;rect x=&#34;350&#34; y=&#34;219&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;unused-volume&#34; /&gt;
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;text x=&#34;445&#34; y=&#34;243&#34; class=&#34;label outer-label&#34;&gt;Prev Version&lt;/text&gt;
+        &lt;/g&gt;
+        
+
+        &lt;rect x=&#34;350&#34; y=&#34;169&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;active-volume&#34; /&gt;
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;text x=&#34;445&#34; y=&#34;193&#34; class=&#34;label active-volume-label&#34;&gt;New Running Version&lt;/text&gt;
+        &lt;/g&gt;
+
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 200 189 L 343.96 236.99&#34; class=&#34;connector&#34; /&gt;
+        &lt;path d=&#34;M 348.94 238.65 L 341.19 239.75 L 343.96 236.99 L 343.41 233.11 Z&#34; class=&#34;arrow-head&#34; /&gt;
+        &lt;path d=&#34;M 200 239 L 343.96 191.01&#34; class=&#34;connector&#34; /&gt;
+        &lt;path d=&#34;M 348.94 189.35 L 343.41 194.89 L 343.96 191.01 L 341.19 188.25 Z&#34; class=&#34;arrow-head&#34; /&gt;
+
+        &lt;/g&gt;
+        
+        &lt;rect x=&#34;240&#34; y=&#34;199&#34; width=&#34;60&#34; height=&#34;30&#34; class=&#34;label-backer&#34; /&gt;
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;text x=&#34;270&#34; y=&#34;218&#34; class=&#34;label outer-label&#34;&gt;Reboot&lt;/text&gt;
+        &lt;/g&gt;
+
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;text x=&#34;22&#34; y=&#34;288&#34; class=&#34;label outer-label&#34;&gt;Node 1&lt;/text&gt;
+        &lt;/g&gt;
+
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;text x=&#34;362&#34; y=&#34;288&#34; class=&#34;label outer-label&#34;&gt;Node 1&lt;/text&gt;
+        &lt;/g&gt;
+        
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;text x=&#34;675&#34; y=&#34;43&#34; class=&#34;label outer-label&#34;&gt;Update state to&lt;/text&gt;
+        &lt;/g&gt;
+        
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;text  x=&#34;675&#34; y=&#34;73&#34; class=&#34;label outer-label&#34;&gt;Rebooted Into Update&lt;/text&gt;
+        &lt;/g&gt;
+        
+
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path
+                d=&#34;M 114 -55 L 109 -55 Q 104 -55 104 -45 L 104 29 Q 104 39 99 39 L 96.5 39 Q 94 39 99 39 L 101.5 39 Q 104 39 104 49 L 104 123 Q 104 133 109 133 L 114 133&#34;
+                transform=&#34;translate(104,0)scale(-1,1)translate(-104,0)rotate(90,104,39)&#34;
+                class=&#34;connector&#34; /&gt;
+        &lt;/g&gt;
+
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;text x=&#34;108&#34; y=&#34;19&#34;  class=&#34;label outer-label&#34;&gt;Stop new and drain existing worloads&lt;/text&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+&lt;p&gt;To minimize disruptions to the workloads running in the cluster, the controller signals to Kubernetes to prevent new workloads from being scheduled on to the node as well as shut down existing workloads (drain).
+Once drained, the agent triggers a reboot into the new OS and changes the state to &lt;strong&gt;Rebooted Into Update&lt;/strong&gt; with the Brupop API server.&lt;/p&gt;
+&lt;h3 id=&#34;monitoring-update&#34;&gt;Monitoring Update&lt;/h3&gt;
+&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; version=&#34;1.1&#34;
+    width=&#34;100%&#34; viewBox=&#34;-0.5 -0.5 741 280&#34;&gt;
+    &lt;defs /&gt;
+    &lt;g class=&#34;brupop-diagram&#34;&gt;
+        &lt;rect x=&#34;0&#34; y=&#34;40&#34; width=&#34;210&#34; height=&#34;210&#34; class=&#34;node&#34; /&gt;
+        &lt;rect x=&#34;10&#34; y=&#34;50&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;agent&#34; /&gt;
+        &lt;rect x=&#34;50&#34; y=&#34;50&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;90&#34; y=&#34;50&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;130&#34; y=&#34;50&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;170&#34; y=&#34;50&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+
+        &lt;rect x=&#34;10&#34; y=&#34;200&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;unused-volume&#34; /&gt;
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;text  x=&#34;105&#34; y=&#34;224&#34; class=&#34;label outer-label&#34;&gt;Prev Version&lt;/text&gt;
+        &lt;/g&gt;
+
+        &lt;rect x=&#34;10&#34; y=&#34;150&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;active-volume&#34; /&gt;
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;text  x=&#34;105&#34; y=&#34;174&#34; class=&#34;label active-volume-label&#34;&gt;New Running Version&lt;/text&gt;
+        &lt;/g&gt;
+        
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;text x=&#34;22&#34; y=&#34;269&#34; class=&#34;label outer-label&#34;&gt;Node 1&lt;/text&gt;
+        &lt;/g&gt;
+
+                
+        &lt;g class=&#34;wait&#34;&gt;
+            &lt;ellipse cx=&#34;270&#34; cy=&#34;161&#34; rx=&#34;15&#34; ry=&#34;15&#34;  /&gt;
+            &lt;path d=&#34;M 270 147.5 L 270 161 L 262.5 161&#34;  /&gt;
+        &lt;/g&gt;
+
+
+
+        &lt;rect x=&#34;340&#34; y=&#34;40&#34; width=&#34;210&#34; height=&#34;210&#34; class=&#34;node&#34; /&gt;
+        &lt;rect x=&#34;350&#34; y=&#34;50&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;agent&#34; /&gt;
+        &lt;rect x=&#34;390&#34; y=&#34;50&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;430&#34; y=&#34;50&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;470&#34; y=&#34;50&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+        &lt;rect x=&#34;510&#34; y=&#34;50&#34; width=&#34;30&#34; height=&#34;90&#34; class=&#34;unused-container&#34; /&gt;
+
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 365 50 L 365 20 L 603.63 20&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 608.88 20 L 601.88 23.5 L 603.63 20 L 601.88 16.5 Z&#34; class=&#34;arrow-head&#34; /&gt;
+        &lt;/g&gt;
+        
+
+        
+        &lt;rect x=&#34;350&#34; y=&#34;200&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;unused-volume&#34;/&gt;
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;text  x=&#34;445&#34; y=&#34;224&#34; class=&#34;label outer-label&#34;&gt;Prev Version&lt;/text&gt;
+        &lt;/g&gt;
+
+        &lt;rect x=&#34;350&#34; y=&#34;150&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;active-volume&#34; /&gt;
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;text x=&#34;445&#34; y=&#34;174&#34; class=&#34;label active-volume-label&#34;&gt;New Running Version&lt;/text&gt;
+        &lt;/g&gt;
+       
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;text x=&#34;362&#34; y=&#34;269&#34; class=&#34;label outer-label&#34;&gt;Node 1&lt;/text&gt;
+        &lt;/g&gt;
+
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;text x=&#34;675&#34; y=&#34;23&#34; class=&#34;label outer-label&#34;&gt;Update state to&lt;/text&gt;
+        &lt;/g&gt;
+        
+        &lt;g transform=&#34;translate(-0.5 -0.5)&#34;&gt;
+            &lt;text  x=&#34;675&#34; y=&#34;53&#34; class=&#34;label outer-label&#34;&gt;Monitoring Update&lt;/text&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+&lt;p&gt;Once the node reboots the update is technically complete, however the time whilst all your workloads startup is critical.
+Bottlerocket’s versioning and variant scheme is built to mitigate incompatibilities between OS versions, there is always a chance that an unforeseen incompatibility exists with some component of your architecture.
+Brupop’s state machine has a reserved state for monitoring these incompatibilities (&lt;strong&gt;Monitoring Updates&lt;/strong&gt;), however as of this version, this state is a noop.
+You can suggest a direction for this state on the &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-update-operator/issues/new?assignees=&amp;labels=&amp;projects=&amp;template=issue.md&amp;title=Suggestion%20for%20monitoring%20state&#34;&gt;Brupop GitHub Repo&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Consequently, the Agent immediately transitions through &lt;strong&gt;Monitoring Updates&lt;/strong&gt; back to &lt;strong&gt;Idle&lt;/strong&gt; with the API server.&lt;/p&gt;
+&lt;h3 id=&#34;error-reset&#34;&gt;Error Reset&lt;/h3&gt;
+&lt;p&gt;In the situation that any of the above states fail, the state becomes &lt;strong&gt;Error Reset&lt;/strong&gt; before transitioning back to &lt;strong&gt;Idle&lt;/strong&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Brupop: Setup</title>
+      <link>//localhost:1313/en/brupop/1.3.x/setup/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/brupop/1.3.x/setup/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Setting up Brupop for the first time has three major steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Installing the prerequisite, &lt;code&gt;cert-manager&lt;/code&gt; on your cluster,&lt;/li&gt;
+&lt;li&gt;Installing Brupop itself,&lt;/li&gt;
+&lt;li&gt;Labeling the nodes you want to update with Brupop.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Many clusters require nothing more than the three above steps, but familiarize yourself with the additional configuration options before installing as you may need to tweak the configuration for your particular needs.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Brupop: Operate &amp; Observe</title>
+      <link>//localhost:1313/en/brupop/1.3.x/operate/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/brupop/1.3.x/operate/</guid>
+      <description>
+        
+        
+        &lt;p&gt;After installation on your cluster Brupop runs in the background and generally requires no intervention.
+Your nodes will check for updates and apply them according to your configuration and the Bottlerocket update waves.&lt;/p&gt;
+&lt;p&gt;However, you can observe the status of the updates by &lt;a href=&#34;//localhost:1313/en/brupop/1.3.x/operate/#adhoc-query&#34;&gt;adhoc query&lt;/a&gt; or setup &lt;a href=&#34;//localhost:1313/en/brupop/1.3.x/operate/#on-going-monitoring&#34;&gt;on-going monitoring&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;adhoc-query&#34;&gt;Adhoc Query&lt;/h2&gt;
+&lt;p&gt;If you want to see the update status of your nodes, use &lt;code&gt;kubectl&lt;/code&gt; to get the custom resource &lt;code&gt;brs&lt;/code&gt; :&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kubectl get brs --namespace brupop-bottlerocket-aws
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;kubectl&lt;/code&gt; returns the &lt;a href=&#34;../concepts/#states&#34;&gt;state&lt;/a&gt;, current version, target state, and target version.
+For example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;AME                                               STATE   VERSION     TARGET STATE   TARGET VERSION
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;brs-node-1                                         Idle    1.17.0     Idle           
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;brs-node-2                                         Idle    1.17.0     StagedUpdate   1.18.0
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;on-going-monitoring&#34;&gt;On-going monitoring&lt;/h2&gt;
+&lt;p&gt;To facilitate on-going monitoring the Brupop API server and controller provides you with metrics endpoints (&lt;code&gt;/metrics&lt;/code&gt;) compatible with &lt;a href=&#34;https://prometheus.io/&#34;&gt;Prometheus&lt;/a&gt;.
+The metrics endpoints expose two metrics: one that describes the current version of each node (&lt;code&gt;brupop_hosts_version&lt;/code&gt;) and another for the &lt;a href=&#34;../concepts/#states&#34;&gt;state&lt;/a&gt; of each node (&lt;code&gt;brupop_hosts_state&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;For a sample configuration of using Prometheus with Brupop see the 
+
+&lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-update-operator/blob/v1.3.0/deploy/examples/prometheus-resources.yaml&#34;&gt;configuration on the Brupop GitHub Repo&lt;/a&gt;
+.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Brupop: Troubleshoot</title>
+      <link>//localhost:1313/en/brupop/1.3.x/troubleshoot/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/brupop/1.3.x/troubleshoot/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;debugging-information&#34;&gt;Debugging information&lt;/h2&gt;
+&lt;p&gt;Brupop’s components emit useful logs for debugging and troubleshooting.&lt;/p&gt;
+&lt;h3 id=&#34;api-server-deployment-logs&#34;&gt;API Server deployment logs&lt;/h3&gt;
+&lt;p&gt;Searching through the API Server’s deployment logs for a particular Node ID will yield the mutations to the node.
+Assuming the default namespace you can retrieve these by running:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kubectl logs deployment/brupop-apiserver --namespace brupop-bottlerocket-aws 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;agent-logs&#34;&gt;Agent logs&lt;/h3&gt;
+&lt;p&gt;Logs from the agent show the specific update actions taken on a particular node.&lt;/p&gt;
+&lt;p&gt;First, find the node in the list of the Brupop agent pods (assuming the default namespace):&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kubectl get pods --selector&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;brupop.bottlerocket.aws/component&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;agent -o wide --namespace brupop-bottlerocket-aws
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;From this list get the logs for the agent you’re troubleshooting by replacing &lt;code&gt;&amp;lt;agent-podname&amp;gt;&lt;/code&gt; with the node name from the previous step.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kubectl logs &amp;lt;agent-podname&amp;gt; --namespace brupop-bottlerocket-aws 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;common-issues&#34;&gt;Common Issues&lt;/h2&gt;
+&lt;h3 id=&#34;stuck-updates&#34;&gt;Stuck Updates&lt;/h3&gt;
+&lt;p&gt;When one or more nodes do not progress through the states and return to idle it is a &amp;ldquo;stuck update.&amp;rdquo; By default, Brupop only updates one node so a single node can prevent nodes across the cluster from updating.&lt;/p&gt;
+&lt;p&gt;There are a few potential causes of stuck updates:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Pod Disruption Budget preventing a node drain.
+Brupop uses the Kubernetes Eviction API to drain pods from a node.
+It’s possible to have Pod Disruption Budgets configured (often mistakenly) to disallow a pod removal resulting in a un-drainable node that Brupop cannot update.&lt;br&gt;
+&lt;strong&gt;Troubleshooting step:&lt;/strong&gt; Check your pod disruption budget configuration.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Unable to access &lt;code&gt;updates.bottlerocket.aws&lt;/code&gt;.
+Bottlerocket needs to access metadata from a public endpoint to get information about the most recent release.
+Production environments may limit this type of outbound access.&lt;br&gt;
+&lt;strong&gt;Troubleshooting step:&lt;/strong&gt; Log into the control container of a node and run &lt;code&gt;apiclient update check&lt;/code&gt;.
+Failures with this check indicate an outbound block.&lt;br&gt;
+&lt;strong&gt;Potential solution:&lt;/strong&gt; Scrape the contents of &lt;code&gt;updates.bottlerocket.aws&lt;/code&gt; with &lt;a href=&#34;https://github.com/awslabs/tough/tree/develop/tuftool#download-tuf-repo&#34;&gt;&lt;code&gt;Tuftool&lt;/code&gt;&lt;/a&gt; and serve from within your cluster, then update your settings accordingly for &lt;a href=&#34;//localhost:1313/en/os/1.34.x/api/settings/updates#metadata-base-url&#34;&gt;&lt;code&gt;settings.updates.metadata-base-url&lt;/code&gt;&lt;/a&gt;  and &lt;a href=&#34;//localhost:1313/en/os/1.34.x/api/settings/updates#targets-base-url&#34;&gt;&lt;code&gt;settings.updates.targets-base-url&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Other issues while updating.&lt;br&gt;
+&lt;strong&gt;Troubleshooting step:&lt;/strong&gt; Check the agent logs for the stuck node.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;bottlerocket-instances-start-with-an-old-version-of-bottlerocket&#34;&gt;Bottlerocket instances start with an old version of Bottlerocket&lt;/h3&gt;
+&lt;p&gt;After using Brupop for a while you may notice that any brand new nodes added to the cluster start with an older version of Bottlerocket then Brupop flags them for an update almost immediately.
+Brupop can only update existing nodes and it doesn’t manage the node creation process.
+Depending on how you created your nodes determines how to address this issue:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Auto-scaling group&lt;/strong&gt;: update your AMI ID in the launch configuration or template.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Manual creation of nodes with AWS CLI&lt;/strong&gt;: Update the &lt;code&gt;image-id&lt;/code&gt; argument to the latest AMI ID&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;VMware&lt;/strong&gt;: Change the &lt;code&gt;target-name&lt;/code&gt; argument when downloading the OVA with tuftool&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;related&#34;&gt;Related&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;//localhost:1313/en/faq&#34;&gt;Bottlerocket FAQ&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;//localhost:1313/en/faq/#7_3&#34;&gt;Why do some of the nodes in my cluster have an update available and others do not?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;//localhost:1313/en/faq/#7_2&#34;&gt;Why are my nodes egressing to &lt;code&gt;updates.bottlerocket.aws&lt;/code&gt;?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;../setup/configure/#logging&#34;&gt;Log Configuration&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Brupop: Disable/Uninstall</title>
+      <link>//localhost:1313/en/brupop/1.3.x/uninstall/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/brupop/1.3.x/uninstall/</guid>
+      <description>
+        
+        
+        &lt;p&gt;You can disable Brupop from managing some or all nodes of your cluster as well as fully remove it from your cluster.&lt;/p&gt;
+&lt;h2 id=&#34;disabling-brupop-on-nodes&#34;&gt;Disabling Brupop on nodes&lt;/h2&gt;
+&lt;p&gt;Brupop will only manage updates for the nodes you’ve labeled &lt;code&gt;bottlerocket.aws/updater-interface-version=2.0.0&lt;/code&gt;.
+Consequently, if you remove the label, Brupop will no longer manage the node updates.
+See the &lt;a href=&#34;https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#label&#34;&gt;Kubectl &lt;code&gt;label&lt;/code&gt; docs&lt;/a&gt; for more information on removing a label.&lt;/p&gt;
+&lt;h2 id=&#34;uninstalling-brupop&#34;&gt;Uninstalling Brupop&lt;/h2&gt;
+&lt;p&gt;To fully remove Brupop from your cluster, execute the following &lt;a href=&#34;https://helm.sh/&#34;&gt;helm&lt;/a&gt; uninstall operations on your cluster:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;helm uninstall brupop
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;helm uninstall brupop-crd
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

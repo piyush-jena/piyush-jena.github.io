@@ -1,0 +1,658 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bottlerocket – AWS</title>
+    <link>//localhost:1313/en/os/1.22.x/install/quickstart/aws/</link>
+    <description>Recent content in AWS on Bottlerocket</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    
+	  <atom:link href="//localhost:1313/en/os/1.22.x/install/quickstart/aws/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Os: Amazon ECS</title>
+      <link>//localhost:1313/en/os/1.22.x/install/quickstart/aws/ecs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/os/1.22.x/install/quickstart/aws/ecs/</guid>
+      <description>
+        
+        
+        &lt;p&gt;
+
+
+
+
+&lt;script&gt;
+    $(document).ready(function() {
+        var $sidebar_link = $(&#39;.td-sidebar a[href=&#34;\/en\/os\/1.22.x\/install\/quickstart\/&#34;]&#39;);
+        var $depad =  true ;
+
+        if ($depad) {
+           $sidebar_link.parent().parent().addClass(&#39;depad&#39;);
+        }
+
+        $sidebar_link.parent().hide();
+    });
+    
+&lt;/script&gt;
+
+
+
+
+
+&lt;script&gt;
+    $(document).ready(function() {
+        var $sidebar_link = $(&#39;.td-sidebar a[href=&#34;\/en\/os\/1.22.x\/install\/quickstart\/aws\/&#34;]&#39;);
+        var $depad =  true ;
+
+        if ($depad) {
+           $sidebar_link.parent().parent().addClass(&#39;depad&#39;);
+        }
+
+        $sidebar_link.parent().hide();
+    });
+    
+&lt;/script&gt;
+
+
+
+
+&lt;script&gt;
+    $(document).ready(function() {
+        var $crumb_link = $(&#39;.td-breadcrumbs a[href$=&#34;\/en\/os\/1.22.x\/install\/quickstart\/&#34;]&#39;);
+        $crumb_link.parent().hide();
+    });
+&lt;/script&gt;
+
+
+
+
+&lt;script&gt;
+    $(document).ready(function() {
+        var $crumb_link = $(&#39;.td-breadcrumbs a[href$=&#34;\/en\/os\/1.22.x\/install\/quickstart\/aws\/&#34;]&#39;);
+        $crumb_link.parent().hide();
+    });
+&lt;/script&gt;&lt;/p&gt;
+&lt;p&gt;When registering EC2 instances as capacity for an ECS cluster, you can use Bottlerocket as the operating system for these instances.
+If you want to understand the AWS console workflow, start with the &lt;a href=&#34;//localhost:1313/en/os/1.22.x/install/quickstart/aws/ecs/#aws-console-quickstart&#34;&gt;video &lt;em&gt;Amazon ECS: Using Bottlerocket&lt;/em&gt;.&lt;/a&gt;
+Otherwise, read the &lt;a href=&#34;//localhost:1313/en/os/1.22.x/install/quickstart/aws/ecs/#aws-cli-quickstart&#34;&gt;AWS CLI Quickstart&lt;/a&gt; or the pattern &lt;a href=&#34;https://containersonaws.com/pattern/ecs-ec2-bottlerocket-cluster&#34;&gt;Amazon ECS cluster on Bottlerocket&lt;/a&gt; which outlines how to start Bottlerocket with &lt;a href=&#34;https://docs.aws.amazon.com/serverless-application-model/&#34;&gt;SAM CLI&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;aws-cli-quickstart&#34;&gt;AWS CLI Quickstart&lt;/h2&gt;
+&lt;p&gt;This quickstart uses a number of techniques/tools like &lt;code&gt;jq&lt;/code&gt; and environment variables to make the quickstart experience as simple and straightforward as possible.
+These tools are not absolutely necessary to use Bottlerocket on ECS.&lt;/p&gt;
+&lt;h3 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h3&gt;
+&lt;p&gt;There are some preliminary tasks to complete in order to use ECS.
+You need to both set up your AWS account for use with ECS and have an IAM role for ECS configured:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Complete the steps in &lt;a href=&#34;https://docs.aws.amazon.com/AmazonECS/latest/developerguide/get-set-up-for-amazon-ecs.html&#34;&gt;Setting up with Amazon ECS&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Ensure that the AWS user you use for this quickstart has the has the &lt;a href=&#34;https://docs.aws.amazon.com/AmazonECS/latest/developerguide/security-iam-awsmanpol.html#security-iam-awsmanpol-AmazonECS_FullAccess&#34;&gt;AmazonECS_FullAccess&lt;/a&gt; policy attached (scope down as needed for your production requirements).&lt;/li&gt;
+&lt;li&gt;Ensure that you have an &lt;a href=&#34;https://docs.aws.amazon.com/AmazonECS/latest/developerguide/instance_IAM_role.html#instance-iam-role-create&#34;&gt;IAM role created&lt;/a&gt; named &lt;code&gt;ecsInstanceRole&lt;/code&gt; and configured according to the AWS ECS Developer Guide.
+&lt;ul&gt;
+&lt;li&gt;Be sure to follow &lt;em&gt;both&lt;/em&gt; the &lt;a href=&#34;https://docs.aws.amazon.com/AmazonECS/latest/developerguide/instance_IAM_role.html#instance-iam-role-create&#34;&gt;AWS Console steps&lt;/a&gt; as well as the AWS CLI steps (section labeled &amp;ldquo;To create the ecsInstanceRole role (AWS CLI)&amp;rdquo; - the AWS CLI steps cover an important aspect: adding an Instance Profile to the role)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In this quickstart, the following software is used to interact with AWS and parse the responses received:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html#getting-started-install-instructions&#34;&gt;&lt;code&gt;aws-cli&lt;/code&gt;&lt;/a&gt;: Used to interact with AWS services.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://stedolan.github.io/jq/download/&#34;&gt;&lt;code&gt;jq&lt;/code&gt;&lt;/a&gt;: Used for parsing response data from &lt;code&gt;aws-cli&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;create-a-cluster&#34;&gt;Create a Cluster&lt;/h3&gt;
+&lt;p&gt;First, set some environment variables to use throughout this quickstart:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;export AWS_REGION&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;us-west-2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;export ECS_CLUSTER_NAME&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;bottlerocket-quickstart-ecs
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;export ECS_INSTANCE_ROLE_NAME&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;ecsInstanceRole
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Then, create an ECS cluster with the AWS CLI as follows:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;aws ecs --region $AWS_REGION create-cluster --cluster-name $ECS_CLUSTER_NAME
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You should see output confirming your new cluster similar to the following:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;cluster&amp;#34;&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;clusterArn&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;arn:aws:ecs:us-west-2:xxxxxxxxxxxx:cluster/bottlerocket-quickstart-ecs&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;clusterName&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;bottlerocket-quickstart-ecs&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;status&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;ACTIVE&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;registeredContainerInstancesCount&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;runningTasksCount&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;pendingTasksCount&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;activeServicesCount&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;statistics&amp;#34;&lt;/span&gt;: [],
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;tags&amp;#34;&lt;/span&gt;: [],
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;settings&amp;#34;&lt;/span&gt;: [
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;containerInsights&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;value&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;disabled&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        ],
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;capacityProviders&amp;#34;&lt;/span&gt;: [],
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;defaultCapacityProviderStrategy&amp;#34;&lt;/span&gt;: []
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;launching-instances-into-your-cluster&#34;&gt;Launching Instances Into Your Cluster&lt;/h3&gt;
+&lt;p&gt;After your ECS cluster is created, you can add instances to it.&lt;/p&gt;
+&lt;h4 id=&#34;enabling-ssm&#34;&gt;Enabling SSM&lt;/h4&gt;
+&lt;p&gt;Enable SSM on the &lt;code&gt;ecsInstanceRole&lt;/code&gt; IAM role by attaching the &lt;code&gt;AmazonSSMManagedInstanceCore&lt;/code&gt; managed policy to the role:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;aws iam attach-role-policy &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --role-name $ECS_INSTANCE_ROLE_NAME &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --policy-arn arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;connecting-to-your-cluster&#34;&gt;Connecting To Your Cluster&lt;/h4&gt;
+&lt;p&gt;In order to communicate with ECS, configure each node with the name of the cluster.
+The following command will create a file named &lt;code&gt;quickstart-ecs-user-data.toml&lt;/code&gt; with the appropriate contents:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;lt;&amp;lt; EOF &amp;gt; quickstart-ecs-user-data.toml
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;[settings.ecs]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;cluster = &amp;#34;$ECS_CLUSTER_NAME&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;launch&#34;&gt;Launch&lt;/h4&gt;
+&lt;p&gt;Now you can add Bottlerocket instances to your ECS cluster!
+There are some values that you need to set in your environment first such as the Subnet ID, Bottlerocket AMI ID, and ECS Instance Profile Name.
+You can get the information you need using the AWS CLI:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;export ECS_VPC_ID&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;$(&lt;/span&gt;aws ec2 describe-vpcs &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --region $AWS_REGION &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --filters&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Name&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;isDefault,Values&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;true &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   | jq --raw-output &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.Vpcs[].VpcId&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;export ECS_SUBNET_ID&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;$(&lt;/span&gt;aws ec2 describe-subnets &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --region $AWS_REGION &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --filter&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Name&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;vpc-id,Values&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;$ECS_VPC_ID &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   | jq --raw-output &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.Subnets[0] | {id: .SubnetId, public: .MapPublicIpOnLaunch, az: .AvailabilityZone} | .id&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;export BOTTLEROCKET_AMI_ID&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;resolve:ssm:/aws/service/bottlerocket/aws-ecs-2/x86_64/latest/image_id&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;export ECS_INSTANCE_PROFILE_NAME&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;$(&lt;/span&gt;aws iam list-instance-profiles-for-role &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --role-name $ECS_INSTANCE_ROLE_NAME &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --query &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;InstanceProfiles[*].InstanceProfileName&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --output text&lt;span style=&#34;color:#66d9ef&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Then launch an instance into your cluster:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;aws ec2 run-instances &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --subnet-id $ECS_SUBNET_ID &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --image-id $BOTTLEROCKET_AMI_ID &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --instance-type m5.large &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --region $AWS_REGION &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --tag-specifications &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;ResourceType=instance,Tags=[{Key=ecs-cluster,Value=&lt;/span&gt;$ECS_CLUSTER_NAME&lt;span style=&#34;color:#e6db74&#34;&gt;}]&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --user-data file://quickstart-ecs-user-data.toml &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --iam-instance-profile Name&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;$ECS_INSTANCE_PROFILE_NAME
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Once the instance launches, you should be able to run tasks on your Bottlerocket instance using either the ECS API or web console.&lt;/p&gt;
+&lt;h3 id=&#34;confirming-your-instances-are-running&#34;&gt;Confirming Your Instances Are Running&lt;/h3&gt;
+&lt;p&gt;To confirm that nodes are running in your cluster, you can run the following command to list your ECS cluster nodes:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;aws ec2 describe-instances &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --no-cli-pager &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --filters &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Name=tag:ecs-cluster,Values=&lt;/span&gt;$ECS_CLUSTER_NAME&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --query &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Reservations[*].Instances[*].{PrivateDNS:PrivateDnsName,InstanceID:InstanceId,Cluster:Tags[?Key==&amp;#39;ecs-cluster&amp;#39;]|[0].Value,State:State.Name}&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --output&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;table
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You should see output that contains a column similar to the following:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    +----------------------+
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;... |     InstanceID       | ...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    +----------------------+
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    |  i-04c2b2087...      |
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    +----------------------+
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;interacting-with-your-cluster&#34;&gt;Interacting With Your Cluster&lt;/h3&gt;
+&lt;p&gt;To confirm in depth that an instance is running Bottlerocket, save the instance ID and follow the steps in the &lt;a href=&#34;../host-containers&#34;&gt;Host Containers Quickstart&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Congratulations!
+You now have a Bottlerocket cluster running on ECS.&lt;/p&gt;
+&lt;div id=&#34;problemReport&#34;&gt;
+    &lt;hr /&gt;
+    &lt;small&gt;
+        See a problem with this page? &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-project-website/issues/new/choose&#34; target=&#34;#&#34;&gt;File an issue&lt;/a&gt;. All feedback is appreciated.&lt;br /&gt;
+        You can also directly contribute a change to the &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-project-website/tree/main/content/en/os/1.22.x/install/quickstart/aws/ecs/index.markdown&#34; target=&#34;#&#34;&gt;source file of this page on GitHub&lt;/a&gt;.
+    &lt;/small&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$(document).ready(function() {
+    $(&#39;#problemReport&#39;).detach().appendTo(&#39;.td-content&#39;);
+});
+&lt;/script&gt;
+&lt;h2 id=&#34;aws-console-quickstart&#34;&gt;AWS Console Quickstart&lt;/h2&gt;
+&lt;p&gt;If you want to start an ECS cluster using EC2 nodes running Bottlerocket, the follow video provides a high level walk through.
+
+
+    
+    &lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
+      &lt;iframe allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&#34; allowfullscreen=&#34;allowfullscreen&#34; loading=&#34;eager&#34; referrerpolicy=&#34;strict-origin-when-cross-origin&#34; src=&#34;https://www.youtube.com/embed/c4hhZZwSrP0?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; title=&#34;YouTube video&#34;
+      &gt;&lt;/iframe&gt;
+    &lt;/div&gt;
+&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Os: Amazon EKS</title>
+      <link>//localhost:1313/en/os/1.22.x/install/quickstart/aws/k8s/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/os/1.22.x/install/quickstart/aws/k8s/</guid>
+      <description>
+        
+        
+        &lt;p&gt;
+
+
+
+
+&lt;script&gt;
+    $(document).ready(function() {
+        var $sidebar_link = $(&#39;.td-sidebar a[href=&#34;\/en\/os\/1.22.x\/install\/quickstart\/&#34;]&#39;);
+        var $depad =  true ;
+
+        if ($depad) {
+           $sidebar_link.parent().parent().addClass(&#39;depad&#39;);
+        }
+
+        $sidebar_link.parent().hide();
+    });
+    
+&lt;/script&gt;
+
+
+
+
+
+&lt;script&gt;
+    $(document).ready(function() {
+        var $sidebar_link = $(&#39;.td-sidebar a[href=&#34;\/en\/os\/1.22.x\/install\/quickstart\/aws\/&#34;]&#39;);
+        var $depad =  true ;
+
+        if ($depad) {
+           $sidebar_link.parent().parent().addClass(&#39;depad&#39;);
+        }
+
+        $sidebar_link.parent().hide();
+    });
+    
+&lt;/script&gt;
+
+
+
+
+&lt;script&gt;
+    $(document).ready(function() {
+        var $crumb_link = $(&#39;.td-breadcrumbs a[href$=&#34;\/en\/os\/1.22.x\/install\/quickstart\/&#34;]&#39;);
+        $crumb_link.parent().hide();
+    });
+&lt;/script&gt;
+
+
+
+
+&lt;script&gt;
+    $(document).ready(function() {
+        var $crumb_link = $(&#39;.td-breadcrumbs a[href$=&#34;\/en\/os\/1.22.x\/install\/quickstart\/aws\/&#34;]&#39;);
+        $crumb_link.parent().hide();
+    });
+&lt;/script&gt;&lt;/p&gt;
+&lt;h2 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h2&gt;
+&lt;p&gt;In order to set up a Bottlerocket cluster on EKS, you will need the latest versions of the following tools installed:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://eksctl.io/&#34;&gt;&lt;code&gt;eksctl&lt;/code&gt;&lt;/a&gt;: Used to create EKS clusters.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/tools/#kubectl&#34;&gt;&lt;code&gt;kubectl&lt;/code&gt;&lt;/a&gt;: Used to interact with resources within a Kubernetes cluster.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html#getting-started-install-instructions&#34;&gt;&lt;code&gt;aws-cli&lt;/code&gt;&lt;/a&gt;: Used to interact with AWS services.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html&#34;&gt;SSM Session Manager Plugin for AWS CLI&lt;/a&gt;: Used to enter SSM sessions on Bottlerocket nodes through the AWS CLI.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;cluster-setup&#34;&gt;Cluster Setup&lt;/h2&gt;
+&lt;p&gt;There are two main steps to setting up an EKS cluster: creating the configuration file and applying the configuration file using &lt;code&gt;eksctl&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;cluster-configuration-file&#34;&gt;Cluster Configuration File&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;eksctl&lt;/code&gt; can use a YAML configuration file to create an EKS cluster.
+First, set some environment variables:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;AWS_REGION&lt;/code&gt;: AWS region to create the cluster in.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;K8S_VERSION&lt;/code&gt;: Kubernetes version to use for the cluster.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;EKS_CLUSTER_NAME&lt;/code&gt;: Name of the EKS cluster to create.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;export AWS_REGION&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;us-west-2&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;export K8S_VERSION&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;1.25&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;export EKS_CLUSTER_NAME&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;bottlerocket-quickstart-eks&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The following command (on Linux and macOS) will create an example configuration file named &lt;code&gt;bottlerocket-quickstart-eks.yaml&lt;/code&gt; that specifies a cluster with 3 Bottlerocket nodes:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;lt;&amp;lt; EOF &amp;gt; bottlerocket-quickstart-eks.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;---
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;apiVersion: eksctl.io/v1alpha5
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;kind: ClusterConfig
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  name: $EKS_CLUSTER_NAME
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  region: $AWS_REGION
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  version: &amp;#34;$K8S_VERSION&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;nodeGroups:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  - name: ng-bottlerocket-quickstart
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    instanceType: m5.large
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    desiredCapacity: 3
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    amiFamily: Bottlerocket
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    iam:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;       attachPolicyARNs:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;          - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;          - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;          - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;          - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    bottlerocket:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;      settings:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;        motd: &amp;#34;Hello from eksctl!&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;On Windows, you will need to create this file in a text editor and replace &lt;code&gt;$EKS_CLUSTER_NAME&lt;/code&gt;, &lt;code&gt;$AWS_REGION&lt;/code&gt;, and &lt;code&gt;$K8S_VERSION&lt;/code&gt; with your desired values.
+The contents to copy are &lt;em&gt;between&lt;/em&gt; the &lt;code&gt;cat &amp;lt;&amp;lt; EOF &amp;gt; bottlerocket-quickstart-eks.yaml&lt;/code&gt; and &lt;code&gt;EOF&lt;/code&gt; lines.&lt;/p&gt;
+&lt;h3 id=&#34;cluster-creation&#34;&gt;Cluster Creation&lt;/h3&gt;
+&lt;p&gt;Start the cluster creation process using the configuration file you created in the last step (&lt;code&gt;bottlerocket-quickstart-eks.yaml&lt;/code&gt; in this example):&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;eksctl create cluster --config-file ./bottlerocket-quickstart-eks.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Get a cup of coffee ☕️, it will take a while to provision your control plane and cluster nodes.&lt;/p&gt;
+&lt;h2 id=&#34;confirm-your-cluster-is-running&#34;&gt;Confirm Your Cluster is Running&lt;/h2&gt;
+&lt;p&gt;To confirm that Bottlerocket nodes are running in your cluster, you can run the following command to list your cluster nodes and what operating system they are running:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kubectl get nodes -o&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;wide
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You should see output that contains a column similar to the following:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;... OS-IMAGE                              ...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Bottlerocket OS 1.12.0 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;aws-k8s-1.25&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Bottlerocket OS 1.12.0 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;aws-k8s-1.25&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Bottlerocket OS 1.12.0 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;aws-k8s-1.25&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Next, get an instance ID from any one of the nodes in the cluster (remember that &lt;code&gt;$EKS_CLUSTER_NAME&lt;/code&gt; is set to the name of your EKS cluster):&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;aws ec2 describe-instances  --no-cli-pager --filters &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Name=tag:aws:eks:cluster-name,Values=&lt;/span&gt;$EKS_CLUSTER_NAME&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; --query &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Reservations[*].Instances[*].{PrivateDNS:PrivateDnsName,InstanceID:InstanceId,Cluster:Tags[?Key==&amp;#39;aws:eks:cluster-name&amp;#39;]|[0].Value,State:State.Name}&amp;#34;&lt;/span&gt; --output&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;table
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You should see output that contains a column similar to the following:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    +----------------------+
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;... |     InstanceID       | ...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    +----------------------+
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    |  i-04c2b2087...      |
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    |  i-0e61e2b0a...      |
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    |  i-022aca952...      |
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    +----------------------+
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;interacting-with-your-cluster&#34;&gt;Interacting With Your Cluster&lt;/h2&gt;
+&lt;p&gt;To confirm in depth that an instance is running Bottlerocket, pick an instance ID and follow the steps in the &lt;a href=&#34;../host-containers&#34;&gt;Host Containers Quickstart&lt;/a&gt;.
+Any of the instance IDs listed for the &lt;code&gt;bottlerocket-quickstart-eks&lt;/code&gt; cluster should work.&lt;/p&gt;
+&lt;p&gt;Congratulations!
+You now have a Bottlerocket cluster running on EKS.&lt;/p&gt;
+&lt;div id=&#34;problemReport&#34;&gt;
+    &lt;hr /&gt;
+    &lt;small&gt;
+        See a problem with this page? &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-project-website/issues/new/choose&#34; target=&#34;#&#34;&gt;File an issue&lt;/a&gt;. All feedback is appreciated.&lt;br /&gt;
+        You can also directly contribute a change to the &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-project-website/tree/main/content/en/os/1.22.x/install/quickstart/aws/k8s/index.markdown&#34; target=&#34;#&#34;&gt;source file of this page on GitHub&lt;/a&gt;.
+    &lt;/small&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$(document).ready(function() {
+    $(&#39;#problemReport&#39;).detach().appendTo(&#39;.td-content&#39;);
+});
+&lt;/script&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Os: Host Containers</title>
+      <link>//localhost:1313/en/os/1.22.x/install/quickstart/aws/host-containers/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/os/1.22.x/install/quickstart/aws/host-containers/</guid>
+      <description>
+        
+        
+        &lt;p&gt;
+
+
+
+
+&lt;script&gt;
+    $(document).ready(function() {
+        var $sidebar_link = $(&#39;.td-sidebar a[href=&#34;\/en\/os\/1.22.x\/install\/quickstart\/&#34;]&#39;);
+        var $depad =  true ;
+
+        if ($depad) {
+           $sidebar_link.parent().parent().addClass(&#39;depad&#39;);
+        }
+
+        $sidebar_link.parent().hide();
+    });
+    
+&lt;/script&gt;
+
+
+
+
+
+&lt;script&gt;
+    $(document).ready(function() {
+        var $sidebar_link = $(&#39;.td-sidebar a[href=&#34;\/en\/os\/1.22.x\/install\/quickstart\/aws\/&#34;]&#39;);
+        var $depad =  true ;
+
+        if ($depad) {
+           $sidebar_link.parent().parent().addClass(&#39;depad&#39;);
+        }
+
+        $sidebar_link.parent().hide();
+    });
+    
+&lt;/script&gt;
+
+
+
+
+&lt;script&gt;
+    $(document).ready(function() {
+        var $crumb_link = $(&#39;.td-breadcrumbs a[href$=&#34;\/en\/os\/1.22.x\/install\/quickstart\/&#34;]&#39;);
+        $crumb_link.parent().hide();
+    });
+&lt;/script&gt;
+
+
+
+
+&lt;script&gt;
+    $(document).ready(function() {
+        var $crumb_link = $(&#39;.td-breadcrumbs a[href$=&#34;\/en\/os\/1.22.x\/install\/quickstart\/aws\/&#34;]&#39;);
+        $crumb_link.parent().hide();
+    });
+&lt;/script&gt;&lt;/p&gt;
+&lt;h2 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;An AWS EC2 Instance ID (begins with &lt;code&gt;i-&lt;/code&gt;) of a Bottlerocket instance&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html#getting-started-install-instructions&#34;&gt;&lt;code&gt;aws-cli&lt;/code&gt;&lt;/a&gt;: Used to interact with AWS services.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html&#34;&gt;SSM Session Manager Plugin for AWS CLI&lt;/a&gt;: Used to enter SSM sessions on Bottlerocket nodes through the AWS CLI.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;interacting-with-a-bottlerocket-node-through-host-containers&#34;&gt;Interacting With a Bottlerocket Node Through Host Containers&lt;/h2&gt;
+&lt;p&gt;Run the following command to enter an SSM session on the node:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;aws ssm start-session --target INSTANCE_ID
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Replace &lt;code&gt;INSTANCE_ID&lt;/code&gt; with the instance ID you picked earlier.&lt;/p&gt;
+&lt;p&gt;Entering the SSM session will place you in the control container.&lt;/p&gt;
+&lt;p&gt;You should see output similar to the following:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Welcome to Bottlerocket&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;s control container!
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    ╱╲
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;   ╱┄┄╲   This container gives you access to the Bottlerocket API,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;   │▗▖│   which in turn lets you inspect and configure the system.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  ╱│  │╲  You&amp;#39;&lt;/span&gt;ll probably want to use the &lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;apiclient&lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt; tool &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; that;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  │╰╮╭╯│  &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; example, to inspect the system:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ╹╹
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;             apiclient -u /settings
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;You can run &lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;apiclient --help&lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; usage details, and check the main
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Bottlerocket documentation &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; descriptions of all settings and examples of
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;changing them.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;If you need to debug the system further, you can use the admin container.  The
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;admin container has more debugging tools installed and allows you to get root
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;access to the host.  The easiest way to get started is like this, which enables
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;and enters the admin container using apiclient:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   enter-admin-container
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;You can also access the admin container through SSH &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; you have network access.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Just enable the container like this, &lt;span style=&#34;color:#66d9ef&#34;&gt;then&lt;/span&gt; SSH to the host:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   enable-admin-container
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;You can disable the admin container like this:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   disable-admin-container
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;ssm-user@control&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;$
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Use &lt;code&gt;apiclient&lt;/code&gt; to get the Bottlerocket host Message Of The Day (MOTD):&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apiclient get settings.motd
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You should see output similar to the following:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;settings&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;motd&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hello from eksctl!&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;exploring-the-admin-container&#34;&gt;Exploring the Admin Container&lt;/h3&gt;
+&lt;p&gt;From the control container, you can enter the admin container:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;enter-admin-container
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Then, check the &lt;code&gt;/etc/os-release&lt;/code&gt; file contents from the &lt;em&gt;Bottlerocket host filesystem&lt;/em&gt;, mounted at &lt;code&gt;/.bottlerocket/rootfs/&lt;/code&gt;.
+You should see something similar to the following:&lt;/p&gt;
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  
+  
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+&lt;ul class=&#34;nav nav-tabs&#34; id=&#34;tabs-4&#34; role=&#34;tablist&#34;&gt;&lt;li class=&#34;nav-item&#34;&gt;
+      &lt;a class=&#34;nav-link disabled&#34; 
+          id=&#34;tabs-4-0-tab&#34; data-toggle=&#34;tab&#34; href=&#34;#tabs-4-0&#34; role=&#34;tab&#34;
+          
+        aria-controls=&#34;tabs-4-0&#34; aria-selected=&#34;false&#34;&gt;Orchestrator:&lt;/a&gt;
+    &lt;/li&gt;
+
+    &lt;li class=&#34;nav-item&#34;&gt;
+      &lt;a class=&#34;nav-link active&#34; 
+          id=&#34;tabs-4-1-tab&#34; data-toggle=&#34;tab&#34; href=&#34;#tabs-4-1&#34; role=&#34;tab&#34;
+          
+        aria-controls=&#34;tabs-4-1&#34; aria-selected=&#34;false&#34;&gt;EKS&lt;/a&gt;
+    &lt;/li&gt;
+
+    
+      
+    &lt;li class=&#34;nav-item&#34;&gt;
+      &lt;a class=&#34;nav-link&#34; 
+          id=&#34;tabs-4-2-tab&#34; data-toggle=&#34;tab&#34; href=&#34;#tabs-4-2&#34; role=&#34;tab&#34;
+          
+        aria-controls=&#34;tabs-4-2&#34; aria-selected=&#34;false&#34;&gt;ECS&lt;/a&gt;
+    &lt;/li&gt;
+
+    
+      
+    &lt;/ul&gt;
+
+
+
+
+&lt;div class=&#34;tab-content&#34; id=&#34;tabs-4-content&#34;&gt;&lt;div class=&#34;tab-pane fade&#34;
+        id=&#34;tabs-4-0&#34; role=&#34;tabpanel&#34; aria-labelled-by=&#34;tabs-4-0-tab&#34;&gt;
+        &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+    
+
+  &lt;div class=&#34;tab-pane fade show active&#34;
+        id=&#34;tabs-4-1&#34; role=&#34;tabpanel&#34; aria-labelled-by=&#34;tabs-4-1-tab&#34;&gt;
+        &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[root@admin]# cat /.bottlerocket/rootfs/etc/os-release
+NAME=Bottlerocket
+ID=bottlerocket
+VERSION=&amp;#34;1.34.0 (aws-k8s-1.32)&amp;#34;
+PRETTY_NAME=&amp;#34;Bottlerocket OS 1.34.0 (aws-k8s-1.32)&amp;#34;
+VARIANT_ID=aws-k8s-1.32
+VERSION_ID=1.34.0
+BUILD_ID=6ef1139f
+HOME_URL=&amp;#34;https://github.com/bottlerocket-os/bottlerocket&amp;#34;
+SUPPORT_URL=&amp;#34;https://github.com/bottlerocket-os/bottlerocket/discussions&amp;#34;
+BUG_REPORT_URL=&amp;#34;https://github.com/bottlerocket-os/bottlerocket/issues&amp;#34;
+  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+    
+      
+    
+
+  &lt;div class=&#34;tab-pane fade&#34;
+        id=&#34;tabs-4-2&#34; role=&#34;tabpanel&#34; aria-labelled-by=&#34;tabs-4-2-tab&#34;&gt;
+        &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[root@admin]# cat /.bottlerocket/rootfs/etc/os-release
+NAME=Bottlerocket
+ID=bottlerocket
+VERSION=&amp;#34;1.34.0 (aws-ecs-2)&amp;#34;
+PRETTY_NAME=&amp;#34;Bottlerocket OS 1.34.0 (aws-ecs-2)&amp;#34;
+VARIANT_ID=aws-ecs-2
+VERSION_ID=1.34.0
+BUILD_ID=32e9bb46
+HOME_URL=&amp;#34;https://github.com/bottlerocket-os/bottlerocket&amp;#34;
+SUPPORT_URL=&amp;#34;https://github.com/bottlerocket-os/bottlerocket/discussions&amp;#34;
+BUG_REPORT_URL=&amp;#34;https://github.com/bottlerocket-os/bottlerocket/issues&amp;#34;
+  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+    
+      
+    
+
+  
+&lt;/div&gt;
+
+&lt;p&gt;Congratulations!
+You have successfully navigated a Bottlerocket system through the control and admin containers.&lt;/p&gt;
+&lt;div id=&#34;problemReport&#34;&gt;
+    &lt;hr /&gt;
+    &lt;small&gt;
+        See a problem with this page? &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-project-website/issues/new/choose&#34; target=&#34;#&#34;&gt;File an issue&lt;/a&gt;. All feedback is appreciated.&lt;br /&gt;
+        You can also directly contribute a change to the &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-project-website/tree/main/content/en/os/1.22.x/install/quickstart/aws/host-containers/index.markdown&#34; target=&#34;#&#34;&gt;source file of this page on GitHub&lt;/a&gt;.
+    &lt;/small&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$(document).ready(function() {
+    $(&#39;#problemReport&#39;).detach().appendTo(&#39;.td-content&#39;);
+});
+&lt;/script&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

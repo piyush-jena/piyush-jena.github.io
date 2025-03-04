@@ -1,0 +1,104 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bottlerocket – Reporting</title>
+    <link>//localhost:1313/en/os/1.20.x/api/reporting/</link>
+    <description>Recent content in Reporting on Bottlerocket</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    
+	  <atom:link href="//localhost:1313/en/os/1.20.x/api/reporting/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Os: Bottlerocket CIS Benchmark</title>
+      <link>//localhost:1313/en/os/1.20.x/api/reporting/cis/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/os/1.20.x/api/reporting/cis/</guid>
+      <description>
+        
+        
+        &lt;p&gt;The &lt;a href=&#34;https://www.cisecurity.org/benchmark/bottlerocket&#34;&gt;Bottlerocket CIS Benchmark&lt;/a&gt; contains a number of security best practices to harden Bottlerocket worker nodes.
+The benchmark contains two levels:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Level 1:&lt;/strong&gt; basic guidelines with clear security benefits that do not inhibit the node.
+Bottlerocket’s default settings are compliant with level 1.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Level 2:&lt;/strong&gt; detailed, specific guidance that provide more defence to the node.
+This level introduces some trade-offs between functionality and security.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The report API has built-in tests that allow you to evaluate the state of the node to both Level 1 and Level 2.&lt;/p&gt;
+&lt;h2 id=&#34;examples&#34;&gt;Examples&lt;/h2&gt;
+&lt;p&gt;Expanding upon the general instructions to &lt;a href=&#34;//localhost:1313/en/os/1.20.x/api/#running-a-report&#34;&gt;run a report&lt;/a&gt;, for the Bottlerocket CIS benchmark use the identifier &lt;code&gt;cis&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apiclient report cis
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Adding the flag &lt;code&gt;-l&lt;/code&gt; with the value of &lt;code&gt;2&lt;/code&gt; will evaluate to the Level 2 benchmark. For example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Returns evaluation of CIS Benchmark Level 2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apiclient report cis -l &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;audit-and-remediation&#34;&gt;Audit and Remediation&lt;/h2&gt;
+&lt;p&gt;Refer to the &lt;a href=&#34;https://www.cisecurity.org/benchmark/bottlerocket&#34;&gt;Bottlerocket CIS Benchmark&lt;/a&gt; for detailed audit and remediation steps.&lt;/p&gt;
+&lt;div id=&#34;problemReport&#34;&gt;
+    &lt;hr /&gt;
+    &lt;small&gt;
+        See a problem with this page? &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-project-website/issues/new/choose&#34; target=&#34;#&#34;&gt;File an issue&lt;/a&gt;. All feedback is appreciated.&lt;br /&gt;
+        You can also directly contribute a change to the &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-project-website/tree/main/content/en/os/1.20.x/api/reporting/cis/index.markdown&#34; target=&#34;#&#34;&gt;source file of this page on GitHub&lt;/a&gt;.
+    &lt;/small&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$(document).ready(function() {
+    $(&#39;#problemReport&#39;).detach().appendTo(&#39;.td-content&#39;);
+});
+&lt;/script&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Os: K8s CIS Benchmark</title>
+      <link>//localhost:1313/en/os/1.20.x/api/reporting/cis-k8s/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/os/1.20.x/api/reporting/cis-k8s/</guid>
+      <description>
+        
+        
+        &lt;p&gt;The &lt;a href=&#34;https://www.cisecurity.org/benchmark/kubernetes&#34;&gt;Kubernetes CIS Benchmark&lt;/a&gt; contains a number of security best practices to harden Kubernetes worker nodes.&lt;/p&gt;
+
+
+&lt;div class=&#34;alert alert-success&#34; role=&#34;alert&#34;&gt;
+&lt;h4 class=&#34;alert-heading&#34;&gt;Note&lt;/h4&gt;
+
+    &lt;p&gt;The Kubernetes CIS Benchmark contains two levels, however, currently, level 2 only adds one additional check (4.2.8) for worker nodes. The Bottlerocket reporting API cannot automatically evaluate this additional check and therefore the two levels are functionally identical for automatic evaluation purposes.&lt;/p&gt;
+
+
+&lt;/div&gt;
+
+&lt;h2 id=&#34;examples&#34;&gt;Examples&lt;/h2&gt;
+&lt;p&gt;Expanding upon the general instructions to &lt;a href=&#34;//localhost:1313/en/os/1.20.x/api/#running-a-report&#34;&gt;run a report&lt;/a&gt;, for the Bottlerocket CIS benchmark use the identifier &lt;code&gt;cis-k8s&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apiclient report cis-k8s
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Adding the flag &lt;code&gt;-l&lt;/code&gt; with the value of &lt;code&gt;2&lt;/code&gt; will evaluate to the Level 2 benchmark. For example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Returns evaluation of CIS Benchmark Level 2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apiclient report cis-k8s -l &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;audit-and-remediation&#34;&gt;Audit and Remediation&lt;/h2&gt;
+&lt;p&gt;Refer to the &lt;a href=&#34;https://www.cisecurity.org/benchmark/kubernetes&#34;&gt;Kubernetes CIS Benchmark&lt;/a&gt; for detailed audit and remediation steps.&lt;/p&gt;
+&lt;div id=&#34;problemReport&#34;&gt;
+    &lt;hr /&gt;
+    &lt;small&gt;
+        See a problem with this page? &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-project-website/issues/new/choose&#34; target=&#34;#&#34;&gt;File an issue&lt;/a&gt;. All feedback is appreciated.&lt;br /&gt;
+        You can also directly contribute a change to the &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-project-website/tree/main/content/en/os/1.20.x/api/reporting/cis-k8s/index.markdown&#34; target=&#34;#&#34;&gt;source file of this page on GitHub&lt;/a&gt;.
+    &lt;/small&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$(document).ready(function() {
+    $(&#39;#problemReport&#39;).detach().appendTo(&#39;.td-content&#39;);
+});
+&lt;/script&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,612 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bottlerocket – 0.2.x (Current)</title>
+    <link>//localhost:1313/en/ecs-updater/0.2.x/</link>
+    <description>Recent content in 0.2.x (Current) on Bottlerocket</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    
+	  <atom:link href="//localhost:1313/en/ecs-updater/0.2.x/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Ecs-Updater: Concepts</title>
+      <link>//localhost:1313/en/ecs-updater/0.2.x/concepts/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/ecs-updater/0.2.x/concepts/</guid>
+      <description>
+        
+        
+        &lt;p&gt;You can update Bottlerocket in a couple of ways:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;node replacement&lt;/strong&gt; where new instances with a new version of the OS replace nodes with older versions of the OS,&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;in-place updates&lt;/strong&gt; where the node downloads and reboots into a new version of the OS while maintaining the same instance/machine.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;There is no single preferred nor advised method to update a node; both methods have pros and cons depending on your situation.
+You can trigger an 
+
+&lt;a href=&#34;//localhost:1313/en/os/1.34.x/update/methods/in-place/#apiclient-commands&#34;&gt;in-place update manually with the API&lt;/a&gt;
+ or you can use the Bottlerocket ECS Updater.
+&lt;strong&gt;The ECS Updater is a service that checks for (and applies) Bottlerocket updates when your nodes are ready.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;If you use Bottlerocket on Kubernetes (see &lt;a href=&#34;//localhost:1313/en/brupop/&#34;&gt;Brupop&lt;/a&gt;) or intend to replace nodes in &lt;a href=&#34;https://aws.amazon.com/ecs/&#34;&gt;Amazon ECS&lt;/a&gt;, ECS Updater is not for you.
+If you plan to use &lt;a href=&#34;../troubleshoot/#spot-instances-never-update-to-a-new-version-of-bottlerocket&#34;&gt;EC2 Spot in your ECS cluster&lt;/a&gt;, ECS Updater is not for you.
+Even if you do plan to do in-place updates, you don’t need to use ECS Updater as you can manage in-place updates in other ways.
+However, ECS updater offers an automated way to manage in-place Bottlerocket updates.&lt;/p&gt;
+&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
+&lt;p&gt;The ECS Updater periodically evaluates data from the ECS control plane API and information from each Bottlerocket node’s API server to determine what nodes need an update &lt;em&gt;and&lt;/em&gt; which nodes are eligible for replacement.
+The upgradable, eligible nodes drain, reboot into the latest update, and finally reactivate.&lt;/p&gt;
+&lt;h2 id=&#34;automated-updates&#34;&gt;Automated updates&lt;/h2&gt;
+&lt;p&gt;The ECS Updater task runs from &lt;a href=&#34;https://aws.amazon.com/fargate/&#34;&gt;AWS Fargate&lt;/a&gt;, triggered periodically by &lt;a href=&#34;https://aws.amazon.com/eventbridge/&#34;&gt;Amazon EventBridge&lt;/a&gt;.
+The updater task first determines the Bottlerocket nodes in a given cluster by querying the ECS API.&lt;/p&gt;
+&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; version=&#34;1.1&#34;
+    width=&#34;80%&#34; 
+    viewBox=&#34;-0.5 -0.5 911 364&#34;&gt;
+    &lt;defs /&gt;
+    &lt;g class=&#34;ecs-updater-diagram&#34;&gt;
+        &lt;path d=&#34;M 160 351 L 160 1&#34; class=&#34;shared-responsibility-boundary&#34; /&gt;
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 60 301 L 60 321.03 L 170 321&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 400 321 L 440 321.03 L 440 307.37&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 440 302.12 L 443.5 309.12 L 440 307.37 L 436.5 309.12 Z&#34; class=&#34;arrow-head&#34;/&gt;
+
+            &lt;text x=&#34;285&#34; y=&#34;325&#34; class=&#34;mid-label&#34;&gt;Bottlerocket Nodes: Node-1, Node-2, Node-3&lt;/text&gt;
+        &lt;/g&gt;
+        &lt;g transform=&#34;translate(0, 181)&#34;class=&#34;aws-service&#34;&gt;
+            
+&lt;rect x=&#34;0&#34; y=&#34;0&#34; width=&#34;120&#34; height=&#34;120&#34; /&gt;
+&lt;text x=&#34;60&#34; y=&#34;64&#34;&gt;ECS API&lt;/text&gt;
+        &lt;/g&gt;
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 440 251 L 440 211.03 L 300 211&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 170 211 L 126.37 211&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 121.12 211 L 128.12 207.5 L 126.37 211 L 128.12 214.5 Z&#34; class=&#34;arrow-head&#34; /&gt;
+            &lt;text x=&#34;235&#34; y=&#34;215&#34; class=&#34;mid-label&#34;&gt;List of Bottlerocket Nodes&lt;/text&gt;
+        &lt;/g&gt;
+        &lt;g transform=&#34;translate(380, 251)&#34; class=&#34;fargate-task&#34;&gt;
+            &lt;rect width=&#34;120&#34; height=&#34;50&#34; /&gt;
+&lt;text x=&#34;60&#34; y=&#34;22&#34;&gt;ECS Updater&lt;/text&gt;
+&lt;text x=&#34;60&#34; y=&#34;36&#34;&gt;Fargate Task&lt;/text&gt;
+        &lt;/g&gt;
+        &lt;g transform=&#34;translate(0, 21)&#34;class=&#34;aws-service&#34;&gt;
+            
+&lt;rect x=&#34;0&#34; y=&#34;0&#34; width=&#34;120&#34; height=&#34;120&#34; /&gt;
+&lt;text x=&#34;60&#34; y=&#34;64&#34;&gt;EventBridge&lt;/text&gt;
+        &lt;/g&gt;
+
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 120 81 L 170 81&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 413 81 L 520 81.03 L 520 276 L 506.37 276&#34; class=&#34;connector&#34;/&gt;
+            &lt;path d=&#34;M 501.12 276 L 508.12 272.5 L 506.37 276 L 508.12 279.5 Z&#34; class=&#34;arrow-head&#34; /&gt;
+            &lt;text x=&#34;290&#34; y=&#34;85&#34; class=&#34;mid-label&#34;&gt;Every 12 hours run the ECS Updater Fargate Task&lt;/text&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+&lt;p&gt;Next, the ECS Updater runs an &lt;a href=&#34;https://aws.amazon.com/systems-manager/&#34;&gt;AWS Systems Manager&lt;/a&gt; &lt;a href=&#34;https://docs.aws.amazon.com/systems-manager/latest/userguide/documents.html&#34;&gt;(SSM) Document&lt;/a&gt; on each Bottlerocket node against the control container.
+This document invokes the API Client to check for updates.
+With the list of nodes that have available updates, the ECS Updater task queries the ECS API for information on the type of workloads running on the node.
+If a node is running one or more non-service (&lt;a href=&#34;https://docs.aws.amazon.com/AmazonECS/latest/developerguide/standalone-tasks.html&#34;&gt;standalone&lt;/a&gt; or &lt;a href=&#34;https://docs.aws.amazon.com/AmazonECS/latest/developerguide/scheduling_tasks.html&#34;&gt;scheduled&lt;/a&gt;) tasks, the node is deemed not updateable.&lt;/p&gt;
+&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; version=&#34;1.1&#34;
+    width=&#34;80%&#34; 
+    viewBox=&#34;-0.5 -0.5 911 500&#34;&gt;
+    &lt;defs /&gt;
+    &lt;g class=&#34;ecs-updater-diagram&#34;&gt;
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 60 410 L 60 453.63&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 60 458.88 L 56.5 451.88 L 60 453.63 L 63.5 451.88 Z&#34; class=&#34;arrow-head&#34; /&gt;
+        &lt;/g&gt;
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 60 360 L 60 15 L 150 15&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 250 15 L 426.13 15&#34; class=&#34;connector&#34;/&gt;
+            &lt;path d=&#34;M 431.38 15 L 424.38 18.5 L 426.13 15 L 424.38 11.5 Z&#34; class=&#34;arrow-head&#34; /&gt;
+        &lt;/g&gt;&lt;g transform=&#34;translate(0, 360)&#34; class=&#34;fargate-task&#34;&gt;
+            &lt;rect width=&#34;120&#34; height=&#34;50&#34; /&gt;
+&lt;text x=&#34;60&#34; y=&#34;22&#34;&gt;ECS Updater&lt;/text&gt;
+&lt;text x=&#34;60&#34; y=&#34;36&#34;&gt;Fargate Task&lt;/text&gt;  
+        &lt;/g&gt;
+
+        &lt;g transform=&#34;translate(150,110)&#34;&gt;
+            
+&lt;rect x=&#34;0&#34; y=&#34;0&#34; width=&#34;210&#34; height=&#34;220&#34; class=&#34;node&#34; /&gt;
+&lt;rect x=&#34;10&#34; y=&#34;10&#34; width=&#34;30&#34; height=&#34;100&#34; class=&#34;unused-container&#34; /&gt;
+&lt;rect x=&#34;50&#34; y=&#34;10&#34; width=&#34;30&#34; height=&#34;100&#34; class=&#34;unused-container&#34; /&gt;
+&lt;rect x=&#34;90&#34; y=&#34;10&#34; width=&#34;30&#34; height=&#34;100&#34; class=&#34;unused-container&#34; /&gt;
+&lt;rect x=&#34;130&#34; y=&#34;10&#34; width=&#34;30&#34; height=&#34;100&#34; class=&#34;unused-container&#34; /&gt;
+&lt;rect x=&#34;170&#34; y=&#34;10&#34; width=&#34;30&#34; height=&#34;100&#34; class=&#34;control-container&#34; /&gt;
+
+&lt;rect x=&#34;10&#34; y=&#34;120&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;active-volume&#34; /&gt;
+&lt;text x=&#34;105&#34; y=&#34;144&#34; class=&#34;label active-volume-label&#34;&gt;Running Version&lt;/text&gt;
+
+&lt;rect x=&#34;10&#34; y=&#34;170&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;unused-volume&#34;/&gt;
+&lt;text x=&#34;105&#34; y=&#34;194&#34; lass=&#34;label active-volume-label&#34;&gt;New Version&lt;/text&gt;   
+        &lt;/g&gt;
+             
+        &lt;g transform=&#34;translate(390,110)&#34;&gt;
+            
+&lt;rect x=&#34;0&#34; y=&#34;0&#34; width=&#34;210&#34; height=&#34;220&#34; class=&#34;node&#34; /&gt;
+&lt;rect x=&#34;10&#34; y=&#34;10&#34; width=&#34;30&#34; height=&#34;100&#34; class=&#34;unused-container&#34; /&gt;
+&lt;rect x=&#34;50&#34; y=&#34;10&#34; width=&#34;30&#34; height=&#34;100&#34; class=&#34;unused-container&#34; /&gt;
+&lt;rect x=&#34;90&#34; y=&#34;10&#34; width=&#34;30&#34; height=&#34;100&#34; class=&#34;unused-container&#34; /&gt;
+&lt;rect x=&#34;130&#34; y=&#34;10&#34; width=&#34;30&#34; height=&#34;100&#34; class=&#34;unused-container&#34; /&gt;
+&lt;rect x=&#34;170&#34; y=&#34;10&#34; width=&#34;30&#34; height=&#34;100&#34; class=&#34;control-container&#34; /&gt;
+
+&lt;rect x=&#34;10&#34; y=&#34;120&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;active-volume&#34; /&gt;
+&lt;text x=&#34;105&#34; y=&#34;144&#34; class=&#34;label active-volume-label&#34;&gt;Running Version&lt;/text&gt;
+
+&lt;rect x=&#34;10&#34; y=&#34;170&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;unused-volume&#34;/&gt;
+&lt;text x=&#34;105&#34; y=&#34;194&#34; lass=&#34;label active-volume-label&#34;&gt;New Version&lt;/text&gt;   
+        &lt;/g&gt;
+
+        &lt;g transform=&#34;translate(630,110)&#34;&gt;
+            
+&lt;rect x=&#34;0&#34; y=&#34;0&#34; width=&#34;210&#34; height=&#34;220&#34; class=&#34;node&#34; /&gt;
+&lt;rect x=&#34;10&#34; y=&#34;10&#34; width=&#34;30&#34; height=&#34;100&#34; class=&#34;unused-container&#34; /&gt;
+&lt;rect x=&#34;50&#34; y=&#34;10&#34; width=&#34;30&#34; height=&#34;100&#34; class=&#34;unused-container&#34; /&gt;
+&lt;rect x=&#34;90&#34; y=&#34;10&#34; width=&#34;30&#34; height=&#34;100&#34; class=&#34;unused-container&#34; /&gt;
+&lt;rect x=&#34;130&#34; y=&#34;10&#34; width=&#34;30&#34; height=&#34;100&#34; class=&#34;unused-container&#34; /&gt;
+&lt;rect x=&#34;170&#34; y=&#34;10&#34; width=&#34;30&#34; height=&#34;100&#34; class=&#34;control-container&#34; /&gt;
+
+&lt;rect x=&#34;10&#34; y=&#34;120&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;active-volume&#34; /&gt;
+&lt;text x=&#34;105&#34; y=&#34;144&#34; class=&#34;label active-volume-label&#34;&gt;Running Version&lt;/text&gt;
+
+&lt;rect x=&#34;10&#34; y=&#34;170&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;unused-volume&#34;/&gt;
+&lt;text x=&#34;105&#34; y=&#34;194&#34; lass=&#34;label active-volume-label&#34;&gt;New Version&lt;/text&gt;   
+        &lt;/g&gt;
+        
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 463.75 30 L 463.83 80.03 L 335.03 80.03 L 335 113.63&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 335 118.88 L 331.51 111.88 L 335 113.63 L 338.51 111.88 Z&#34; class=&#34;arrow-head&#34; /&gt;
+        &lt;/g&gt;
+        
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 495 30 L 495.03 90.03 L 575.03 90.03 L 575.01 113.63&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 575 118.88 L 571.51 111.88 L 575.01 113.63 L 578.51 111.89 Z&#34; class=&#34;arrow-head&#34; /&gt;
+        &lt;/g&gt;
+        
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 526.25 30 L 526.29 80.03 L 815.03 80.03 L 815 113.63&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 815 118.88 L 811.51 111.88 L 815 113.63 L 818.51 111.88 Z&#34; class=&#34;arrow-head&#34; /&gt;
+        &lt;/g&gt;
+        
+        &lt;text x=&#34;495&#34; y=&#34;19&#34; class=&#34;label&#34;&gt;Update Available?&lt;/text&gt;
+        &lt;g transform=&#34;translate(60,475)&#34;&gt;
+            &lt;text x=&#34;0&#34; y=&#34;0&#34; class=&#34;label&#34;&gt;Node 1 and Node 3&lt;/text&gt;
+            &lt;text x=&#34;0&#34; y=&#34;12&#34; class=&#34;label&#34;&gt;are updatable&lt;/text&gt;
+        &lt;/g&gt;
+        
+
+        &lt;text x=&#34;200&#34; y=&#34;19&#34; fill=&#34;rgb(0, 0, 0)&#34; class=&#34;mid-label&#34;&gt;(SSM Document)&lt;/text&gt;
+
+        &lt;text x=&#34;324&#34; y=&#34;376&#34; class=&#34;mid-label&#34;&gt;Updateable&lt;/text&gt;
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 360 372 L 367.03 372.03 L 367.03 145 L 356.37 145&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 351.12 145 L 358.12 141.5 L 356.37 145 L 358.12 148.5 Z&#34; class=&#34;arrow-head&#34; /&gt;
+            &lt;path d=&#34;M 287 372 L 126.37 372.48&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 121.12 372.5 L 128.11 368.98 L 126.37 372.48 L 128.13 375.98 Z&#34;
+            class=&#34;arrow-head&#34; /&gt;
+        &lt;/g&gt;
+        
+        &lt;text x=&#34;550&#34; y=&#34;389&#34; class=&#34;mid-label&#34;&gt;Not Updateable&lt;/text&gt;
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 600 385 L 607.03 385 L 607.03 145 L 596.37 145&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 591.12 145 L 598.12 141.5 L 596.37 145 L 598.12 148.5 Z&#34; class=&#34;arrow-head&#34; /&gt;
+            &lt;path d=&#34;M 500 385 L 126.37 385&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 121.12 385 L 128.12 381.5 L 126.37 385 L 128.12 388.5 Z&#34; class=&#34;arrow-head&#34; /&gt;
+        &lt;/g&gt;
+
+
+        &lt;text x=&#34;805&#34; y=&#34;402&#34; fill=&#34;rgb(0, 0, 0)&#34; class=&#34;mid-label&#34;&gt;Updateable&lt;/text&gt;
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 770 398 L 430 398.03 L 126.37 397.51&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 121.12 397.5 L 128.12 394.01 L 126.37 397.51 L 128.11 401.01 Z&#34;
+            class=&#34;arrow-head&#34; /&gt;
+            &lt;path d=&#34;M 840 398 L 847.03 398.03 L 847.03 145 L 836.37 145&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 831.12 145 L 838.12 141.5 L 836.37 145 L 838.12 148.5 Z&#34; class=&#34;arrow-head&#34; /&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+&lt;p&gt;ECS Updater uses the ECS API to initiate node draining and checks the number of running tasks on the node until none remain.&lt;/p&gt;
+&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; version=&#34;1.1&#34;
+    width=&#34;80%&#34;viewBox=&#34;-0.5 -0.5 911 233&#34;&gt;
+    &lt;defs /&gt;
+    &lt;g class=&#34;ecs-updater-diagram&#34;&gt;
+        &lt;g transform=&#34;translate(0, 21)&#34;class=&#34;aws-service&#34;&gt;
+            
+&lt;rect x=&#34;0&#34; y=&#34;0&#34; width=&#34;120&#34; height=&#34;120&#34; /&gt;
+&lt;text x=&#34;60&#34; y=&#34;64&#34;&gt;ECS API&lt;/text&gt;
+        &lt;/g&gt;
+        
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 500 81 L 665 81 L 665 114.63&#34; class=&#34;connector&#34;/&gt;
+            &lt;path d=&#34;M 665 119.88 L 661.5 112.88 L 665 114.63 L 668.5 112.88 Z&#34; class=&#34;arrow-head&#34; /&gt;
+        &lt;/g&gt;
+        &lt;g transform=&#34;translate(380, 56)&#34; class=&#34;fargate-task&#34;&gt;
+            &lt;rect width=&#34;120&#34; height=&#34;50&#34; /&gt;
+&lt;text x=&#34;60&#34; y=&#34;22&#34;&gt;ECS Updater&lt;/text&gt;
+&lt;text x=&#34;60&#34; y=&#34;36&#34;&gt;Fargate Task&lt;/text&gt;
+        &lt;/g&gt;
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 210 196 L 30 196 L 30 147.37&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 30 142.12 L 33.5 149.12 L 30 147.37 L 26.5 149.12 Z&#34; class=&#34;arrow-head&#34; /&gt;
+        &lt;/g&gt;
+
+        &lt;text x=&#34;665&#34; y=&#34;140&#34; class=&#34;label&#34;&gt;Node-3 is ready to update&lt;/text&gt;
+
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 350 196 L 665 196 L 665 151&#34; class=&#34;connector&#34; /&gt;
+        &lt;/g&gt;
+        &lt;path d=&#34;M 160 221 L 160 1&#34; class=&#34;shared-responsibility-boundary&#34;  /&gt;
+    
+
+        &lt;text x=&#34;280&#34; y=&#34;200&#34; class=&#34;mid-label&#34;&gt;Drain Node 3 of tasks&lt;/text&gt;
+
+    &lt;/g&gt;
+&lt;/svg&gt;
+&lt;p&gt;Once the node has no remaining tasks, the ECS Updater runs an SSM Document against the control container to initiate the update through the 
+
+&lt;a href=&#34;//localhost:1313/en/os/1.34.x/concepts/api-driven/&#34;&gt;Bottlerocket API&lt;/a&gt;
+.&lt;/p&gt;
+&lt;p&gt;Effectively, this is the same as running  &lt;code&gt;apiclient update apply --reboot&lt;/code&gt;  from an interactive SSM session with the control container.
+After the reboot, the node will be running the newer version of Bottlerocket.&lt;/p&gt;
+&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; version=&#34;1.1&#34;
+    width=&#34;80%&#34; viewBox=&#34;-0.5 -0.5 911 324&#34;&gt;
+    &lt;defs /&gt;
+    &lt;g class=&#34;ecs-updater-diagram&#34;&gt;&lt;g transform=&#34;translate(610, 92)&#34;&gt;
+          
+&lt;rect x=&#34;0&#34; y=&#34;0&#34; width=&#34;210&#34; height=&#34;220&#34; class=&#34;node&#34; /&gt;
+&lt;rect x=&#34;10&#34; y=&#34;10&#34; width=&#34;30&#34; height=&#34;100&#34; class=&#34;unused-container&#34; /&gt;
+&lt;rect x=&#34;50&#34; y=&#34;10&#34; width=&#34;30&#34; height=&#34;100&#34; class=&#34;unused-container&#34; /&gt;
+&lt;rect x=&#34;90&#34; y=&#34;10&#34; width=&#34;30&#34; height=&#34;100&#34; class=&#34;unused-container&#34; /&gt;
+&lt;rect x=&#34;130&#34; y=&#34;10&#34; width=&#34;30&#34; height=&#34;100&#34; class=&#34;unused-container&#34; /&gt;
+&lt;rect x=&#34;170&#34; y=&#34;10&#34; width=&#34;30&#34; height=&#34;100&#34; class=&#34;control-container&#34; /&gt;
+
+&lt;rect x=&#34;10&#34; y=&#34;120&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;active-volume&#34; /&gt;
+&lt;text x=&#34;105&#34; y=&#34;144&#34; class=&#34;label active-volume-label&#34;&gt;Old Version&lt;/text&gt;
+
+&lt;rect x=&#34;10&#34; y=&#34;170&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;unused-volume&#34;/&gt;
+&lt;text x=&#34;105&#34; y=&#34;194&#34; lass=&#34;label active-volume-label&#34;&gt;New Version&lt;/text&gt;
+        &lt;/g&gt;
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 420 141 L 420 41.47 L 480 41.5&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 730 41.5 L 795.06 41.47 L 795.06 95.63&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 795.06 100.88 L 791.56 93.88 L 795.06 95.63 L 798.56 93.88 Z&#34; class=&#34;arrow-head&#34; /&gt;
+        &lt;/g&gt;
+        &lt;text x=&#34;605&#34; y=&#34;45&#34; class=&#34;mid-label&#34;&gt;Apply update and reboot (SSM Document)&lt;/text&gt;
+        &lt;g transform=&#34;translate(360, 141)&#34; class=&#34;fargate-task&#34;&gt;
+            &lt;rect width=&#34;120&#34; height=&#34;50&#34; /&gt;
+&lt;text x=&#34;60&#34; y=&#34;22&#34;&gt;ECS Updater&lt;/text&gt;
+&lt;text x=&#34;60&#34; y=&#34;36&#34;&gt;Fargate Task&lt;/text&gt;
+        &lt;/g&gt;
+
+        &lt;path d=&#34;M 160 311 L 160 1&#34; class=&#34;shared-responsibility-boundary&#34;  /&gt;
+
+        
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 310 166 L 353.63 166&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 358.88 166 L 351.88 169.5 L 353.63 166 L 351.88 162.5 Z&#34; class=&#34;arrow-head&#34; /&gt;
+        &lt;/g&gt;
+        &lt;g transform=&#34;translate(0, 106)&#34;class=&#34;aws-service&#34;&gt;
+            
+&lt;rect x=&#34;0&#34; y=&#34;0&#34; width=&#34;120&#34; height=&#34;120&#34; /&gt;
+&lt;text x=&#34;60&#34; y=&#34;64&#34;&gt;ECS API&lt;/text&gt;
+        &lt;/g&gt;
+
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 875 272 L 875.06 282.06 L 816.37 282.01&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 811.12 282 L 818.12 278.51 L 816.37 282.01 L 818.11 285.51 Z&#34; class=&#34;arrow-head&#34; /&gt;
+        &lt;/g&gt;
+        
+        &lt;text x=&#34;875&#34; y=&#34;266&#34; class=&#34;mid-label&#34;&gt;Reboot&lt;/text&gt;
+
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 810 232 L 875.06 232.06 L 875 252&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 120 166 L 190 166&#34; class=&#34;arrow-head&#34; /&gt;
+        &lt;/g&gt;
+
+        &lt;text x=&#34;250&#34; y=&#34;170&#34; class=&#34;mid-label&#34;&gt;Node-3 is drained &lt;/text&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+&lt;p&gt;Once confirmed to be running with the new version, the ECS Updater uses the ECS API to update the node status to active.
+At this point ECS will resume assigning tasks to the updated node.&lt;/p&gt;
+&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; version=&#34;1.1&#34;
+    width=&#34;80%&#34;
+    viewBox=&#34;-0.5 -0.5 911 323&#34;&gt;
+    &lt;defs /&gt;
+    &lt;g class=&#34;ecs-updater-diagram&#34;&gt;&lt;g transform=&#34;translate(610, 92)&#34;&gt;
+          
+&lt;rect x=&#34;0&#34; y=&#34;0&#34; width=&#34;210&#34; height=&#34;220&#34; class=&#34;node&#34; /&gt;
+&lt;rect x=&#34;10&#34; y=&#34;10&#34; width=&#34;30&#34; height=&#34;100&#34; class=&#34;unused-container&#34; /&gt;
+&lt;rect x=&#34;50&#34; y=&#34;10&#34; width=&#34;30&#34; height=&#34;100&#34; class=&#34;unused-container&#34; /&gt;
+&lt;rect x=&#34;90&#34; y=&#34;10&#34; width=&#34;30&#34; height=&#34;100&#34; class=&#34;unused-container&#34; /&gt;
+&lt;rect x=&#34;130&#34; y=&#34;10&#34; width=&#34;30&#34; height=&#34;100&#34; class=&#34;unused-container&#34; /&gt;
+&lt;rect x=&#34;170&#34; y=&#34;10&#34; width=&#34;30&#34; height=&#34;100&#34; class=&#34;control-container&#34; /&gt;
+
+&lt;rect x=&#34;10&#34; y=&#34;120&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;active-volume&#34; /&gt;
+&lt;text x=&#34;105&#34; y=&#34;144&#34; class=&#34;label active-volume-label&#34;&gt;Old Version&lt;/text&gt;
+
+&lt;rect x=&#34;10&#34; y=&#34;170&#34; width=&#34;190&#34; height=&#34;40&#34; class=&#34;unused-volume&#34;/&gt;
+&lt;text x=&#34;105&#34; y=&#34;194&#34; lass=&#34;label active-volume-label&#34;&gt;New Version&lt;/text&gt;
+        &lt;/g&gt;
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 360 166 L 330 166&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 486.37 166 L 540 166 L 540 206&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 481.12 166 L 488.12 162.5 L 486.37 166 L 488.12 169.5 Z&#34; class=&#34;arrow-head&#34; /&gt;
+        &lt;/g&gt;
+        &lt;g transform=&#34;translate(360, 141)&#34; class=&#34;fargate-task&#34;&gt;
+            &lt;rect width=&#34;120&#34; height=&#34;50&#34; /&gt;
+&lt;text x=&#34;60&#34; y=&#34;22&#34;&gt;ECS Updater&lt;/text&gt;
+&lt;text x=&#34;60&#34; y=&#34;36&#34;&gt;Fargate Task&lt;/text&gt;
+        &lt;/g&gt;
+        
+        &lt;path d=&#34;M 160 311 L 160 1&#34; class=&#34;shared-responsibility-boundary&#34;  /&gt;
+
+        &lt;g transform=&#34;translate(0, 106)&#34;class=&#34;aws-service&#34;&gt;
+            
+&lt;rect x=&#34;0&#34; y=&#34;0&#34; width=&#34;120&#34; height=&#34;120&#34; /&gt;
+&lt;text x=&#34;60&#34; y=&#34;64&#34;&gt;ECS API&lt;/text&gt;
+        &lt;/g&gt;
+
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 170 166 L 126.37 166&#34; class=&#34;connector&#34; /&gt;
+            &lt;path d=&#34;M 121.12 166 L 128.12 162.5 L 126.37 166 L 128.12 169.5 Z&#34; class=&#34;arrow-head&#34; /&gt;
+        &lt;/g&gt;
+        &lt;text x=&#34;250&#34; y=&#34;170&#34; fill=&#34;rgb(0, 0, 0)&#34; class=&#34;mid-label&#34;&gt;Node-3 is ready for tasks&lt;/text&gt;
+        
+        &lt;g class=&#34;line-arrow-connector&#34;&gt;
+            &lt;path d=&#34;M 540 226 L 540 282 L 620 282&#34; class=&#34;connector&#34; /&gt;
+        &lt;/g&gt;
+
+        &lt;text  x=&#34;540&#34; y=&#34;220&#34; fill=&#34;rgb(0, 0, 0)&#34; class=&#34;mid-label&#34;&gt;Ready&lt;/text&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Ecs-Updater: Setup</title>
+      <link>//localhost:1313/en/ecs-updater/0.2.x/setup/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/ecs-updater/0.2.x/setup/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This guide assumes you have &lt;a href=&#34;https://aws.amazon.com/cli/&#34;&gt;AWS CLI v2&lt;/a&gt; installed on a Unix-like system and that you’re authenticated into an account with the requisite permissions.&lt;/p&gt;
+
+
+&lt;div class=&#34;alert alert-secondary&#34; role=&#34;alert&#34;&gt;
+&lt;h4 class=&#34;alert-heading&#34;&gt;Note&lt;/h4&gt;
+
+    &lt;p&gt;Environment variable names in this guide do not have specific meaning; you can replace them with your own or directly interpolate your values as needed.&lt;/p&gt;
+
+
+&lt;/div&gt;
+
+&lt;h2 id=&#34;define-your-environment&#34;&gt;Define your environment&lt;/h2&gt;
+&lt;p&gt;First, define your region in an environment variable.
+Customize the value of this variable for whatever region in which your particular &lt;a href=&#34;https://aws.amazon.com/ecs/&#34;&gt;Amazon ECS&lt;/a&gt; cluster resides.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;export AWS_REGION&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;us-west-2
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;set-your-cluster-name&#34;&gt;Set your cluster name&lt;/h2&gt;
+&lt;p&gt;Now, set an environment variable name &lt;code&gt;ECS_UPDATER_CLUSTER&lt;/code&gt; with the name of the ECS cluster you want to update.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;export ECS_UPDATER_CLUSTER&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;my-cluster-to-update
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Confirm that you have a valid cluster name by running the following:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;aws ecs describe-clusters --no-cli-pager &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    --region &lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;AWS_REGION&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    --cluster &lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;ECS_UPDATER_CLUSTER&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This should return JSON &lt;a href=&#34;https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ecs/describe-clusters.html&#34;&gt;describing the information about your cluster&lt;/a&gt;.
+If the returned JSON has an empty &lt;code&gt;clusters&lt;/code&gt; element and populated &lt;code&gt;failures&lt;/code&gt; element, double check your cluster name.&lt;/p&gt;
+&lt;h2 id=&#34;vpcs-and-subnets&#34;&gt;VPCs and Subnets&lt;/h2&gt;
+&lt;p&gt;If you’re &lt;strong&gt;using the default VPC&lt;/strong&gt;, this command stores it in the environment variable &lt;code&gt;ECS_UPDATER_VPC&lt;/code&gt; :&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;export ECS_UPDATER_VPC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;$(&lt;/span&gt;aws ec2 describe-vpcs &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    --no-cli-pager &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    --output text &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    --region &lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;AWS_REGION&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    --filters&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Name&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;isDefault,Values&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;true &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    --query &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Vpcs[0].VpcId&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Alternately, &lt;strong&gt;if you want a specific VPC by name&lt;/strong&gt;, store that name in the environment variable &lt;code&gt;ECS_UPDATER_VPC_NAME&lt;/code&gt; , replacing ‘myvpc’ with the name of your specific VPC.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;export ECS_UPDATER_VPC_NAME&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;myvpc
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Then run the following command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;export ECS_UPDATER_VPC&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;$(&lt;/span&gt;aws ec2 describe-vpcs &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    --no-cli-pager &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    --output text &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    --region &lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;AWS_REGION&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    --filters&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Name&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;tag:Name,Values&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;ECS_UPDATER_VPC_NAME&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    --query &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Vpcs[0].VpcId&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Double check that the output matches what you’d expect by running &lt;code&gt;echo $ECS_UPDATER_VPC&lt;/code&gt;.
+It should return something like &lt;code&gt;vpc-0a0a0a0a0a0a0a0a0&lt;/code&gt; .&lt;/p&gt;
+&lt;p&gt;Now, with the &lt;code&gt;ECS_UPDATER_VPC&lt;/code&gt;  environment variable, you’ll need to select the subnets.
+To get a &lt;a href=&#34;https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/describe-subnets.html&#34;&gt;list of your subnets&lt;/a&gt; with the requisite information, run the following:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; aws ec2 describe-subnets &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --no-cli-pager &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --output table &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --region &lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;AWS_REGION&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --filter&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;Name&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;vpc-id,Values&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;ECS_UPDATER_VPC&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    --query &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Subnets[].{id: SubnetId, public: MapPublicIpOnLaunch, az: AvailabilityZone}&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This returns a formatted table for each subnet in the VPC along with their ID, availability zone, and a boolean if the subnet is public or not.
+From this table you’ll need to select at least one in each availability zone listed and put the IDs into a comma separated environment variable &lt;code&gt;ECS_UPDATER_SUBNETS&lt;/code&gt; .
+For example, you might end up with something like &lt;code&gt;export ECS_UPDATER_SUBNETS=subnet-0c0c0c0c0c0c0c0c0,subnet-0b0b0b0b0b0b0b0cb&lt;/code&gt;&lt;/p&gt;
+
+
+&lt;div class=&#34;alert alert-warning&#34; role=&#34;alert&#34;&gt;
+&lt;h4 class=&#34;alert-heading&#34;&gt;Requirement&lt;/h4&gt;
+
+    &lt;p&gt;ECS Updater requires access to the internet to gather dependencies. &lt;a href=&#34;https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html&#34;&gt;Public subnets need an internet gateway and private subnets require NAT configuration.&lt;/a&gt;&lt;/p&gt;
+
+
+&lt;/div&gt;
+
+&lt;h2 id=&#34;add-a-log-group&#34;&gt;Add a log group&lt;/h2&gt;
+&lt;p&gt;ECS Updater requires an &lt;a href=&#34;https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html&#34;&gt;Amazon CloudWatch Logs&lt;/a&gt; group to record output.
+You can use either an existing log group or create a new log group.&lt;/p&gt;
+&lt;h3 id=&#34;create-a-log-group&#34;&gt;Create a log group&lt;/h3&gt;
+&lt;p&gt;To create a new log group, first define the name of the log group:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;export ECS_UPDATER_LOG_GROUP&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;my-log-group&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Then &lt;a href=&#34;https://awscli.amazonaws.com/v2/documentation/api/latest/reference/logs/create-log-group.html&#34;&gt;create the group&lt;/a&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;aws logs create-log-group --log-group-name &lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;ECS_UPDATER_LOG_GROUP&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;A successful log group creation may not return any values, so make sure and confirm the details about your group.&lt;/p&gt;
+&lt;h3 id=&#34;use-an-existing-log-group&#34;&gt;Use an existing log group&lt;/h3&gt;
+&lt;p&gt;Run the following to get a &lt;a href=&#34;https://awscli.amazonaws.com/v2/documentation/api/latest/reference/logs/describe-log-groups.html&#34;&gt;list of your available log groups&lt;/a&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;aws logs describe-log-groups &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    --no-cli-pager &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    --query &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;logGroups[*].logGroupName&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    --output table
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This should return a single-column, formatted table of your log groups.
+Select the log group you want and then set the  &lt;code&gt;ECS_UPDATER_LOG_GROUP&lt;/code&gt; to the name of the group you wish to use.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;export ECS_UPDATER_LOG_GROUP&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;my-log-existing&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;To make sure you transcribed the log group name correctly, confirm the details about your group.&lt;/p&gt;
+&lt;h3 id=&#34;confirm-the-log-group&#34;&gt;Confirm the log group&lt;/h3&gt;
+&lt;p&gt;To confirm that your log group environment variable is valid, run the following:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;aws logs describe-log-groups &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    --no-cli-pager &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    --query &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;logGroups[?logGroupName == &amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;ECS_UPDATER_LOG_GROUP&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;]&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This should return some JSON including the element &lt;code&gt;logGroupName&lt;/code&gt;  populated with your log group.
+If you get &lt;code&gt;[]&lt;/code&gt; as a return value, double check your log group name.&lt;/p&gt;
+&lt;h2 id=&#34;install-and-deploy-the-template&#34;&gt;Install and deploy the template&lt;/h2&gt;
+&lt;p&gt;First set an environment variable to define the stack name:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;export ECS_UPDATER_STACK&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;bottlerocket-ecs-updater&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Next, get the &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-ecs-updater/blob/develop/stacks/bottlerocket-ecs-updater.yaml&#34;&gt;AWS CloudFormation template from the ECS Updater GitHub repo&lt;/a&gt; and save it to your working directory or use  curl to retrieve the file directly:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl https://raw.githubusercontent.com/bottlerocket-os/bottlerocket-ecs-updater/v0.2.3/stacks/bottlerocket-ecs-updater.yaml &amp;gt; bottlerocket-ecs-updater.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Then &lt;a href=&#34;https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cloudformation/deploy/index.html&#34;&gt;deploy the stack&lt;/a&gt; using the environment variables you previously set above:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;aws cloudformation deploy &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    --stack-name &lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;ECS_UPDATER_STACK&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    --template-file  ./bottlerocket-ecs-updater.yaml &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    --capabilities CAPABILITY_NAMED_IAM &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    --parameter-overrides &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    ClusterName&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;ECS_UPDATER_CLUSTER&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    Subnets&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;ECS_UPDATER_SUBNETS&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    LogGroupName&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;ECS_UPDATER_LOG_GROUP&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This should return something like:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Waiting &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; changeset to be created..
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Waiting &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; stack create/update to complete
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Successfully created/updated stack - bottlerocket-ecs-updater
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;With this, you’ve successfully deployed the ECS Updater to your cluster.&lt;/p&gt;
+&lt;h2 id=&#34;also-see&#34;&gt;Also see&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;The pattern &lt;a href=&#34;https://containersonaws.com/pattern/ecs-ec2-bottlerocket-cluster&#34;&gt;Amazon ECS cluster on Bottlerocket Operating System&lt;/a&gt; contains instructions on how to deploy a Bottlerocket cluster with ECS Updater using &lt;a href=&#34;https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html&#34;&gt;SAM CLI&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Ecs-Updater: Operate &amp; Observe</title>
+      <link>//localhost:1313/en/ecs-updater/0.2.x/operate/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/ecs-updater/0.2.x/operate/</guid>
+      <description>
+        
+        
+        &lt;p&gt;By default, the ECS Updater runs every 12 hours (using the &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-ecs-updater/blob/develop/stacks/bottlerocket-ecs-updater.yaml&#34;&gt;default template&lt;/a&gt;, schedule defined at at &lt;code&gt;.Resources.BottlerocketUpdaterSchedule.Properties.ScheduleExpression&lt;/code&gt;).
+Each time it runs, the ECS Updater creates a new log stream in Amazon CloudWatch Logs in the log group you specified when deploying.
+You can view the logs in the &lt;a href=&#34;https://console.aws.amazon.com/cloudwatch/&#34;&gt;CloudWatch Logs Console&lt;/a&gt;, with your own tools, or in the console.&lt;/p&gt;
+&lt;h2 id=&#34;ecs-updater-logs-in-the-console&#34;&gt;ECS Updater logs in the console&lt;/h2&gt;
+&lt;p&gt;First, you’ll need to &lt;a href=&#34;https://awscli.amazonaws.com/v2/documentation/api/latest/reference/logs/describe-log-streams.html&#34;&gt;retrieve the log stream&lt;/a&gt;; likely you’re interested in the most recent update check.
+Using the environment variables established in the Setup documentation, run the following command to get the most recent stream and store it in an environment variable:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;export LAST_ECS_UPDATER_LOG_STREAM&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;$(&lt;/span&gt;aws logs describe-log-streams &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --log-group-name &lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;ECS_UPDATER_LOG_GROUP&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --order-by LastEventTime &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --query &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;logStreams[0].logStreamName&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --descending --no-cli-pager --output text --no-paginate&lt;span style=&#34;color:#66d9ef&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Then confirm that the results look correct by running &lt;code&gt;echo $LAST_ECS_UPDATER_LOG_STREAM&lt;/code&gt; , this should return something like &lt;code&gt;/ecs/bottlerocket-updater/some-ecs-cluster/BottlerocketEcsUpdaterService/0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Once you have the &lt;code&gt;LAST_ECS_UPDATER_LOG_STREAM&lt;/code&gt; environment variable, you can &lt;a href=&#34;https://awscli.amazonaws.com/v2/documentation/api/latest/reference/logs/get-log-events.html&#34;&gt;get the events&lt;/a&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;aws logs get-log-events --log-group-name &lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;ECS_UPDATER_LOG_GROUP&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --log-stream-name &lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;LAST_ECS_UPDATER_LOG_STREAM&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --query &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;events[*].message&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;   --no-cli-pager --output table
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This returns a table formatted list of the events, starting with the oldest and moving to the most recent.&lt;/p&gt;
+&lt;p&gt;A few notable messages and meanings:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Filtering container instances running Bottlerocket OS&lt;/code&gt; and subsequently the message &lt;code&gt;Bottlerocket instance &amp;quot;i-&amp;lt;instance&amp;gt;&amp;quot; detected&lt;/code&gt; .
+You should see a match for all the Bottlerocket nodes in your ECS cluster.&lt;/li&gt;
+&lt;li&gt;ECS Updater emits the message  &lt;code&gt;Filtering instances with available updates&lt;/code&gt; when evaluating both the availability of of updates as well as the ability to drain the node.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Sending SSM document &amp;quot;bottlerocket-ecs-updater-UpdateApplyCommand...&lt;/code&gt;  signals the start of ECS Updater directing the control container to apply the update.&lt;/li&gt;
+&lt;li&gt;After finishing the update, the ECS Updater commands the control container to reboot, being logged as &lt;code&gt;Sending SSM document &amp;quot;bottlerocket-ecs-updater-RebootCommand...&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Following the reboot, ECS Updater awaits the successful reboot and emits  &lt;code&gt;Waiting for instance &amp;quot;i-&amp;lt;instance&amp;gt;&amp;quot; to reach Ok status&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Once reaching active, ECS Updater emits  &lt;code&gt;Container instance &amp;quot;arn:aws:ecs:&amp;lt;region&amp;gt;:&amp;lt;instance&amp;gt;:container-instance/&amp;lt;cluster&amp;gt;/&amp;lt;...&amp;gt;&amp;quot; state changed to ACTIVE successfully!&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Before ensuring that the update happened correctly, ECS Updater logs &lt;code&gt;Verifying update by checking there is no new version available to update and validate the active version&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;In the scope of the frequency at which ECS Updater runs compared to the release cadence, most log streams end with “&lt;code&gt;No instances to update&lt;/code&gt;”&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Ecs-Updater: Troubleshoot</title>
+      <link>//localhost:1313/en/ecs-updater/0.2.x/troubleshoot/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/ecs-updater/0.2.x/troubleshoot/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Troubleshooting’s first step is evaluating the log messages emitted by ECS Updater.
+See Operate &amp;amp; Observe for details on how logging works with ECS Updater and what common messages mean.&lt;/p&gt;
+&lt;h2 id=&#34;common-issues&#34;&gt;Common Issues&lt;/h2&gt;
+&lt;h3 id=&#34;bottlerocket-instances-start-with-an-old-version-of-bottlerocket&#34;&gt;Bottlerocket instances start with an old version of Bottlerocket&lt;/h3&gt;
+&lt;p&gt;After using ECS Updater for a while you may notice that any brand new nodes added to the cluster start with an older version of Bottlerocket then ECS Updater flags them for an update on next invocation.
+The ECS updater can only update existing nodes and it doesn’t manage the node creation process.
+If you’re using an auto-scaling group, update your AMI ID in the the launch configuration or template.&lt;/p&gt;
+&lt;h3 id=&#34;spot-instances-never-update-to-a-new-version-of-bottlerocket&#34;&gt;Spot instances never update to a new version of Bottlerocket&lt;/h3&gt;
+&lt;p&gt;While it’s possible to run ECS Updater in conjunction with &lt;a href=&#34;https://aws.amazon.com/ec2/spot/&#34;&gt;Amazon EC2 Spot&lt;/a&gt;, in practice &lt;strong&gt;this doesn’t work well&lt;/strong&gt;.
+Due to the short average lifespan of Spot instances paired with the run frequency and draining requirements in ECS Updater, Spot instances are unlikely to be kept up-to-date.
+If you intend to use Spot instances, set the instance to start with the latest AMI for your variant.&lt;/p&gt;
+&lt;h3 id=&#34;stuck-updates&#34;&gt;Stuck Updates&lt;/h3&gt;
+&lt;p&gt;ECS Updater attempts to update nodes with minimal disruption to your workloads, however it must balance this with the reboot needed to complete the update.
+To update a node, it requires a number of preconditions:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The node has non-service task.
+ECS Updater will avoid updating any node that has un-replacable workloads.
+&lt;br&gt; &lt;strong&gt;Troubleshooting step&lt;/strong&gt;: Confirm the workloads on the node that did not update are part of services.&lt;/li&gt;
+&lt;li&gt;The cluster lacks spare capacity.
+Amazon ECS needs to replace any tasks shut down by attempting to update whilst maintaining a service’s &lt;code&gt;minimumHealthyPercent&lt;/code&gt; configuration.
+ECS will not stop tasks that violate this configuration and consequently, the node will not drain.
+&lt;br&gt; &lt;strong&gt;Troubleshooting step&lt;/strong&gt;: Check that your &lt;code&gt;minimumHealthyPercent&lt;/code&gt;  is reasonable and that you have enough capacity to adequately update nodes.&lt;/li&gt;
+&lt;li&gt;Draining takes too long.
+ECS Updater waits for the ECS control plane to drain a node for 25 minutes.
+&lt;br&gt; &lt;strong&gt;Troubleshooting step:&lt;/strong&gt; Ensure that your workloads respond as quickly as possible to &lt;code&gt;SIGTERM&lt;/code&gt; , evaluate the &lt;code&gt;stopTimeout&lt;/code&gt;  value in the task definition, and evaluate the load balancer health check and deregistration delays.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;also-see&#34;&gt;Also see:&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;//localhost:1313/en/faq&#34;&gt;Bottlerocket FAQ&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;//localhost:1313/en/faq/#7_3&#34;&gt;Why do some of the nodes in my cluster have an update available and others do not?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;//localhost:1313/en/faq/#7_2&#34;&gt;Why are my nodes egressing to &lt;code&gt;updates.bottlerocket.aws&lt;/code&gt;?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Ecs-Updater: Uninstall</title>
+      <link>//localhost:1313/en/ecs-updater/0.2.x/uninstall/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/ecs-updater/0.2.x/uninstall/</guid>
+      <description>
+        
+        
+        &lt;p&gt;To uninstall ECS Updater, &lt;a href=&#34;https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cloudformation/delete-stack.html&#34;&gt;delete&lt;/a&gt; the &lt;a href=&#34;https://aws.amazon.com/cloudformation/&#34;&gt;AWS CloudFormation&lt;/a&gt; stack that you previously deployed.
+Assuming you have the environment variables set from the previous install guide, run the following:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;aws cloudformation delete-stack &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    --stack-name &lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;ECS_UPDATER_STACK&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    --region &lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;AWS_REGION&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;With no errors, this will give no return status.&lt;/p&gt;
+&lt;p&gt;To confirm the removal of ECS Updater, &lt;a href=&#34;https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cloudformation/describe-stacks.html&#34;&gt;describe the stack&lt;/a&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;aws cloudformation delete-stack --stack-name &lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;ECS_UPDATER_STACK&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;If deleted, the CLI returns &lt;code&gt;An error occurred (ValidationError) when calling the DescribeStacks operation Stack with id &amp;lt;...&amp;gt; does not exist&lt;/code&gt; , otherwise it will show the stack, indicating a still active ECS Updater.&lt;/p&gt;
+&lt;p&gt;If you followed the &lt;a href=&#34;../setup/&#34;&gt;Setup instructions&lt;/a&gt; and created a log group, make sure and &lt;a href=&#34;https://awscli.amazonaws.com/v2/documentation/api/latest/reference/logs/delete-log-group.html&#34;&gt;clean that up&lt;/a&gt; as well.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

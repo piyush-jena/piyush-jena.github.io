@@ -1,0 +1,95 @@
+languageCode = 'en-us'
+title = 'Bottlerocket'
+
+
+
+defaultContentLanguage = 'all'
+
+[params]
+copyright = "Copyright Amazon.com, Inc., its affiliates, or other contributors. All Rights Reserved."
+languageOverride = 'all'
+brand_link = "/"
+description = "Bottlerocket is a Linux-based operating system optimized for hosting containers. It’s free and open-source software, developed in the open on GitHub. Bottlerocket is installed on the machine or instance where your containers themselves are running. It is specifically designed to work with your container orchestrator (like Kubernetes) to automate the lifecycle of the containers running in your cluster. Bottlerocket runs in the cloud or in your datacenter."
+[params.ui]
+footer_about_disable = true
+navbar_logo = false
+sidebar_menu_foldable = true
+ul_show = 1
+
+[params.imports.bottlerocket]
+    repo_path = 'bottlerocket'
+    repo_human_readable = 'bottlerocket-os/bottlerocket'
+    import_url_fragment = "https://github.com/bottlerocket-os/bottlerocket/blob/develop/"
+
+
+[[params.textLinks]]
+  name = "Charter"
+  url = "/about/charter"
+
+[[params.textLinks]]
+  name = "Code of Conduct"
+  url = "/about/code-of-conduct"
+
+[[params.textLinks]]
+  name = "Security"
+  url = "/about/security"
+
+[[params.textLinks]]
+  name = "Trademark Policy"
+  url = "/about/trademark"
+
+[params.links]
+
+[[params.links.developer]]
+	name = "GitHub"
+	url = "https://github.com/bottlerocket-os"
+	icon = "fab fa-github"
+        desc = "The Bottlerocket GitHub Organization"
+
+[module]
+  proxy = "direct"
+  [module.hugoVersion]
+    extended = true
+    min = "0.73.0"
+
+[[module.imports]]
+  path = "github.com/google/docsy"
+  disable = false
+[[module.imports]]
+  path = "github.com/google/docsy/dependencies"
+  disable = false
+[[module.mounts]]
+  source= "/third-party/google/docsy/layouts/_default"
+  target= "layouts/_default"
+  includeFiles= "baseof.html"
+[[module.mounts]]
+  source= "/third-party/google/docsy/layouts/partials"
+  target= "layouts/partials"
+  includeFiles= ["navbar.html", "footer.html"]
+
+[languages]
+  [languages.all]
+    contentDir = 'content/all'
+    languageName = 'Home'
+    weight = 10
+  [languages.en]
+    contentDir = 'content/en'
+    languageName = 'Docs in English'
+    weight = 11
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[[menu.main]]
+  # This was added to support mutliple languages eventually but start with one only
+  # to re-enable, you'll need to uncomment the drop down in /layouts/partials/navbar.html
+  name = "Documentation"
+  weight = 50
+  url = "en/"
+
+[[menu.main]]
+  name = "FAQ"
+  weight = 20
+  url = "en/faq/"

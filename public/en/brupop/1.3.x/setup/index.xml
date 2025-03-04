@@ -1,0 +1,295 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bottlerocket – Setup</title>
+    <link>//localhost:1313/en/brupop/1.3.x/setup/</link>
+    <description>Recent content in Setup on Bottlerocket</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    
+	  <atom:link href="//localhost:1313/en/brupop/1.3.x/setup/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Brupop: Prerequisite: cert-manager</title>
+      <link>//localhost:1313/en/brupop/1.3.x/setup/cert-manager/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/brupop/1.3.x/setup/cert-manager/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Brupop uses &lt;a href=&#34;https://cert-manager.io/&#34;&gt;cert-manager&lt;/a&gt; to manage self-signed certificates.
+You can install it with &lt;code&gt;kubectl&lt;/code&gt; or &lt;a href=&#34;https://helm.sh/&#34;&gt;helm&lt;/a&gt;.&lt;/p&gt;
+
+
+&lt;div class=&#34;alert alert-success&#34; role=&#34;alert&#34;&gt;
+&lt;h4 class=&#34;alert-heading&#34;&gt;Note&lt;/h4&gt;
+
+    &lt;p&gt;This guide uses the most recent release of &lt;code&gt;cert-manager&lt;/code&gt;, 1.14.1, but there is no particular hard dependency on this version.&lt;/p&gt;
+
+
+&lt;/div&gt;
+
+&lt;h2 id=&#34;installing-cert-manager-using-kubectl&#34;&gt;Installing &lt;code&gt;cert-manager&lt;/code&gt; using &lt;code&gt;kubectl&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;Use &lt;code&gt;kubectl&lt;/code&gt; to install cert-manager:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.1/cert-manager.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;installing-cert-manager-using-helm&#34;&gt;Installing &lt;code&gt;cert-manager&lt;/code&gt; using &lt;code&gt;helm&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;First, add the &lt;code&gt;cert-manager&lt;/code&gt; helm chart:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;helm repo add jetstack https://charts.jetstack.io
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Then update your local chart:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;helm repo update
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Finally, install &lt;code&gt;cert-manager&lt;/code&gt; including its CRDs:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;helm install &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  cert-manager jetstack/cert-manager &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --namespace cert-manager &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --create-namespace &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --version v1.14.1 &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --set installCRDs&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;true
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;next-step&#34;&gt;Next step&lt;/h2&gt;
+&lt;p&gt;After installing &lt;code&gt;cert-manager&lt;/code&gt;, go ahead and &lt;a href=&#34;../install/&#34;&gt;install Brupop itself&lt;/a&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Brupop: Install Brupop</title>
+      <link>//localhost:1313/en/brupop/1.3.x/setup/install/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/brupop/1.3.x/setup/install/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Installing Brupop creates the custom resource definitions (CRDs), roles, and deployments and uses the latest operator image from &lt;a href=&#34;https://gallery.ecr.aws/bottlerocket/bottlerocket-update-operator&#34;&gt;Amazon ECR Public&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;You can install Brupop either &lt;a href=&#34;//localhost:1313/en/brupop/1.3.x/setup/install/#install-with-helm&#34;&gt;with &lt;code&gt;helm&lt;/code&gt;&lt;/a&gt; or a &lt;a href=&#34;//localhost:1313/en/brupop/1.3.x/setup/install/#install-with-a-manifest&#34;&gt;pre-baked manifest&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;install-with-helm&#34;&gt;Install with &lt;code&gt;helm&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;First, using &lt;a href=&#34;https://helm.sh/&#34;&gt;helm&lt;/a&gt; add the &lt;code&gt;bottlerocket-operator-chart&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;helm repo add brupop https://bottlerocket-os.github.io/bottlerocket-update-operator
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Then update your local chart:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;helm repo update
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Create a namespace for the operator:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kubectl create namespace brupop-bottlerocket-aws
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Next, install the Brupop custom resource definition:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;helm install brupop-crd brupop/bottlerocket-shadow
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Finally, install the operator itself:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;helm install brupop-operator brupop/bottlerocket-update-operator
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;After you&amp;rsquo;ve installed the operator, you can move on to the next step: &lt;a href=&#34;../configure/&#34;&gt;configuring Brupop&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;install-with-a-manifest&#34;&gt;Install with a Manifest&lt;/h2&gt;
+&lt;p&gt;First, &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-update-operator/releases/tag/v1.3.0&#34;&gt;download the manifest from the release&lt;/a&gt; to your local machine and run the following:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kubectl apply -f bottlerocket-update-operator-v1.3.0.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Alternately, you can point &lt;code&gt;kubectl&lt;/code&gt; directly at the manifest URL.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kubectl apply -f https://github.com/bottlerocket-os/bottlerocket-update-operator/releases/download/v1.3.0/bottlerocket-update-operator-v1.3.0.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;After you&amp;rsquo;ve installed the operator, you can move on to the next step: &lt;a href=&#34;../configure/&#34;&gt;configuring Brupop&lt;/a&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Brupop: Configure Brupop</title>
+      <link>//localhost:1313/en/brupop/1.3.x/setup/configure/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/brupop/1.3.x/setup/configure/</guid>
+      <description>
+        
+        
+        &lt;p&gt;When you install Brupop, the operator comes pre-configured with reasonable defaults.
+&lt;a href=&#34;//localhost:1313/en/brupop/1.3.x/setup/configure/#label-nodes&#34;&gt;Labeling your nodes&lt;/a&gt; is the only required configuration step.&lt;/p&gt;
+&lt;p&gt;Aside from labeling nodes, you configure Brupop with &lt;a href=&#34;https://helm.sh/&#34;&gt;helm&lt;/a&gt; or with a manifest.
+Helm reduces the configuration burden for Brupop substantially with few down sides, so this documentation focuses on configuration with helm.
+If you choose to not use helm, refer to the 
+
+&lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-update-operator/blob/v1.3.0/bottlerocket-update-operator.yaml&#34;&gt;pre-baked manifest for an example&lt;/a&gt;
+.&lt;/p&gt;
+&lt;h2 id=&#34;required-configuration&#34;&gt;Required Configuration&lt;/h2&gt;
+&lt;h3 id=&#34;label-nodes&#34;&gt;Label nodes&lt;/h3&gt;
+
+
+&lt;div class=&#34;alert alert-warning&#34; role=&#34;alert&#34;&gt;
+&lt;h4 class=&#34;alert-heading&#34;&gt;Warning&lt;/h4&gt;
+
+    &lt;p&gt;You can fully install Brupop but if you do not apply the proper node labels the operator will not update your nodes.&lt;/p&gt;
+
+
+&lt;/div&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/&#34;&gt;Kubernetes node labels&lt;/a&gt; control which nodes Brupop updates; specifically, the label &lt;code&gt;bottlerocket.aws/updater-interface-version=2.0.0&lt;/code&gt; dictates which nodes in the cluster get automatic updates.&lt;/p&gt;
+&lt;p&gt;You can label nodes using 
+
+&lt;a href=&#34;//localhost:1313/en/os/1.34.x/api/settings/kubernetes/#node-labels&#34;&gt;&lt;code&gt;settings.kubernetes.node-labels&lt;/code&gt;&lt;/a&gt;
+ with TOML 
+
+&lt;a href=&#34;//localhost:1313/en/os/1.34.x/concepts/api-driven/#user-data&#34;&gt;(including instance user data)&lt;/a&gt;
+, using &lt;code&gt;apiclient&lt;/code&gt; in a host container, or &lt;code&gt;kubectl&lt;/code&gt;.&lt;/p&gt;
+&lt;h4 id=&#34;label-a-node-with-apiclient&#34;&gt;Label a node with &lt;code&gt;apiclient&lt;/code&gt;&lt;/h4&gt;
+&lt;p&gt;From the control or admin container, run the following:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apiclient set settings.kubernetes.node-labels.bottlerocket.aws/updater-interface-version&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;2.0.0
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;label-all-nodes-when-starting-an-eks-cluster-with-eksctl&#34;&gt;Label all nodes when starting an EKS cluster with &lt;code&gt;eksctl&lt;/code&gt;&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;nodeGroups&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  - &lt;span style=&#34;color:#f92672&#34;&gt;name&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;name-of-your-nodegroup&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;labels&lt;/span&gt;: { &lt;span style=&#34;color:#f92672&#34;&gt;bottlerocket.aws/updater-interface-version&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;2.0.0&lt;/span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;labeling-nodes-with-kubectl&#34;&gt;Labeling nodes with &lt;code&gt;kubectl&lt;/code&gt;&lt;/h4&gt;
+&lt;h4 id=&#34;label-a-single-node&#34;&gt;Label a single node&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# replace MY_NODE_NAME with the name of your node&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kubectl label node MY_NODE_NAME bottlerocket.aws/updater-interface-version&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;2.0.0
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h5 id=&#34;label-all-nodes&#34;&gt;Label all nodes&lt;/h5&gt;
+&lt;p&gt;If you are running Bottlerocket on all nodes in your cluster, you can use &lt;code&gt;kubectl&lt;/code&gt; to label all nodes at once:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kubectl label node &lt;span style=&#34;color:#66d9ef&#34;&gt;$(&lt;/span&gt;kubectl get nodes -o jsonpath&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;{.items[*].metadata.name}&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;)&lt;/span&gt; bottlerocket.aws/updater-interface-version&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;2.0.0
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;labeling-a-node-with-the-bottlerocket-api&#34;&gt;Labeling a node with the Bottlerocket API&lt;/h4&gt;
+&lt;p&gt;Add the following TOML to your instance user data:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-TOML&#34; data-lang=&#34;TOML&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;[&lt;span style=&#34;color:#a6e22e&#34;&gt;settings&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;kubernetes&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;node-labels&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;bottlerocket.aws/updater-interface-version&amp;#34;&lt;/span&gt; = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.0.0&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;optional-configuration&#34;&gt;Optional Configuration&lt;/h2&gt;
+&lt;h3 id=&#34;api-server-ports&#34;&gt;API Server Ports&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Helm Configuration&lt;/strong&gt;: &lt;code&gt;apiserver_internal_port&lt;/code&gt; for internal traffic, &lt;code&gt;apiserver_service_port&lt;/code&gt; for node agent traffic.&lt;/p&gt;
+&lt;p&gt;Brupop uses two ports for &lt;a href=&#34;../../concepts/#controlled-updates&#34;&gt;communication between components&lt;/a&gt;: &lt;code&gt;apiserver_internal_port&lt;/code&gt; for the controller and the &lt;a href=&#34;../../concepts/#states&#34;&gt;&lt;code&gt;BottlerocketShadow&lt;/code&gt; custom resource&lt;/a&gt; and the &lt;code&gt;apiserver_service_port&lt;/code&gt; for the conversion webhook.
+Refer to the the
+
+
+&lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-update-operator/blob/v1.3.0/bottlerocket-update-operator.yaml&#34;&gt;manifest&lt;/a&gt;
+ for more information on the usage of each port.&lt;/p&gt;
+&lt;p&gt;By default, the operator’s API server uses port &lt;code&gt;8443&lt;/code&gt; for internal traffic and port &lt;code&gt;443&lt;/code&gt; for node agents, but you can change these ports via this configuration.
+Both ports must be set or the operator will fail to start.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-YAML&#34; data-lang=&#34;YAML&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;apiserver_internal_port&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;8443&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;concurrent-updates&#34;&gt;Concurrent Updates&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Helm Configuration&lt;/strong&gt;: &lt;code&gt;max_concurrent_updates&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;You can set the maximum concurrency of updates that Brupop will perform.
+You either set a specific number of concurrent updates or, alternately, &lt;code&gt;&amp;quot;unlimited&amp;quot;&lt;/code&gt; to update as many nodes as possible concurrently.
+In either case, Brupop always respects &lt;a href=&#34;https://kubernetes.io/docs/tasks/run-application/configure-pdb/&#34;&gt;&lt;code&gt;PodDisruptionBudget&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+
+
+&lt;div class=&#34;alert alert-warning&#34; role=&#34;alert&#34;&gt;
+&lt;h4 class=&#34;alert-heading&#34;&gt;Conflicts between load balancing and concurrency&lt;/h4&gt;
+
+    &lt;p&gt;Take caution when setting concurrency and &lt;a href=&#34;//localhost:1313/en/brupop/1.3.x/setup/configure/#load-balancer-exclusion&#34;&gt;excluding load balancers&lt;/a&gt; together, as misconfiguration can result in a condition where all nodes exclude load balancing and can never drain fully to complete the update.
+Setting up &lt;code&gt;PodDisruptionBudget&lt;/code&gt; guards against this condition.&lt;/p&gt;
+
+
+&lt;/div&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;max_concurrent_updates&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;namespace&#34;&gt;Namespace&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Helm Configuration&lt;/strong&gt;: &lt;code&gt;brupop-bottlerocket-aws&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;You can change the namespace where Kubernetes deploys Brupop (default: &lt;code&gt;brupop-bottlerocket-aws&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;namespace&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;brupop-bottlerocket-aws&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;load-balancer-exclusion&#34;&gt;Load balancer exclusion&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Helm Configuration&lt;/strong&gt;: &lt;code&gt;exclude_from_lb_wait_time_in_sec&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;With this option, you control the exclusion of the node from load balancing and delays draining the node for the number of seconds specified.
+Internally, Brupop uses &lt;a href=&#34;https://kubernetes.io/docs/reference/labels-annotations-taints/#node-kubernetes-io-exclude-from-external-load-balancers&#34;&gt;&lt;code&gt;node.kubernetes.io/exclude-from-external-load-balancers&lt;/code&gt;&lt;/a&gt; to exclude the node from load balancing.&lt;/p&gt;
+&lt;p&gt;See &lt;a href=&#34;//localhost:1313/en/brupop/1.3.x/setup/configure/#concurrent-updates&#34;&gt;Concurrent Updates&lt;/a&gt; for an important warning about concurrency and load balancer exclusion.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;exclude_from_lb_wait_time_in_sec&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;0&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;logging&#34;&gt;Logging&lt;/h3&gt;
+&lt;p&gt;Brupop emits logs from the controller, agent, and API server through standard Kubernetes logging mechanisms but you configure the log format and filter.&lt;/p&gt;
+&lt;h4 id=&#34;format&#34;&gt;Format&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Helm Configuration&lt;/strong&gt;: &lt;code&gt;logging.formatter&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Log formatting has four options:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;full&lt;/code&gt;: Human-readable, single-line logs,&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;compact&lt;/code&gt;: A shorter version of &lt;code&gt;full&lt;/code&gt;,&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pretty&lt;/code&gt;: &amp;ldquo;Excessively pretty&amp;rdquo;, terminal-optimized human-readable logs (default),&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;json&lt;/code&gt;:  New line-delimited JSON-formatted (machine-readable) logs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;logging&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;formatter&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;pretty&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;colours&#34;&gt;Colours&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Helm Configuration&lt;/strong&gt;: &lt;code&gt;logging.ansi_enabled&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;You can optionally set the logs to add ANSI colour information (&lt;code&gt;true&lt;/code&gt;/&lt;code&gt;false&lt;/code&gt;), which is helpful if viewing in a terminal, but adds garbage characters for non-terminal logging utilities.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;logging&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;ansi_enabled&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;true&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;filter&#34;&gt;Filter&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Helm Configuration&lt;/strong&gt;: The controller, agent, and API server are configured via&lt;code&gt;logging.controller.tracing_filter&lt;/code&gt;, &lt;code&gt;logging.agent.tracing_filter&lt;/code&gt;, and &lt;code&gt;logging.apiserver.tracing_filter&lt;/code&gt; (respectively).&lt;/p&gt;
+&lt;p&gt;Log filtering accepts on both typical log levels (&lt;code&gt;info&lt;/code&gt; (default), &lt;code&gt;debug&lt;/code&gt;, &lt;code&gt;error&lt;/code&gt;) or through &lt;a href=&#34;https://docs.rs/tracing-subscriber/0.3.17/tracing_subscriber/filter/struct.EnvFilter.html#directives&#34;&gt;filter directives&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;controller&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;tracing_filter&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;info&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;agent&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;tracing_filter&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;debug&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;apiserver&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;tracing_filter&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;error&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;placement&#34;&gt;Placement&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Helm Configuration&lt;/strong&gt;: &lt;code&gt;placement.agent&lt;/code&gt;, &lt;code&gt;placement.controller&lt;/code&gt;, &lt;code&gt;placement.apiserver&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;With these configurations, you can control the &lt;a href=&#34;https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/&#34;&gt;tolerations&lt;/a&gt; for the agent, controller and API server.
+For the controller and API server you can also control the &lt;a href=&#34;https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector&#34;&gt;node selector&lt;/a&gt;, and &lt;a href=&#34;https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity&#34;&gt;pod affinitiy and anti-affinity&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Placement controls&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# See the Kubernetes documentation about placement controls for more details:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# * https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# * https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# * https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;placement&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;agent&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# The agent is a daemonset, so the only controls that apply to it are tolerations.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;tolerations&lt;/span&gt;: []
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;controller&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;tolerations&lt;/span&gt;: []
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;nodeSelector&lt;/span&gt;: {}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;podAffinity&lt;/span&gt;: {}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;podAntiAffinity&lt;/span&gt;: {}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;apiserver&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;tolerations&lt;/span&gt;: []
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;nodeSelector&lt;/span&gt;: {}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;podAffinity&lt;/span&gt;: {}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# By default, apiserver pods prefer not to be scheduled to the same node.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;podAntiAffinity&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;preferredDuringSchedulingIgnoredDuringExecution&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        - &lt;span style=&#34;color:#f92672&#34;&gt;weight&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#f92672&#34;&gt;podAffinityTerm&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;labelSelector&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              &lt;span style=&#34;color:#f92672&#34;&gt;matchExpressions&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              - &lt;span style=&#34;color:#f92672&#34;&gt;key&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;brupop.bottlerocket.aws/component&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#f92672&#34;&gt;operator&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;In&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#f92672&#34;&gt;values&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                - &lt;span style=&#34;color:#ae81ff&#34;&gt;apiserver&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;topologyKey&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;kubernetes.io/hostname&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;private-image-registry&#34;&gt;Private Image Registry&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Helm Configuration&lt;/strong&gt;: &lt;code&gt;image_pull_secrets&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;If you are testing Brupop with a private image registry, you can configure pull secrets to fetch images.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;image_pull_secrets&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  - &lt;span style=&#34;color:#f92672&#34;&gt;name&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;brupop&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;scheduling&#34;&gt;Scheduling&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Helm Configuration&lt;/strong&gt;: &lt;code&gt;scheduler_cron_expression&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Brupop schedules node updates based on a cron expression in the following format:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; ┌───────────── seconds (0 - 59)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; │ ┌───────────── minute (0 - 59)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; │ │ ┌───────────── hour (0 - 23)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; │ │ │ ┌───────────── day of the month (1 - 31)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; │ │ │ │ ┌───────────── month (Jan, Feb, Mar, Apr, Jun, Jul, Aug, Sep, Oct, Nov, Dec)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; │ │ │ │ │ ┌───────────── day of the week (Mon, Tue, Wed, Thu, Fri, Sat, Sun)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; │ │ │ │ │ │ ┌───────────── year (formatted as YYYY)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; │ │ │ │ │ │ │
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; │ │ │ │ │ │ │
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; * * * * * * *
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Every day at 3 AM&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;scheduler_cron_expression&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;* * 3 * * * *&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

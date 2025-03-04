@@ -1,0 +1,171 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bottlerocket – Update Methods</title>
+    <link>//localhost:1313/en/os/1.29.x/update/methods/</link>
+    <description>Recent content in Update Methods on Bottlerocket</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    
+	  <atom:link href="//localhost:1313/en/os/1.29.x/update/methods/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Os: In-Place Updates</title>
+      <link>//localhost:1313/en/os/1.29.x/update/methods/in-place/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/os/1.29.x/update/methods/in-place/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Bottlerocket clusters can be updated in-place, meaning that the existing Bottlerocket nodes will download updated software to use, without re-provisioning the nodes.
+There are different ways to update in-place depending on your environment.&lt;/p&gt;
+&lt;h2 id=&#34;apiclient-commands&#34;&gt;&lt;code&gt;apiclient&lt;/code&gt; Commands&lt;/h2&gt;
+&lt;p&gt;At its core, updating Bottlerocket consists of three steps: checking for an update, applying an update, and rebooting into the new Bottlerocket version.&lt;/p&gt;
+&lt;p&gt;These steps have specific &lt;code&gt;apiclient&lt;/code&gt; commands associated with them:&lt;/p&gt;
+&lt;h3 id=&#34;check-for-update&#34;&gt;Check for Update&lt;/h3&gt;
+&lt;p&gt;In order to check for an update using &lt;code&gt;apiclient&lt;/code&gt;, issue the following command in the control container:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apiclient update check
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;apply-update&#34;&gt;Apply Update&lt;/h3&gt;
+&lt;p&gt;If an update is found while checking for an update, apply the update using the following command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apiclient update apply
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;That command downloads the updated Bottlerocket image, apply it to a separate partition on disk, and prepare the system to use the new version of Bottlerocket.
+In particular, &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket#updates-1&#34;&gt;the partition that was just updated with the new Bottlerocket image is marked as the &amp;ldquo;active&amp;rdquo; next boot partition&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;It is also possible to combine the Check and Apply steps into a single command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apiclient update apply --check
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;That command first checks for an update, and then applies the update if one is found.&lt;/p&gt;
+&lt;h3 id=&#34;reboot-into-the-new-version&#34;&gt;Reboot Into the New Version&lt;/h3&gt;
+&lt;p&gt;After applying the update, reboot the system in order to begin using the new version of Bottlerocket.
+That can be done with the following command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apiclient reboot
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;ecs&#34;&gt;ECS&lt;/h2&gt;
+&lt;p&gt;For the &lt;code&gt;aws-ecs-*&lt;/code&gt; variants of Bottlerocket, use the &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-ecs-updater#how-it-works&#34;&gt;ECS updater&lt;/a&gt;.
+See the &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-ecs-updater#installation&#34;&gt;ECS updater installation documentation&lt;/a&gt; for more information on how to install and use the ECS updater.&lt;/p&gt;
+&lt;p&gt;By default, the ECS updater checks for updates every 12 hours.&lt;/p&gt;
+&lt;p&gt;In order to install the ECS updater, you need a few different pieces of information: the subnet information for your cluster, the name of the CloudWatch Logs log group where you want logs stored, and the name of the ECS cluster you want the ECS updater to keep updated.
+Further information on how to get that information can be found in the &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-ecs-updater#getting-started&#34;&gt;Getting Started section of the ECS updater documentation&lt;/a&gt;.
+After you&amp;rsquo;ve gathered those three values, you are ready to install the ECS updater.&lt;/p&gt;
+&lt;p&gt;Detailed installation steps, including commands to run, are provided in the &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-ecs-updater#install&#34;&gt;Install section of the ECS updater documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;kubernetes&#34;&gt;Kubernetes&lt;/h2&gt;
+&lt;p&gt;For the &lt;code&gt;aws-k8s-*&lt;/code&gt; variants of Bottlerocket, there are a handful of possible ways to update Bottlerocket: Brupop, the EKS Console, &lt;code&gt;eksctl&lt;/code&gt;, and SSM Command Documents.
+The following sections discuss each of these methods.&lt;/p&gt;
+&lt;h3 id=&#34;brupop&#34;&gt;Brupop&lt;/h3&gt;
+&lt;p&gt;The recommended method to update your Bottlerocket nodes on Kubernetes is with Brupop.&lt;/p&gt;
+&lt;h4 id=&#34;brupop-install-via-released-yaml&#34;&gt;Brupop: Install via Released YAML&lt;/h4&gt;
+&lt;p&gt;Brupop installation via the released YAML file is covered in the &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-update-operator#installation&#34;&gt;Brupop documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;ssm&#34;&gt;SSM&lt;/h2&gt;
+&lt;p&gt;If your Bottlerocket nodes are registered with AWS Systems Manager (SSM), it may be convenient for you to use SSM Command Documents to update your Bottlerocket nodes.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Important:&lt;/strong&gt; when using the SSM instructions below to update Bottlerocket nodes, workloads will &lt;em&gt;not&lt;/em&gt; be drained from the node before rebooting the node, causing interruptions to the workloads (unlike when using Brupop, for example).&lt;/p&gt;
+&lt;h3 id=&#34;ssm-command-document-method&#34;&gt;SSM Command Document Method&lt;/h3&gt;
+&lt;p&gt;This method performs the same action as the &lt;a href=&#34;//localhost:1313/en/os/1.29.x/update/methods/in-place/#apiclient-commands&#34;&gt;&lt;code&gt;apiclient&lt;/code&gt; commands&lt;/a&gt; method above, but uses SSM Command Documents rather than interactively running the &lt;code&gt;apiclient&lt;/code&gt; commands from the &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket#control-container&#34;&gt;control container&lt;/a&gt;.
+SSM Command Documents allow you to specify shell commands to run on target nodes.
+Use the &lt;code&gt;aws:runShellScript&lt;/code&gt; SSM Action inside SSM Command Documents to run the &lt;code&gt;apiclient update&lt;/code&gt; command on your Bottlerocket nodes.
+See the &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket/blob/develop/sources/api/apiclient/README.md#update-mode&#34;&gt;&lt;code&gt;apiclient&lt;/code&gt; documentation&lt;/a&gt; to learn more about &lt;code&gt;apiclient update&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The following three subsections cover how to create two SSM Command Documents and apply them to your Bottlerocket nodes: one Command Document updates and prepares a Bottlerocket node to use the latest available version of the Bottlerocket image, and the other Command Document reboots a Bottlerocket node in order to use that latest acquired Bottlerocket image.&lt;/p&gt;
+&lt;p&gt;Both the update and reboot steps can be combined into a single SSM Command Document, however keeping the two steps separate allows you to apply updates and reboot your Bottlerocket nodes in separate patterns, if needed.
+For example, you may want to apply updates to your Bottlerocket nodes all at once, but reboot them in groups.&lt;/p&gt;
+&lt;h4 id=&#34;1-create-the-ssm-command-document-for-updating-nodes&#34;&gt;1. Create the SSM Command Document for Updating Nodes&lt;/h4&gt;
+&lt;p&gt;To create an SSM Command Document, follow the steps in the &lt;a href=&#34;https://docs.aws.amazon.com/systems-manager/latest/userguide/create-ssm-console.html&#34;&gt;AWS Systems Manager User Guide: &amp;ldquo;Create an SSM document (console)&amp;rdquo;&lt;/a&gt;.
+Remember to select &amp;ldquo;YAML&amp;rdquo; in the &amp;ldquo;Content&amp;rdquo; box, since the &lt;a href=&#34;//localhost:1313/en/os/1.29.x/update/methods/in-place/#ssm-command-document-check-for-and-apply-updates-to-a-bottlerocket-node&#34;&gt;SSM Command Document below&lt;/a&gt; is formatted in YAML.&lt;/p&gt;
+&lt;p&gt;A quick overview of what &lt;code&gt;apiclient update apply --check&lt;/code&gt; does:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;First, the &lt;code&gt;--check&lt;/code&gt; flag executes: &lt;code&gt;apiclient&lt;/code&gt; checks for the available Bottlerocket OS images and selects the latest one.&lt;/li&gt;
+&lt;li&gt;Next, the &lt;code&gt;apply&lt;/code&gt; subcommand executes: &lt;code&gt;apiclient&lt;/code&gt; downloads the latest Bottlerocket OS image and prepares the Bottlerocket node to use it.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h5 id=&#34;ssm-command-document-check-for-and-apply-updates-to-a-bottlerocket-node&#34;&gt;SSM Command Document: Check For and Apply Updates to a Bottlerocket Node&lt;/h5&gt;
+&lt;p&gt;The following SSM Command Document is referred to in this documentation as &lt;code&gt;update-bottlerocket-node&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;---
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;schemaVersion&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.2&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;description&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Update a Bottlerocket host via the Bottlerocket Update API&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;mainSteps&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  - &lt;span style=&#34;color:#f92672&#34;&gt;name&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;updateBottlerocket&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;action&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;aws:runShellScript&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;inputs&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;timeoutSeconds&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;120&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;runCommand&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        - &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;apiclient update apply --check&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Congratulations!
+You now have an SSM Command Document that updates a Bottlerocket node to the latest version of Bottlerocket.&lt;/p&gt;
+&lt;h4 id=&#34;2-create-the-ssm-command-document-for-rebooting-nodes&#34;&gt;2. Create the SSM Command Document for Rebooting Nodes&lt;/h4&gt;
+&lt;p&gt;To create an SSM Command Document, follow the steps in the &lt;a href=&#34;https://docs.aws.amazon.com/systems-manager/latest/userguide/create-ssm-console.html&#34;&gt;AWS Systems Manager User Guide: &amp;ldquo;Create an SSM document (console)&amp;rdquo;&lt;/a&gt;.
+Remember to select &amp;ldquo;YAML&amp;rdquo; in the &amp;ldquo;Content&amp;rdquo; box, since the &lt;a href=&#34;//localhost:1313/en/os/1.29.x/update/methods/in-place/#ssm-command-document-reboot-a-bottlerocket-node&#34;&gt;SSM Command Document below&lt;/a&gt; is formatted in YAML.&lt;/p&gt;
+&lt;h5 id=&#34;ssm-command-document-reboot-a-bottlerocket-node&#34;&gt;SSM Command Document: Reboot a Bottlerocket Node&lt;/h5&gt;
+&lt;p&gt;The following SSM Command Document is referred to in this documentation as &lt;code&gt;reboot-bottlerocket-node&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;---
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;schemaVersion&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.2&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;description&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Reboot a Bottlerocket host via the Bottlerocket API&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;mainSteps&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  - &lt;span style=&#34;color:#f92672&#34;&gt;name&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;updateBottlerocket&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;action&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;aws:runShellScript&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;inputs&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;timeoutSeconds&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;120&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;runCommand&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        - &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;apiclient reboot&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Congratulations!
+You now have an SSM Command Document that reboots a Bottlerocket node.&lt;/p&gt;
+&lt;h4 id=&#34;3-apply-the-ssm-command-documents-to-your-bottlerocket-nodes&#34;&gt;3. Apply the SSM Command Documents to Your Bottlerocket Nodes&lt;/h4&gt;
+&lt;p&gt;After creating the two SSM Command Documents above (&lt;a href=&#34;//localhost:1313/en/os/1.29.x/update/methods/in-place/#ssm-command-document-check-for-and-apply-updates-to-a-bottlerocket-node&#34;&gt;&lt;code&gt;update-bottlerocket-node&lt;/code&gt;&lt;/a&gt; and &lt;a href=&#34;//localhost:1313/en/os/1.29.x/update/methods/in-place/#ssm-command-document-reboot-a-bottlerocket-node&#34;&gt;&lt;code&gt;reboot-bottlerocket-node&lt;/code&gt;&lt;/a&gt;), apply them to your Bottlerocket nodes.&lt;/p&gt;
+&lt;p&gt;To apply SSM Command Documents to your Bottlerocket nodes, follow the steps in the &lt;a href=&#34;https://docs.aws.amazon.com/systems-manager/latest/userguide/running-commands-console.html&#34;&gt;AWS Systems Manager User Guide: &amp;ldquo;To send a command using Run Command&amp;rdquo;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;If you are using EKS, select all nodes in a given EKS cluster by specifying an instance tag in the &amp;ldquo;Target selection&amp;rdquo; section of the page.
+Specify &lt;code&gt;eks:cluster-name&lt;/code&gt; as the tag key, with the tag value set to your cluster name.&lt;/p&gt;
+&lt;p&gt;After running the SSM Command Document, you are taken to the SSM Command status page.
+If you would like to see the output of the SSM Command Document that you just ran, click on an Instance ID in the &amp;ldquo;Targets and outputs&amp;rdquo; section of the page and see any output or errors.&lt;/p&gt;
+&lt;p&gt;Once the &lt;a href=&#34;//localhost:1313/en/os/1.29.x/update/methods/in-place/#ssm-command-document-check-for-and-apply-updates-to-a-bottlerocket-node&#34;&gt;first SSM Command Document (&lt;code&gt;update-bottlerocket-node&lt;/code&gt;)&lt;/a&gt; has finished running, apply the &lt;a href=&#34;//localhost:1313/en/os/1.29.x/update/methods/in-place/#ssm-command-document-reboot-a-bottlerocket-node&#34;&gt;second SSM Command Document (&lt;code&gt;reboot-bottlerocket-node&lt;/code&gt;)&lt;/a&gt; to your Bottlerocket nodes using the same process as above.&lt;/p&gt;
+&lt;div id=&#34;problemReport&#34;&gt;
+    &lt;hr /&gt;
+    &lt;small&gt;
+        See a problem with this page? &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-project-website/issues/new/choose&#34; target=&#34;#&#34;&gt;File an issue&lt;/a&gt;. All feedback is appreciated.&lt;br /&gt;
+        You can also directly contribute a change to the &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-project-website/tree/main/content/en/os/1.29.x/update/methods/in-place/index.markdown&#34; target=&#34;#&#34;&gt;source file of this page on GitHub&lt;/a&gt;.
+    &lt;/small&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$(document).ready(function() {
+    $(&#39;#problemReport&#39;).detach().appendTo(&#39;.td-content&#39;);
+});
+&lt;/script&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Os: Node Replacement</title>
+      <link>//localhost:1313/en/os/1.29.x/update/methods/node-replacement/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/os/1.29.x/update/methods/node-replacement/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Bottlerocket clusters can be updated via node replacement, meaning that the existing Bottlerocket nodes will be replaced by new Bottlerocket nodes that run updated software.
+This requires nodes to be reprovisioned.&lt;/p&gt;
+&lt;h2 id=&#34;eks&#34;&gt;EKS&lt;/h2&gt;
+&lt;p&gt;When running the &lt;code&gt;aws-k8s-*&lt;/code&gt; variants of Bottlerocket on EKS, use either the EKS Console or &lt;a href=&#34;https://eksctl.io/&#34;&gt;&lt;code&gt;eksctl&lt;/code&gt;&lt;/a&gt; to update your Bottlerocket nodes using the &lt;em&gt;node replacement&lt;/em&gt; method.
+This means that you are replacing your existing Bottlerocket nodes with new Bottlerocket nodes, rather than updating your existing Bottlerocket nodes in-place.&lt;/p&gt;
+&lt;h3 id=&#34;eks-console&#34;&gt;EKS Console&lt;/h3&gt;
+&lt;p&gt;In order to update your Bottlerocket nodes in an EKS cluster using the EKS Console, follow the &lt;a href=&#34;https://docs.aws.amazon.com/eks/latest/userguide/update-managed-node-group.html#mng-update&#34;&gt;steps found under the &amp;ldquo;AWS Management Console&amp;rdquo; tab, in the EKS User Guide&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;eksctl&#34;&gt;&lt;code&gt;eksctl&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;Using &lt;a href=&#34;https://eksctl.io/&#34;&gt;&lt;code&gt;eksctl&lt;/code&gt;&lt;/a&gt; is another option to update your Bottlerocket nodes.
+Specific commands can be found in the &lt;a href=&#34;https://docs.aws.amazon.com/eks/latest/userguide/update-managed-node-group.html#mng-update&#34;&gt;EKS User Guide: &amp;ldquo;Update a node group version&amp;rdquo;, on the &lt;code&gt;eksctl&lt;/code&gt; tab&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;problemReport&#34;&gt;
+    &lt;hr /&gt;
+    &lt;small&gt;
+        See a problem with this page? &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-project-website/issues/new/choose&#34; target=&#34;#&#34;&gt;File an issue&lt;/a&gt;. All feedback is appreciated.&lt;br /&gt;
+        You can also directly contribute a change to the &lt;a href=&#34;https://github.com/bottlerocket-os/bottlerocket-project-website/tree/main/content/en/os/1.29.x/update/methods/node-replacement/index.markdown&#34; target=&#34;#&#34;&gt;source file of this page on GitHub&lt;/a&gt;.
+    &lt;/small&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$(document).ready(function() {
+    $(&#39;#problemReport&#39;).detach().appendTo(&#39;.td-content&#39;);
+});
+&lt;/script&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

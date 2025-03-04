@@ -1,0 +1,324 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bottlerocket – GPU Driver Versions</title>
+    <link>//localhost:1313/en/os/1.19.x/version-information/gpu-drivers/</link>
+    <description>Recent content in GPU Driver Versions on Bottlerocket</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    
+	  <atom:link href="//localhost:1313/en/os/1.19.x/version-information/gpu-drivers/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Os: 1.19.0</title>
+      <link>//localhost:1313/en/os/1.19.x/version-information/gpu-drivers/1.19.0/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/os/1.19.x/version-information/gpu-drivers/1.19.0/</guid>
+      <description>
+        
+        
+        &lt;table&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th scope=&#34;col&#34;&gt;Variant&lt;/th&gt;
+            &lt;th scope=&#34;col&#34;&gt;Kernel Version&lt;/th&gt;
+            &lt;th scope=&#34;col&#34;&gt;NVIDIA Driver Version&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-ecs-1-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.10&lt;/td&gt;
+            &lt;td&gt;470.223.02&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-ecs-2-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;6.1&lt;/td&gt;
+            &lt;td&gt;535.129.03&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.23-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.10&lt;/td&gt;
+            &lt;td&gt;470.223.02&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.24-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.15&lt;/td&gt;
+            &lt;td&gt;535.129.03&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.25-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.15&lt;/td&gt;
+            &lt;td&gt;535.129.03&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.26-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.15&lt;/td&gt;
+            &lt;td&gt;535.129.03&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.27-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.15&lt;/td&gt;
+            &lt;td&gt;535.129.03&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.28-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;6.1&lt;/td&gt;
+            &lt;td&gt;535.129.03&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.29-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;6.1&lt;/td&gt;
+            &lt;td&gt;535.129.03&lt;/td&gt;
+        &lt;/tr&gt;&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Os: 1.19.1</title>
+      <link>//localhost:1313/en/os/1.19.x/version-information/gpu-drivers/1.19.1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/os/1.19.x/version-information/gpu-drivers/1.19.1/</guid>
+      <description>
+        
+        
+        &lt;table&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th scope=&#34;col&#34;&gt;Variant&lt;/th&gt;
+            &lt;th scope=&#34;col&#34;&gt;Kernel Version&lt;/th&gt;
+            &lt;th scope=&#34;col&#34;&gt;NVIDIA Driver Version&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-ecs-1-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.10&lt;/td&gt;
+            &lt;td&gt;470.223.02&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-ecs-2-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;6.1&lt;/td&gt;
+            &lt;td&gt;535.129.03&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.23-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.10&lt;/td&gt;
+            &lt;td&gt;470.223.02&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.24-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.15&lt;/td&gt;
+            &lt;td&gt;535.129.03&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.25-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.15&lt;/td&gt;
+            &lt;td&gt;535.129.03&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.26-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.15&lt;/td&gt;
+            &lt;td&gt;535.129.03&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.27-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.15&lt;/td&gt;
+            &lt;td&gt;535.129.03&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.28-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;6.1&lt;/td&gt;
+            &lt;td&gt;535.129.03&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.29-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;6.1&lt;/td&gt;
+            &lt;td&gt;535.129.03&lt;/td&gt;
+        &lt;/tr&gt;&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Os: 1.19.2</title>
+      <link>//localhost:1313/en/os/1.19.x/version-information/gpu-drivers/1.19.2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/os/1.19.x/version-information/gpu-drivers/1.19.2/</guid>
+      <description>
+        
+        
+        &lt;table&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th scope=&#34;col&#34;&gt;Variant&lt;/th&gt;
+            &lt;th scope=&#34;col&#34;&gt;Kernel Version&lt;/th&gt;
+            &lt;th scope=&#34;col&#34;&gt;NVIDIA Driver Version&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-ecs-1-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.10&lt;/td&gt;
+            &lt;td&gt;470.239.06&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-ecs-2-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;6.1&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.23-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.10&lt;/td&gt;
+            &lt;td&gt;470.239.06&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.24-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.15&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.25-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.15&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.26-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.15&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.27-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.15&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.28-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;6.1&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.29-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;6.1&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Os: 1.19.3</title>
+      <link>//localhost:1313/en/os/1.19.x/version-information/gpu-drivers/1.19.3/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/os/1.19.x/version-information/gpu-drivers/1.19.3/</guid>
+      <description>
+        
+        
+        &lt;table&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th scope=&#34;col&#34;&gt;Variant&lt;/th&gt;
+            &lt;th scope=&#34;col&#34;&gt;Kernel Version&lt;/th&gt;
+            &lt;th scope=&#34;col&#34;&gt;NVIDIA Driver Version&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-ecs-1-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.10&lt;/td&gt;
+            &lt;td&gt;470.239.06&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-ecs-2-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;6.1&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.23-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.10&lt;/td&gt;
+            &lt;td&gt;470.239.06&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.24-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.15&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.25-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.15&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.26-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.15&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.27-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.15&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.28-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;6.1&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.29-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;6.1&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Os: 1.19.4</title>
+      <link>//localhost:1313/en/os/1.19.x/version-information/gpu-drivers/1.19.4/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/os/1.19.x/version-information/gpu-drivers/1.19.4/</guid>
+      <description>
+        
+        
+        &lt;table&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th scope=&#34;col&#34;&gt;Variant&lt;/th&gt;
+            &lt;th scope=&#34;col&#34;&gt;Kernel Version&lt;/th&gt;
+            &lt;th scope=&#34;col&#34;&gt;NVIDIA Driver Version&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-ecs-1-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.10&lt;/td&gt;
+            &lt;td&gt;470.239.06&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-ecs-2-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;6.1&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.23-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.10&lt;/td&gt;
+            &lt;td&gt;470.239.06&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.24-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.15&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.25-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.15&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.26-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.15&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.27-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.15&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.28-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;6.1&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.29-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;6.1&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Os: 1.19.5</title>
+      <link>//localhost:1313/en/os/1.19.x/version-information/gpu-drivers/1.19.5/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//localhost:1313/en/os/1.19.x/version-information/gpu-drivers/1.19.5/</guid>
+      <description>
+        
+        
+        &lt;table&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th scope=&#34;col&#34;&gt;Variant&lt;/th&gt;
+            &lt;th scope=&#34;col&#34;&gt;Kernel Version&lt;/th&gt;
+            &lt;th scope=&#34;col&#34;&gt;NVIDIA Driver Version&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-ecs-1-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.10&lt;/td&gt;
+            &lt;td&gt;470.239.06&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-ecs-2-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;6.1&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.23-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.10&lt;/td&gt;
+            &lt;td&gt;470.239.06&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.24-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.15&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.25-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.15&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.26-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.15&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.27-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;5.15&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.28-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;6.1&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;tr&gt;
+            &lt;td&gt;&lt;code&gt;aws-k8s-1.29-nvidia&lt;/code&gt;&lt;/td&gt;&lt;td&gt;6.1&lt;/td&gt;
+            &lt;td&gt;535.161.07&lt;/td&gt;
+        &lt;/tr&gt;&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>
