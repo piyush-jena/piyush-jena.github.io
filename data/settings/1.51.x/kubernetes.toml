@@ -1,0 +1,26 @@
+[[docs.ref.image-minimum-gc-age]]
+description = "Minimum age for an unused image before it is garbage collected. Value is a duration like `2m` for 2 minutes."
+see = [
+    ["[`imageMinimumGCAge` in Kubelet Configuration](https://kubernetes.io/docs/reference/config-api/kubelet-config.v1beta1/)"]
+]
+
+[[docs.ref.image-maximum-gc-age]]
+description = "Maximum age an image can be unused before it is garbage collected. Set to 0 to disable. Value is a duration like `0s` to disable or `24h` for 24 hours."
+see = [
+    ["[`imageMaximumGCAge` in Kubelet Configuration](https://kubernetes.io/docs/reference/config-api/kubelet-config.v1beta1/)"]
+]
+
+[[docs.ref.max-parallel-image-pulls]]
+description = "Maximum number of image pulls that can be in progress at the same time."
+see = [
+    ["[`maxParallelImagePulls` in Kubelet Configuration](https://kubernetes.io/docs/reference/config-api/kubelet-config.v1beta1/)"]
+]
+
+[[docs.ref.ids-per-pod]]
+description = """
+Number of UIDs/GIDs allocated for each user namespace.
+This setting is only available for Kubernetes 1.33 and later variants.
+"""
+see = [
+    ["[User Namespaces](https://kubernetes.io/docs/concepts/workloads/pods/user-namespaces/#id-count-for-each-of-pods)"]
+]
