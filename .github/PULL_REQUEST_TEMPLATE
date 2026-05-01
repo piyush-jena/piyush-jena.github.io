@@ -1,0 +1,13 @@
+<!--- When modifying this file, please also update the Github Actions under the .github/workflows/ directory, as they use duplicates of this PR template in their PR creation steps. -->
+
+**Issue number:**
+
+Closes #
+
+**Description of changes:**
+
+
+**Terms of contribution:**
+
+By submitting this pull request, I confirm that my contribution is made under
+the terms of the licenses outlined in the LICENSE-SUMMARY file.

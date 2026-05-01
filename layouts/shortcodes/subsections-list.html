@@ -1,0 +1,10 @@
+
+<div class="section-index subsection-list">
+    <div class="entry">
+        {{ range (.Page.Pages).Reverse  }}
+            {{- if (ne .Params.no_version_warning true) -}}
+                <h5><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h5>
+            {{- end -}}
+        {{ end }}
+    </div>
+</div>

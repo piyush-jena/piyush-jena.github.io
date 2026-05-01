@@ -1,0 +1,18 @@
+[[docs.ref.concurrent-download-chunk-size]]
+description = """
+The maximum chunk size in bytes for each part when downloading container image layers in parallel. Parallel layer fetch is enabled when this value is 512 bytes or greater, which can accelerate pulls for large images. The default is `8mib`.
+
+This setting can also be configured using the alias `concurrent-layer-fetch-buffer`.
+
+This setting is only used for variants that have `containerd-2.1` or above.
+"""
+accepted_values = [
+    "a positive integer",
+    "a byte size string (e.g. `1024`, `1kb`, `3mib`, `2gb`)"
+]
+see = [
+    ["[Containerd Transfer Service](https://github.com/containerd/containerd/blob/main/docs/transfer.md)"]
+]
+[[docs.ref.concurrent-download-chunk-size.example]]
+value = "\"32mb\""
+comment = "Set chunk size to 32 MiB"

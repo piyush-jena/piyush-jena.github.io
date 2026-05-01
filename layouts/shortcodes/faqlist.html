@@ -1,0 +1,35 @@
+{{- $groups := slice  -}}
+{{- $headless := .Site.GetPage "/faqitems"  -}}
+{{- $faq_items := $headless.Resources.Match "*"  -}}
+
+{{- $grouped := dict  -}}
+
+{{- $hash_links := slice  -}}
+
+{{- range $k, $v := $faq_items  -}}
+    {{- $hash := (index (split (path.BaseName ($v.Page.File)) "-") 0)  -}}
+    {{- $hash_links = $hash_links | append $hash  -}}
+    {{- $group := $v.Params.group  -}}
+
+    {{- if not ( reflect.IsSlice (index $grouped $group) )  -}}
+        {{- $grouped = merge $grouped (dict $group ( slice ) )  -}}
+    {{- end  -}}
+
+    {{- $this_item := dict "hash" $hash "question" $v.Page.Params.question "answer" $v.Page.Content  -}}
+    {{- $this_group := index $grouped $group | append $this_item  -}}
+    {{- $grouped = merge $grouped (dict $group ( $this_group ) )   -}}
+
+    {{- $groups = $groups | append .Params.group  -}}
+{{- end  -}}
+
+{{- $unique_hashes := $hash_links | uniq | len  -}}
+{{- $total_faq_items := $faq_items | len  -}}
+{{- if ne $unique_hashes $total_faq_items  -}}
+    {{- errorf "Oops! You have %d faq items and %d unique hash links. Check for duplicate IDs in faq file names." $total_faq_items $unique_hashes  -}}
+{{- end  -}}
+
+{{- $faq := dict "groups" (sort (uniq $groups) ) "questions" $grouped  -}}
+
+{{- partial "faq-index.html" $faq  -}}
+<hr />
+{{- partial "faq-body.html" $faq  -}}
