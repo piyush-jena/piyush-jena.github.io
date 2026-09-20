@@ -134,6 +134,8 @@ section.section {
   height: auto;
   max-width: 900px;
 }
+/* The chart art is light-background already; only invert it for dark mode. */
+:root[data-theme="light"] .contrib img { filter: none; }
 
 @media (max-width: 860px) {
   .hero { grid-template-columns: 1fr; }

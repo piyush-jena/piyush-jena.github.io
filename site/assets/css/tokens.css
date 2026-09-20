@@ -37,3 +37,24 @@
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   color-scheme: dark;
 }
+
+/* Light theme — toggled via data-theme on <html> (see theme.js). Only the
+   colors change; spacing, fonts, and the accent hue stay put. */
+:root[data-theme="light"] {
+  --bg: #f6f5f2;
+  --bg-raised: #ffffff;
+  --bg-panel: #ffffff;
+  --bg-panel-hover: #efece6;
+  --border: #e3ded5;
+  --border-strong: #cec8bc;
+
+  --text: #1b1d21;
+  --text-dim: #565c67;
+  --text-faint: #8a8f99;
+
+  --accent: #d76a15;
+  --accent-dim: #b2560f;
+  --accent-wash: rgba(215, 106, 21, 0.12);
+
+  color-scheme: light;
+}

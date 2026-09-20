@@ -83,6 +83,34 @@ code, .mono {
 }
 .brand b { color: var(--text); font-weight: 600; }
 
+.theme-toggle {
+  appearance: none;
+  flex: none;
+  align-self: center;
+  margin: 0 0 var(--space-2) var(--space-2);
+  width: 32px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-raised);
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.15s var(--ease), background 0.15s var(--ease), border-color 0.15s var(--ease);
+}
+.theme-toggle:hover {
+  color: var(--text);
+  background: var(--bg-panel-hover);
+  border-color: var(--border-strong);
+}
+/* Show the theme you'd switch TO. */
+.theme-toggle::before { content: "\2600"; } /* ☀ in dark mode */
+:root[data-theme="light"] .theme-toggle::before { content: "\263E"; } /* ☾ in light mode */
+
 .tabs {
   display: flex;
   gap: 2px;
