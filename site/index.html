@@ -167,34 +167,16 @@
       <section class="panel" id="panel-bottlerocket">
         <h2>Bottlerocket website preview</h2>
         <p class="br-intro">The <a href="https://github.com/piyush-jena/bottlerocket-project-website" target="_blank" rel="noopener">bottlerocket-project-website</a> fork &amp; branch pinned in <code>site/bottlerocket-preview.json</code>, built with Hugo and rendered live below. To switch what's on screen I edit that one file and push — the deploy rebuilds it.</p>
+        <div class="br-caption">
+          <span class="br-led on" id="br-led"></span>
+          <span id="br-source">loading pinned branch…</span>
+        </div>
         <div class="br-viewer">
-          <div class="room-scene">
-            <div class="room-decor left">
-              <div class="shelf"></div>
-              <div class="plant-pot"></div>
-              <div class="plant-leaf"></div>
-            </div>
-            <div class="room-decor right">
-              <div class="shelf"></div>
-              <div class="plant-pot"></div>
-              <div class="plant-leaf"></div>
-            </div>
-
-            <div class="tv-unit">
-              <div class="tv-bezel wide">
-                <div class="tv-led">
-                  <span class="light on" id="br-led"></span>
-                  <span id="br-source">loading pinned branch…</span>
-                </div>
-                <div class="tv-screen-frame tall">
-                  <iframe id="br-frame" title="Bottlerocket branch preview"></iframe>
-                  <div class="tv-scanlines" aria-hidden="true"></div>
-                  <div class="br-empty" id="br-empty" hidden></div>
-                </div>
-              </div>
-              <div class="tv-stand"></div>
-              <div class="tv-stand-base"></div>
-              <div class="room-decor" style="position:static;width:auto;height:auto;opacity:1;"><div class="rug"></div></div>
+          <div class="ipad">
+            <span class="ipad-camera" aria-hidden="true"></span>
+            <div class="ipad-screen">
+              <iframe id="br-frame" title="Bottlerocket website preview"></iframe>
+              <div class="br-empty" id="br-empty" hidden></div>
             </div>
           </div>
         </div>
