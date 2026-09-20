@@ -125,11 +125,14 @@ section.section {
   border-radius: var(--radius-md);
   background: var(--bg-panel);
   padding: var(--space-5);
-  overflow-x: auto;
+  display: flex;
+  justify-content: center;
 }
 .contrib img {
   filter: invert(1) hue-rotate(180deg) saturate(0.85) brightness(0.95);
-  min-width: 640px;
+  width: 100%;
+  height: auto;
+  max-width: 900px;
 }
 
 @media (max-width: 860px) {
