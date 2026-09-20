@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AWS on Bottlerocket</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.16.x/install/quickstart/aws/</link><description>Recent content in AWS on Bottlerocket</description><generator>Hugo</generator><language>en</language><atom:link href="https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.16.x/install/quickstart/aws/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon ECS</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.16.x/install/quickstart/aws/ecs/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.16.x/install/quickstart/aws/ecs/</guid><description>&lt;p&gt;
+
+
+
+
+&lt;script&gt;
+ $(document).ready(function() {
+ var $sidebar_link = $('.td-sidebar a[href="\/en\/os\/1.16.x\/install\/quickstart\/"]');
+ var $depad = true ;
+
+ if ($depad) {
+ $sidebar_link.parent().parent().addClass('depad');
+ }
+
+ $sidebar_link.parent().hide();
+ });
+ 
+&lt;/script&gt;
+
+
+
+
+
+&lt;script&gt;
+ $(document).ready(function() {
+ var $sidebar_link = $('.td-sidebar a[href="\/en\/os\/1.16.x\/install\/quickstart\/aws\/"]');
+ var $depad = true ;
+
+ if ($depad) {
+ $sidebar_link.parent().parent().addClass('depad');
+ }
+
+ $sidebar_link.parent().hide();
+ });
+ 
+&lt;/script&gt;
+
+
+
+
+&lt;script&gt;
+ $(document).ready(function() {
+ var $crumb_link = $('.td-breadcrumbs a[href$="\/en\/os\/1.16.x\/install\/quickstart\/"]');
+ $crumb_link.parent().hide();
+ });
+&lt;/script&gt;
+
+
+
+
+&lt;script&gt;
+ $(document).ready(function() {
+ var $crumb_link = $('.td-breadcrumbs a[href$="\/en\/os\/1.16.x\/install\/quickstart\/aws\/"]');
+ $crumb_link.parent().hide();
+ });
+&lt;/script&gt;&lt;/p&gt;
+&lt;p&gt;In this quickstart, we use a number of techniques/tools like &lt;code&gt;jq&lt;/code&gt; and environment variables to make the quickstart experience as simple and straightforward as possible.
+These tools are not absolutely necessary to use Bottlerocket on ECS.&lt;/p&gt;</description></item><item><title>Amazon EKS</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.16.x/install/quickstart/aws/k8s/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.16.x/install/quickstart/aws/k8s/</guid><description>&lt;p&gt;
+
+
+
+
+&lt;script&gt;
+ $(document).ready(function() {
+ var $sidebar_link = $('.td-sidebar a[href="\/en\/os\/1.16.x\/install\/quickstart\/"]');
+ var $depad = true ;
+
+ if ($depad) {
+ $sidebar_link.parent().parent().addClass('depad');
+ }
+
+ $sidebar_link.parent().hide();
+ });
+ 
+&lt;/script&gt;
+
+
+
+
+
+&lt;script&gt;
+ $(document).ready(function() {
+ var $sidebar_link = $('.td-sidebar a[href="\/en\/os\/1.16.x\/install\/quickstart\/aws\/"]');
+ var $depad = true ;
+
+ if ($depad) {
+ $sidebar_link.parent().parent().addClass('depad');
+ }
+
+ $sidebar_link.parent().hide();
+ });
+ 
+&lt;/script&gt;
+
+
+
+
+&lt;script&gt;
+ $(document).ready(function() {
+ var $crumb_link = $('.td-breadcrumbs a[href$="\/en\/os\/1.16.x\/install\/quickstart\/"]');
+ $crumb_link.parent().hide();
+ });
+&lt;/script&gt;
+
+
+
+
+&lt;script&gt;
+ $(document).ready(function() {
+ var $crumb_link = $('.td-breadcrumbs a[href$="\/en\/os\/1.16.x\/install\/quickstart\/aws\/"]');
+ $crumb_link.parent().hide();
+ });
+&lt;/script&gt;&lt;/p&gt;
+&lt;h2 id="prerequisites"&gt;Prerequisites&lt;/h2&gt;
+&lt;p&gt;In order to set up a Bottlerocket cluster on EKS, you will need the latest versions of the following tools installed:&lt;/p&gt;</description></item><item><title>Host Containers</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.16.x/install/quickstart/aws/host-containers/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.16.x/install/quickstart/aws/host-containers/</guid><description>&lt;p&gt;
+
+
+
+
+&lt;script&gt;
+ $(document).ready(function() {
+ var $sidebar_link = $('.td-sidebar a[href="\/en\/os\/1.16.x\/install\/quickstart\/"]');
+ var $depad = true ;
+
+ if ($depad) {
+ $sidebar_link.parent().parent().addClass('depad');
+ }
+
+ $sidebar_link.parent().hide();
+ });
+ 
+&lt;/script&gt;
+
+
+
+
+
+&lt;script&gt;
+ $(document).ready(function() {
+ var $sidebar_link = $('.td-sidebar a[href="\/en\/os\/1.16.x\/install\/quickstart\/aws\/"]');
+ var $depad = true ;
+
+ if ($depad) {
+ $sidebar_link.parent().parent().addClass('depad');
+ }
+
+ $sidebar_link.parent().hide();
+ });
+ 
+&lt;/script&gt;
+
+
+
+
+&lt;script&gt;
+ $(document).ready(function() {
+ var $crumb_link = $('.td-breadcrumbs a[href$="\/en\/os\/1.16.x\/install\/quickstart\/"]');
+ $crumb_link.parent().hide();
+ });
+&lt;/script&gt;
+
+
+
+
+&lt;script&gt;
+ $(document).ready(function() {
+ var $crumb_link = $('.td-breadcrumbs a[href$="\/en\/os\/1.16.x\/install\/quickstart\/aws\/"]');
+ $crumb_link.parent().hide();
+ });
+&lt;/script&gt;&lt;/p&gt;
+&lt;h2 id="prerequisites"&gt;Prerequisites&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;An AWS EC2 Instance ID (begins with &lt;code&gt;i-&lt;/code&gt;) of a Bottlerocket instance&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html#getting-started-install-instructions"&gt;&lt;code&gt;aws-cli&lt;/code&gt;&lt;/a&gt;: Used to interact with AWS services.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html"&gt;SSM Session Manager Plugin for AWS CLI&lt;/a&gt;: Used to enter SSM sessions on Bottlerocket nodes through the AWS CLI.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="interacting-with-a-bottlerocket-node-through-host-containers"&gt;Interacting With a Bottlerocket Node Through Host Containers&lt;/h2&gt;
+&lt;p&gt;Run the following command to enter an SSM session on the node:&lt;/p&gt;</description></item></channel></rss>

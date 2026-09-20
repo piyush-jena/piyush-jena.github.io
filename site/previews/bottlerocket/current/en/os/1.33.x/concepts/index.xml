@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Concepts on Bottlerocket</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.33.x/concepts/</link><description>Recent content in Concepts on Bottlerocket</description><generator>Hugo</generator><language>en</language><atom:link href="https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.33.x/concepts/index.xml" rel="self" type="application/rss+xml"/><item><title>API Driven</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.33.x/concepts/api-driven/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.33.x/concepts/api-driven/</guid><description>&lt;p&gt;Bottlerocket is an API-driven operating system.
+This is a departure from general purpose Linux distributions where you install packages, configure services through individual configuration files, and use commands from the shell to perform administrative tasks.&lt;/p&gt;
+&lt;p&gt;With the concept of variants, all installed software for any given image is a known quantity and an included API enables you to configure everything from a single interface.
+Additionally, administrative tasks like checking for updates and rebooting as well as executing commands on the host are all accomplished with API calls.&lt;/p&gt;</description></item><item><title>Chain of Trust</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.33.x/concepts/chain-of-trust/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.33.x/concepts/chain-of-trust/</guid><description>&lt;p&gt;Container hosts are particularly sensitive, with nearly unfettered access to your workloads, secrets, storage, and network.
+Consequently, ensuring that only your desired code runs on the host is paramount. Bottlerocket’s chain of trust provides cryptographic verification of all parts of the boot sequence through to your containers starting.
+Effectively, this means that every step verifies the next step in the sequence and any verification failure will immediately prevent any further progress.&lt;/p&gt;</description></item><item><title>Components</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.33.x/concepts/components/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.33.x/concepts/components/</guid><description>&lt;p&gt;The components of Bottlerocket differ substantially from most Linux distributions. By providing ready-to-run images, some software typically considered as workloads of an operating system are integral to Bottlerocket.&lt;/p&gt;
+
+&lt;div class="container-fluid featured-figure td-max-width-on-larger-screens docs-figure"&gt;
+ &lt;div class="row docs-figure"&gt;
+ 
+ &lt;div class="col"&gt;
+ &lt;svg
+ width="100%"
+ viewBox="0 0 210 297"
+ version="1.1"
+ id="components_diagram"
+ xmlns="http://www.w3.org/2000/svg"
+ xmlns:svg="http://www.w3.org/2000/svg"
+ aria-describedby="aria_description"
+ &gt;
+ &lt;defs
+ id="defs8426" /&gt;
+
+ &lt;title id="aria_description "&gt;Components of Bottlerocket&lt;/title&gt;
+ &lt;g class="
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ "&gt;
+ &lt;rect
+ class="containers user-containers"
+ id="svg_host_container"
+ width="100"
+ height="140"
+ x="0"
+ y="0"
+ rx="2" /&gt;
+ &lt;rect
+ class="containers containerd"
+ id="svg_containerd_left"
+ width="100"
+ height="40"
+ x="0"
+ y="150"
+ rx="2" /&gt;
+ &lt;rect
+ class="containers"
+ id="svg_systemd"
+ width="210"
+ height="40"
+ x="0"
+ y="200"
+ rx="2" /&gt;
+ &lt;rect
+ class="containers"
+ id="svg_kernel"
+ width="210"
+ height="40"
+ x="0"
+ y="250"
+ rx="2" /&gt;
+ &lt;rect
+ class="containers user-containers"
+ id="svg_pods"
+ width="100"
+ height="90"
+ x="110"
+ y="0"
+ rx="2" /&gt;
+ &lt;rect
+ class="containers"
+ id="svg_kubelet"
+ width="100"
+ height="40"
+ x="110"
+ y="100"
+ rx="2" /&gt;
+ &lt;rect
+ class="containers containerd"
+ id="svg_containerd_right"
+ width="100"
+ height="40"
+ x="110"
+ y="150"
+ rx="2" /&gt;
+ &lt;text
+ xml:space="preserve"
+ class="container-labels"
+ x="160.09647"
+ y="49.209904"
+ id="svg_pods_label"&gt;&lt;tspan
+ id="tspan12986"
+ x="160.09647"
+ y="49.209904"&gt;Pods &lt;/tspan&gt;&lt;/text&gt;
+ &lt;text
+ xml:space="preserve"
+ class="container-labels"
+ x="159.84497"
+ y="124.2099"
+ id="svg_kubelet_label"&gt;&lt;tspan
+ id="tspan13044"
+ x="159.84497"
+ y="124.2099"&gt;kubelet&lt;/tspan&gt;&lt;/text&gt;
+ &lt;text
+ xml:space="preserve"
+ class="container-labels"
+ x="159.52802"
+ y="174.3546"
+ id="svg_containerd_right_label"&gt;&lt;tspan
+ id="tspan13048"
+ x="159.52802"
+ y="174.3546"&gt;containerd&lt;/tspan&gt;&lt;/text&gt;
+ &lt;text
+ xml:space="preserve"
+ class="container-labels"
+ x="49.528019"
+ y="174.3546"
+ id="svg_containerd_left_label"&gt;&lt;tspan
+ id="tspan13052"
+ x="49.528023"
+ y="174.3546"&gt;containerd&lt;/tspan&gt;&lt;/text&gt;
+ &lt;text
+ xml:space="preserve"
+ class="container-labels"
+ x="104.404"
+ y="222.99379"
+ id="svg_systemd_label"&gt;&lt;tspan
+ id="tspan13058"
+ x="104.404"
+ y="222.99379"&gt;systemd&lt;/tspan&gt;&lt;/text&gt;
+ &lt;text
+ xml:space="preserve"
+ class="container-labels"
+ x="105.19637"
+ y="274.35458"
+ id="svg_kernel_label"&gt;&lt;tspan
+ id="tspan13062"
+ x="105.19637"
+ y="274.35458"&gt;Linux Kernel&lt;/tspan&gt;&lt;/text&gt;
+ &lt;text
+ xml:space="preserve"
+ class="container-labels"
+ x="50.275604"
+ y="65.097633"
+ id="svg_host_container_label"&gt;&lt;tspan
+ id="tspan13066"
+ x="50.275604"
+ y="65.097633"&gt;Host&lt;/tspan&gt;&lt;tspan
+ x="50.275608"
+ y="82.736511"
+ id="tspan13070"&gt;Containers&lt;/tspan&gt;&lt;/text&gt;
+ &lt;rect
+ class="host-containers"
+ id="svg_control"
+ width="90"
+ height="35"
+ x="5"
+ y="5"
+ rx="2" /&gt;
+ &lt;text
+ xml:space="preserve"
+ class="container-labels"
+ x="50.199814"
+ y="26.709904"
+ id="svg_control_label"&gt;&lt;tspan
+ id="tspan13176"
+ x="50.199814"
+ y="26.709904"&gt;Control&lt;/tspan&gt;&lt;/text&gt;
+ &lt;rect
+ class="host-containers"
+ id="svg_admin"
+ width="90"
+ height="35"
+ x="5"
+ y="100"
+ rx="2" /&gt;
+ &lt;text
+ xml:space="preserve"
+ class="container-labels"
+ x="50.347954"
+ y="121.8546"
+ id="svg_admin_label"&gt;&lt;tspan
+ id="tspan13182"
+ x="50.347958"
+ y="121.8546"&gt;Admin&lt;/tspan&gt;&lt;/text&gt;
+ &lt;rect
+ class="ecs containers"
+ id="svg_ecs_agent"
+ width="100"
+ height="40"
+ x="110"
+ y="50"
+ rx="2" /&gt;
+ &lt;text
+ xml:space="preserve"
+ class="ecs container-labels"
+ y="74.20999"
+ x="159.84497"
+ id="svg_ecs_agent_label"&gt;&lt;tspan
+ id="tspan13176"
+ y="74.20999"
+ x="159.84497"&gt;ecs-agent&lt;/tspan&gt;&lt;/text&gt;
+ &lt;rect
+ class="ecs containers user-containers"
+ id="svg_ecs_tasks"
+ width="100"
+ height="40"
+ x="110"
+ y="0"
+ rx="2" /&gt;
+ &lt;text
+ xml:space="preserve"
+ class="ecs container-labels"
+ y="24.20999"
+ x="159.84497"
+ id="svg_ecs_tasks_label"&gt;&lt;tspan
+ id="tspan13176"
+ y="24.20999"
+ x="159.84497"&gt;Tasks&lt;/tspan&gt;&lt;/text&gt;
+ &lt;/g&gt;
+ &lt;/svg&gt;
+ 
+&lt;/div&gt;
+ &lt;div class="col-7"&gt;
+ This diagram represents the components of the &lt;code&gt;aws-k8s-*&lt;/code&gt; variant. Subsequent sections will dissect and explain this variant.
+&lt;/div&gt;
+
+ &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h3 id="foundation"&gt;Foundation&lt;/h3&gt;
+
+&lt;div class="container-fluid featured-figure td-max-width-on-larger-screens docs-figure"&gt;
+ &lt;div class="row docs-figure"&gt;
+ 
+ &lt;div class="col"&gt;
+ 
+ &lt;svg
+ width="100%"
+ viewBox="0 0 210 297"
+ version="1.1"
+ id="components_diagram"
+ xmlns="http://www.w3.org/2000/svg"
+ xmlns:svg="http://www.w3.org/2000/svg"
+ aria-describedby="aria_description"
+ &gt;
+ &lt;defs
+ id="defs8426" /&gt;
+ 
+ &lt;title id="aria_description "&gt;Components of Bottlerocket&lt;/title&gt;
+ &lt;g class="
+ 
+ 
+ disabled-diagram-component-kubelet 
+ disabled-diagram-component-systemd 
+ 
+ disabled-diagram-component-containerd-left 
+ disabled-diagram-component-containerd-right 
+ disabled-diagram-component-kubelet 
+ disabled-diagram-component-pods 
+ disabled-diagram-component-host-containers 
+ 
+ "&gt;
+ &lt;rect
+ class="containers user-containers"
+ id="svg_host_container"
+ width="100"
+ height="140"
+ x="0"
+ y="0"
+ rx="2" /&gt;
+ &lt;rect
+ class="containers containerd"
+ id="svg_containerd_left"
+ width="100"
+ height="40"
+ x="0"
+ y="150"
+ rx="2" /&gt;
+ &lt;rect
+ class="containers"
+ id="svg_systemd"
+ width="210"
+ height="40"
+ x="0"
+ y="200"
+ rx="2" /&gt;
+ &lt;rect
+ class="containers"
+ id="svg_kernel"
+ width="210"
+ height="40"
+ x="0"
+ y="250"
+ rx="2" /&gt;
+ &lt;rect
+ class="containers user-containers"
+ id="svg_pods"
+ width="100"
+ height="90"
+ x="110"
+ y="0"
+ rx="2" /&gt;
+ &lt;rect
+ class="containers"
+ id="svg_kubelet"
+ width="100"
+ height="40"
+ x="110"
+ y="100"
+ rx="2" /&gt;
+ &lt;rect
+ class="containers containerd"
+ id="svg_containerd_right"
+ width="100"
+ height="40"
+ x="110"
+ y="150"
+ rx="2" /&gt;
+ &lt;text
+ xml:space="preserve"
+ class="container-labels"
+ x="160.09647"
+ y="49.209904"
+ id="svg_pods_label"&gt;&lt;tspan
+ id="tspan12986"
+ x="160.09647"
+ y="49.209904"&gt;Pods &lt;/tspan&gt;&lt;/text&gt;
+ &lt;text
+ xml:space="preserve"
+ class="container-labels"
+ x="159.84497"
+ y="124.2099"
+ id="svg_kubelet_label"&gt;&lt;tspan
+ id="tspan13044"
+ x="159.84497"
+ y="124.2099"&gt;kubelet&lt;/tspan&gt;&lt;/text&gt;
+ &lt;text
+ xml:space="preserve"
+ class="container-labels"
+ x="159.52802"
+ y="174.3546"
+ id="svg_containerd_right_label"&gt;&lt;tspan
+ id="tspan13048"
+ x="159.52802"
+ y="174.3546"&gt;containerd&lt;/tspan&gt;&lt;/text&gt;
+ &lt;text
+ xml:space="preserve"
+ class="container-labels"
+ x="49.528019"
+ y="174.3546"
+ id="svg_containerd_left_label"&gt;&lt;tspan
+ id="tspan13052"
+ x="49.528023"
+ y="174.3546"&gt;containerd&lt;/tspan&gt;&lt;/text&gt;
+ &lt;text
+ xml:space="preserve"
+ class="container-labels"
+ x="104.404"
+ y="222.99379"
+ id="svg_systemd_label"&gt;&lt;tspan
+ id="tspan13058"
+ x="104.404"
+ y="222.99379"&gt;systemd&lt;/tspan&gt;&lt;/text&gt;
+ &lt;text
+ xml:space="preserve"
+ class="container-labels"
+ x="105.19637"
+ y="274.35458"
+ id="svg_kernel_label"&gt;&lt;tspan
+ id="tspan13062"
+ x="105.19637"
+ y="274.35458"&gt;Linux Kernel&lt;/tspan&gt;&lt;/text&gt;
+ &lt;text
+ xml:space="preserve"
+ class="container-labels"
+ x="50.275604"
+ y="65.097633"
+ id="svg_host_container_label"&gt;&lt;tspan
+ id="tspan13066"
+ x="50.275604"
+ y="65.097633"&gt;Host&lt;/tspan&gt;&lt;tspan
+ x="50.275608"
+ y="82.736511"
+ id="tspan13070"&gt;Containers&lt;/tspan&gt;&lt;/text&gt;
+ &lt;rect
+ class="host-containers"
+ id="svg_control"
+ width="90"
+ height="35"
+ x="5"
+ y="5"
+ rx="2" /&gt;
+ &lt;text
+ xml:space="preserve"
+ class="container-labels"
+ x="50.199814"
+ y="26.709904"
+ id="svg_control_label"&gt;&lt;tspan
+ id="tspan13176"
+ x="50.199814"
+ y="26.709904"&gt;Control&lt;/tspan&gt;&lt;/text&gt;
+ &lt;rect
+ class="host-containers"
+ id="svg_admin"
+ width="90"
+ height="35"
+ x="5"
+ y="100"
+ rx="2" /&gt;
+ &lt;text
+ xml:space="preserve"
+ class="container-labels"
+ x="50.347954"
+ y="121.8546"
+ id="svg_admin_label"&gt;&lt;tspan
+ id="tspan13182"
+ x="50.347958"
+ y="121.8546"&gt;Admin&lt;/tspan&gt;&lt;/text&gt;
+ &lt;rect
+ class="ecs containers"
+ id="svg_ecs_agent"
+ width="100"
+ height="40"
+ x="110"
+ y="50"
+ rx="2" /&gt;
+ &lt;text
+ xml:space="preserve"
+ class="ecs container-labels"
+ y="74.20999"
+ x="159.84497"
+ id="svg_ecs_agent_label"&gt;&lt;tspan
+ id="tspan13176"
+ y="74.20999"
+ x="159.84497"&gt;ecs-agent&lt;/tspan&gt;&lt;/text&gt;
+ &lt;rect
+ class="ecs containers user-containers"
+ id="svg_ecs_tasks"
+ width="100"
+ height="40"
+ x="110"
+ y="0"
+ rx="2" /&gt;
+ &lt;text
+ xml:space="preserve"
+ class="ecs container-labels"
+ y="24.20999"
+ x="159.84497"
+ id="svg_ecs_tasks_label"&gt;&lt;tspan
+ id="tspan13176"
+ y="24.20999"
+ x="159.84497"&gt;Tasks&lt;/tspan&gt;&lt;/text&gt;
+ &lt;/g&gt;
+ &lt;/svg&gt;
+ 
+ 
+&lt;/div&gt;
+ &lt;div class="col-7"&gt;
+ &lt;p&gt;The Linux kernel provides the foundation of Bottlerocket. The kernel (major+minor) version may vary between variants, but does not change on update.&lt;/p&gt;</description></item><item><title>Restricted Filesystem</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.33.x/concepts/restricted-filesystem/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.33.x/concepts/restricted-filesystem/</guid><description>&lt;p&gt;Bottlerocket is a container host operating system.
+Most containerized workloads need little, if any access to the underlying host filesystem.
+This, paired with image-based updates, means that much of the filesystem can be immutable.
+Still, there are some resources like logs, container images, and configuration files that do need to be mutable for a practically operable system.
+Bottlerocket splits the difference by having some storage that is immutable and some that is mutable, using different protection mechanisms for each filesystem.
+Additionally, some mutable storage in Bottlerocket only exists ephemerally and any changes will not survive a reboot.&lt;/p&gt;</description></item><item><title>Shell-less Host</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.33.x/concepts/shell-less-host/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.33.x/concepts/shell-less-host/</guid><description>&lt;p&gt;Bottlerocket images do not have an SSH server nor even a shell.
+As it turns out, you don’t need one in the host operating system itself.
+Bottlerocket does, however, give you out-of-band access that allows you to launch a shell from a container to explore, debug, manually update, and change settings on the host.&lt;/p&gt;
+&lt;h2 id="host-container-out-of-band-access"&gt;Host container out-of-band access&lt;/h2&gt;
+&lt;p&gt;Since the software doesn’t exist on the host to facilitate interactive shell sessions, it is provided through a container.
+These containers are granted access to resources on the underlying host, have the required software for remote connections, and are run in the host containerd instance.&lt;/p&gt;</description></item><item><title>Updates</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.33.x/concepts/updating-bottlerocket/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.33.x/concepts/updating-bottlerocket/</guid><description>&lt;p&gt;Bottlerocket is designed to be updated in an &lt;a href="https://github.com/bottlerocket-os/bottlerocket#updates"&gt;image-based fashion&lt;/a&gt;.
+This means that updates are applied by downloading an image of the entire operating system to a different partition on disk, then switching to using that partition when the system is rebooted.
+This is done instead of a series of individual package updates on the current operating system partition.
+This is a departure from the traditional package-based Linux update model such as &lt;code&gt;apt&lt;/code&gt; or &lt;code&gt;yum&lt;/code&gt;, which are what you would find in Ubuntu or Amazon Linux.&lt;/p&gt;</description></item><item><title>Variants</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.33.x/concepts/variants/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.33.x/concepts/variants/</guid><description>&lt;p&gt;General purpose distributions of Linux have &amp;ldquo;packages&amp;rdquo; that are delivered by a package manager.
+This allows the distribution to ship a limited set of drivers, tools, and applications with the kernel; the user then adds additional packages that suits the workload after the operating system is installed.&lt;/p&gt;
+&lt;p&gt;Bottlerocket is not a general purpose Linux distribution and intentionally doesn’t have a package manager. Instead Bottlerocket has &lt;em&gt;variants&lt;/em&gt;.
+Variants are pre-defined sets of drivers, tools, and applications that are tailored to a specific architecture, platform, and orchestrator (as well as a “flavor,” more on that later).
+For example, there is a variant that consists of everything needed to run as a Kubernetes (orchestrator) node on an aarch64 (architecture) processor in AWS EC2 (platform).
+Bottlerocket delivers the variant as a complete, ready-to-run image.&lt;/p&gt;</description></item></channel></rss>

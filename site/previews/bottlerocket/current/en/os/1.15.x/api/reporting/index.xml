@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Reporting on Bottlerocket</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.15.x/api/reporting/</link><description>Recent content in Reporting on Bottlerocket</description><generator>Hugo</generator><language>en</language><atom:link href="https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.15.x/api/reporting/index.xml" rel="self" type="application/rss+xml"/><item><title>Bottlerocket CIS Benchmark</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.15.x/api/reporting/cis/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.15.x/api/reporting/cis/</guid><description>&lt;p&gt;The &lt;a href="https://www.cisecurity.org/benchmark/bottlerocket"&gt;Bottlerocket CIS Benchmark&lt;/a&gt; contains a number of security best practices to harden Bottlerocket worker nodes.
+The benchmark contains two levels:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Level 1:&lt;/strong&gt; basic guidelines with clear security benefits that do not inhibit the node.
+Bottlerocket’s default settings are compliant with level 1.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Level 2:&lt;/strong&gt; detailed, specific guidance that provide more defence to the node.
+This level introduces some trade-offs between functionality and security.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The report API has built-in tests that allow you to evaluate the state of the node to both Level 1 and Level 2.&lt;/p&gt;</description></item><item><title>K8s CIS Benchmark</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.15.x/api/reporting/cis-k8s/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.15.x/api/reporting/cis-k8s/</guid><description>&lt;p&gt;The &lt;a href="https://www.cisecurity.org/benchmark/kubernetes"&gt;Kubernetes CIS Benchmark&lt;/a&gt; contains a number of security best practices to harden Kubernetes worker nodes.&lt;/p&gt;
+
+
+&lt;div class="alert alert-success" role="alert"&gt;
+&lt;h4 class="alert-heading"&gt;Note&lt;/h4&gt;
+
+ &lt;p&gt;The Kubernetes CIS Benchmark contains two levels, however, currently, level 2 only adds one additional check (4.2.8) for worker nodes. The Bottlerocket reporting API cannot automatically evaluate this additional check and therefore the two levels are functionally identical for automatic evaluation purposes.&lt;/p&gt;
+
+
+&lt;/div&gt;
+
+&lt;h2 id="examples"&gt;Examples&lt;/h2&gt;
+&lt;p&gt;Expanding upon the general instructions to &lt;a href="https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.15.x/api/#running-a-report"&gt;run a report&lt;/a&gt;, for the Bottlerocket CIS benchmark use the identifier &lt;code&gt;cis-k8s&lt;/code&gt;:&lt;/p&gt;</description></item></channel></rss>

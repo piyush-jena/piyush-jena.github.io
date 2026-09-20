@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Reporting on Bottlerocket</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.31.x/api/reporting/</link><description>Recent content in Reporting on Bottlerocket</description><generator>Hugo</generator><language>en</language><atom:link href="https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.31.x/api/reporting/index.xml" rel="self" type="application/rss+xml"/><item><title>Bottlerocket CIS Benchmark</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.31.x/api/reporting/cis/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.31.x/api/reporting/cis/</guid><description>&lt;p&gt;The &lt;a href="https://www.cisecurity.org/benchmark/bottlerocket"&gt;Bottlerocket CIS Benchmark&lt;/a&gt; contains a number of security best practices to harden Bottlerocket worker nodes.
+The benchmark contains two levels:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Level 1:&lt;/strong&gt; basic guidelines with clear security benefits that do not inhibit the node.
+Bottlerocket’s default settings are compliant with level 1.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Level 2:&lt;/strong&gt; detailed, specific guidance that provide more defence to the node.
+This level introduces some trade-offs between functionality and security.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The report API has built-in tests that allow you to evaluate the state of the node to both Level 1 and Level 2.&lt;/p&gt;</description></item><item><title>Bottlerocket FIPS report</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.31.x/api/reporting/fips/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.31.x/api/reporting/fips/</guid><description>&lt;p&gt;The FIPS report includes information about the state of the FIPS support in the host.
+The report API has built-in tests that allow you to evaluate the state of the node.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Note: this report is only available on FIPS variants&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="examples"&gt;Examples&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;apiclient report fips
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Benchmark name: FIPS Security Policy
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Version: v1.0.0
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Reference: https://csrc.nist.gov/
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Benchmark level: &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Start time: &amp;lt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;PASS&lt;span style="color:#f92672"&gt;]&lt;/span&gt; 1.0 FIPS mode is enabled. &lt;span style="color:#f92672"&gt;(&lt;/span&gt;Automatic&lt;span style="color:#f92672"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;PASS&lt;span style="color:#f92672"&gt;]&lt;/span&gt; 1.1 FIPS module is Amazon Linux &lt;span style="color:#ae81ff"&gt;2023&lt;/span&gt; Kernel Cryptographic API. &lt;span style="color:#f92672"&gt;(&lt;/span&gt;Automatic&lt;span style="color:#f92672"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;PASS&lt;span style="color:#f92672"&gt;]&lt;/span&gt; 1.2 FIPS self-tests passed. &lt;span style="color:#f92672"&gt;(&lt;/span&gt;Automatic&lt;span style="color:#f92672"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Passed: &lt;span style="color:#ae81ff"&gt;3&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Failed: &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Skipped: &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Total checks: &lt;span style="color:#ae81ff"&gt;3&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title>K8s CIS Benchmark</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.31.x/api/reporting/cis-k8s/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.31.x/api/reporting/cis-k8s/</guid><description>&lt;p&gt;The &lt;a href="https://www.cisecurity.org/benchmark/kubernetes"&gt;Kubernetes CIS Benchmark&lt;/a&gt; contains a number of security best practices to harden Kubernetes worker nodes.&lt;/p&gt;
+
+
+&lt;div class="alert alert-success" role="alert"&gt;
+&lt;h4 class="alert-heading"&gt;Note&lt;/h4&gt;
+
+ &lt;p&gt;The Kubernetes CIS Benchmark contains two levels, however, currently, level 2 only adds one additional check (4.2.8) for worker nodes. The Bottlerocket reporting API cannot automatically evaluate this additional check and therefore the two levels are functionally identical for automatic evaluation purposes.&lt;/p&gt;
+
+
+&lt;/div&gt;
+
+&lt;h2 id="examples"&gt;Examples&lt;/h2&gt;
+&lt;p&gt;Expanding upon the general instructions to &lt;a href="https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.31.x/api/#running-a-report"&gt;run a report&lt;/a&gt;, for the Bottlerocket CIS benchmark use the identifier &lt;code&gt;cis-k8s&lt;/code&gt;:&lt;/p&gt;</description></item></channel></rss>

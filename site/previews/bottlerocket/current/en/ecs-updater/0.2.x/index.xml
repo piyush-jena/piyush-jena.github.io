@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>0.2.x (Current) on Bottlerocket</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/ecs-updater/0.2.x/</link><description>Recent content in 0.2.x (Current) on Bottlerocket</description><generator>Hugo</generator><language>en</language><atom:link href="https://piyush-jena.github.io/previews/bottlerocket/current/en/ecs-updater/0.2.x/index.xml" rel="self" type="application/rss+xml"/><item><title>Concepts</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/ecs-updater/0.2.x/concepts/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://piyush-jena.github.io/previews/bottlerocket/current/en/ecs-updater/0.2.x/concepts/</guid><description>&lt;p&gt;You can update Bottlerocket in a couple of ways:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;node replacement&lt;/strong&gt; where new instances with a new version of the OS replace nodes with older versions of the OS,&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;in-place updates&lt;/strong&gt; where the node downloads and reboots into a new version of the OS while maintaining the same instance/machine.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;There is no single preferred nor advised method to update a node; both methods have pros and cons depending on your situation.
+You can trigger an 
+
+&lt;a href="https://piyush-jena.github.io/previews/bottlerocket/current/en/os/1.64.x/update/methods/in-place/#apiclient-commands"&gt;in-place update manually with the API&lt;/a&gt;
+ or you can use the Bottlerocket ECS Updater.
+&lt;strong&gt;The ECS Updater is a service that checks for (and applies) Bottlerocket updates when your nodes are ready.&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>Setup</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/ecs-updater/0.2.x/setup/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://piyush-jena.github.io/previews/bottlerocket/current/en/ecs-updater/0.2.x/setup/</guid><description>&lt;p&gt;This guide assumes you have &lt;a href="https://aws.amazon.com/cli/"&gt;AWS CLI v2&lt;/a&gt; installed on a Unix-like system and that you’re authenticated into an account with the requisite permissions.&lt;/p&gt;
+
+
+&lt;div class="alert alert-secondary" role="alert"&gt;
+&lt;h4 class="alert-heading"&gt;Note&lt;/h4&gt;
+
+ &lt;p&gt;Environment variable names in this guide do not have specific meaning; you can replace them with your own or directly interpolate your values as needed.&lt;/p&gt;
+
+
+&lt;/div&gt;
+
+&lt;h2 id="define-your-environment"&gt;Define your environment&lt;/h2&gt;
+&lt;p&gt;First, define your region in an environment variable.
+Customize the value of this variable for whatever region in which your particular &lt;a href="https://aws.amazon.com/ecs/"&gt;Amazon ECS&lt;/a&gt; cluster resides.&lt;/p&gt;</description></item><item><title>Operate &amp; Observe</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/ecs-updater/0.2.x/operate/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://piyush-jena.github.io/previews/bottlerocket/current/en/ecs-updater/0.2.x/operate/</guid><description>&lt;p&gt;By default, the ECS Updater runs every 12 hours (using the &lt;a href="https://github.com/bottlerocket-os/bottlerocket-ecs-updater/blob/develop/stacks/bottlerocket-ecs-updater.yaml"&gt;default template&lt;/a&gt;, schedule defined at at &lt;code&gt;.Resources.BottlerocketUpdaterSchedule.Properties.ScheduleExpression&lt;/code&gt;).
+Each time it runs, the ECS Updater creates a new log stream in Amazon CloudWatch Logs in the log group you specified when deploying.
+You can view the logs in the &lt;a href="https://console.aws.amazon.com/cloudwatch/"&gt;CloudWatch Logs Console&lt;/a&gt;, with your own tools, or in the console.&lt;/p&gt;
+&lt;h2 id="ecs-updater-logs-in-the-console"&gt;ECS Updater logs in the console&lt;/h2&gt;
+&lt;p&gt;First, you’ll need to &lt;a href="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/logs/describe-log-streams.html"&gt;retrieve the log stream&lt;/a&gt;; likely you’re interested in the most recent update check.
+Using the environment variables established in the Setup documentation, run the following command to get the most recent stream and store it in an environment variable:&lt;/p&gt;</description></item><item><title>Troubleshoot</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/ecs-updater/0.2.x/troubleshoot/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://piyush-jena.github.io/previews/bottlerocket/current/en/ecs-updater/0.2.x/troubleshoot/</guid><description>&lt;p&gt;Troubleshooting’s first step is evaluating the log messages emitted by ECS Updater.
+See Operate &amp;amp; Observe for details on how logging works with ECS Updater and what common messages mean.&lt;/p&gt;
+&lt;h2 id="common-issues"&gt;Common Issues&lt;/h2&gt;
+&lt;h3 id="bottlerocket-instances-start-with-an-old-version-of-bottlerocket"&gt;Bottlerocket instances start with an old version of Bottlerocket&lt;/h3&gt;
+&lt;p&gt;After using ECS Updater for a while you may notice that any brand new nodes added to the cluster start with an older version of Bottlerocket then ECS Updater flags them for an update on next invocation.
+The ECS updater can only update existing nodes and it doesn’t manage the node creation process.
+If you’re using an auto-scaling group, update your AMI ID in the the launch configuration or template.&lt;/p&gt;</description></item><item><title>Uninstall</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/ecs-updater/0.2.x/uninstall/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://piyush-jena.github.io/previews/bottlerocket/current/en/ecs-updater/0.2.x/uninstall/</guid><description>&lt;p&gt;To uninstall ECS Updater, &lt;a href="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cloudformation/delete-stack.html"&gt;delete&lt;/a&gt; the &lt;a href="https://aws.amazon.com/cloudformation/"&gt;AWS CloudFormation&lt;/a&gt; stack that you previously deployed.
+Assuming you have the environment variables set from the previous install guide, run the following:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;aws cloudformation delete-stack &lt;span style="color:#ae81ff"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; --stack-name &lt;span style="color:#e6db74"&gt;${&lt;/span&gt;ECS_UPDATER_STACK&lt;span style="color:#e6db74"&gt;}&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; --region &lt;span style="color:#e6db74"&gt;${&lt;/span&gt;AWS_REGION&lt;span style="color:#e6db74"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;With no errors, this will give no return status.&lt;/p&gt;
+&lt;p&gt;To confirm the removal of ECS Updater, &lt;a href="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cloudformation/describe-stacks.html"&gt;describe the stack&lt;/a&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;aws cloudformation delete-stack --stack-name &lt;span style="color:#e6db74"&gt;${&lt;/span&gt;ECS_UPDATER_STACK&lt;span style="color:#e6db74"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;If deleted, the CLI returns &lt;code&gt;An error occurred (ValidationError) when calling the DescribeStacks operation Stack with id &amp;lt;...&amp;gt; does not exist&lt;/code&gt; , otherwise it will show the stack, indicating a still active ECS Updater.&lt;/p&gt;</description></item></channel></rss>

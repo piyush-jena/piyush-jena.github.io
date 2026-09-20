@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Setup on Bottlerocket</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/brupop/1.3.x/setup/</link><description>Recent content in Setup on Bottlerocket</description><generator>Hugo</generator><language>en</language><atom:link href="https://piyush-jena.github.io/previews/bottlerocket/current/en/brupop/1.3.x/setup/index.xml" rel="self" type="application/rss+xml"/><item><title>Prerequisite: cert-manager</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/brupop/1.3.x/setup/cert-manager/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://piyush-jena.github.io/previews/bottlerocket/current/en/brupop/1.3.x/setup/cert-manager/</guid><description>&lt;p&gt;Brupop uses &lt;a href="https://cert-manager.io/"&gt;cert-manager&lt;/a&gt; to manage self-signed certificates.
+You can install it with &lt;code&gt;kubectl&lt;/code&gt; or &lt;a href="https://helm.sh/"&gt;helm&lt;/a&gt;.&lt;/p&gt;
+
+
+&lt;div class="alert alert-success" role="alert"&gt;
+&lt;h4 class="alert-heading"&gt;Note&lt;/h4&gt;
+
+ &lt;p&gt;This guide uses the most recent release of &lt;code&gt;cert-manager&lt;/code&gt;, 1.14.1, but there is no particular hard dependency on this version.&lt;/p&gt;
+
+
+&lt;/div&gt;
+
+&lt;h2 id="installing-cert-manager-using-kubectl"&gt;Installing &lt;code&gt;cert-manager&lt;/code&gt; using &lt;code&gt;kubectl&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;Use &lt;code&gt;kubectl&lt;/code&gt; to install cert-manager:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.1/cert-manager.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="installing-cert-manager-using-helm"&gt;Installing &lt;code&gt;cert-manager&lt;/code&gt; using &lt;code&gt;helm&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;First, add the &lt;code&gt;cert-manager&lt;/code&gt; helm chart:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;helm repo add jetstack https://charts.jetstack.io
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Then update your local chart:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;helm repo update
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Finally, install &lt;code&gt;cert-manager&lt;/code&gt; including its CRDs:&lt;/p&gt;</description></item><item><title>Install Brupop</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/brupop/1.3.x/setup/install/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://piyush-jena.github.io/previews/bottlerocket/current/en/brupop/1.3.x/setup/install/</guid><description>&lt;p&gt;Installing Brupop creates the custom resource definitions (CRDs), roles, and deployments and uses the latest operator image from &lt;a href="https://gallery.ecr.aws/bottlerocket/bottlerocket-update-operator"&gt;Amazon ECR Public&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;You can install Brupop either &lt;a href="https://piyush-jena.github.io/previews/bottlerocket/current/en/brupop/1.3.x/setup/install/#install-with-helm"&gt;with &lt;code&gt;helm&lt;/code&gt;&lt;/a&gt; or a &lt;a href="https://piyush-jena.github.io/previews/bottlerocket/current/en/brupop/1.3.x/setup/install/#install-with-a-manifest"&gt;pre-baked manifest&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id="install-with-helm"&gt;Install with &lt;code&gt;helm&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;First, using &lt;a href="https://helm.sh/"&gt;helm&lt;/a&gt; add the &lt;code&gt;bottlerocket-operator-chart&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;helm repo add brupop https://bottlerocket-os.github.io/bottlerocket-update-operator
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Then update your local chart:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;helm repo update
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Create a namespace for the operator:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;kubectl create namespace brupop-bottlerocket-aws
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Next, install the Brupop custom resource definition:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;helm install brupop-crd brupop/bottlerocket-shadow
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Finally, install the operator itself:&lt;/p&gt;</description></item><item><title>Configure Brupop</title><link>https://piyush-jena.github.io/previews/bottlerocket/current/en/brupop/1.3.x/setup/configure/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://piyush-jena.github.io/previews/bottlerocket/current/en/brupop/1.3.x/setup/configure/</guid><description>&lt;p&gt;When you install Brupop, the operator comes pre-configured with reasonable defaults.
+&lt;a href="https://piyush-jena.github.io/previews/bottlerocket/current/en/brupop/1.3.x/setup/configure/#label-nodes"&gt;Labeling your nodes&lt;/a&gt; is the only required configuration step.&lt;/p&gt;
+&lt;p&gt;Aside from labeling nodes, you configure Brupop with &lt;a href="https://helm.sh/"&gt;helm&lt;/a&gt; or with a manifest.
+Helm reduces the configuration burden for Brupop substantially with few down sides, so this documentation focuses on configuration with helm.
+If you choose to not use helm, refer to the 
+
+&lt;a href="https://github.com/bottlerocket-os/bottlerocket-update-operator/blob/v1.3.0/bottlerocket-update-operator.yaml"&gt;pre-baked manifest for an example&lt;/a&gt;
+.&lt;/p&gt;
+&lt;h2 id="required-configuration"&gt;Required Configuration&lt;/h2&gt;
+&lt;h3 id="label-nodes"&gt;Label nodes&lt;/h3&gt;
+
+
+&lt;div class="alert alert-danger" role="alert"&gt;
+&lt;h4 class="alert-heading"&gt;Warning&lt;/h4&gt;
+
+ &lt;p&gt;You can fully install Brupop but if you do not apply the proper node labels the operator will not update your nodes.&lt;/p&gt;</description></item></channel></rss>
