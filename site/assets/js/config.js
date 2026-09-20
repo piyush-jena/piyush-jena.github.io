@@ -2,7 +2,7 @@
 // reachable at its Tailscale Funnel URL.
 window.SITE = {
   githubUser: "piyush-jena",
-  linkedin: "https://www.linkedin.com/in/piyush-jena",
+  linkedin: "https://www.linkedin.com/in/piyushjena",
 
   // Curated, not auto-generated: real projects worth surfacing.
   // `feature: true` gets the large card. Live stats are fetched client-side
