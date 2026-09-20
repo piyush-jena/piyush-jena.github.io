@@ -1,0 +1,24 @@
+[Unit]
+Description=gym-server (backend for piyush-jena.github.io Gym tab)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Build first: cargo build --release
+ExecStart=/home/piyushjena/Repositories/piyush-jena.github.io/backend/gym-server/target/release/gym-server
+WorkingDirectory=/home/piyushjena/Repositories/piyush-jena.github.io/backend/gym-server
+Environment=GYM_DB_PATH=/home/piyushjena/.local/share/gym-server/gym.sqlite3
+Environment=GYM_ALLOWED_ORIGIN=https://piyush-jena.github.io
+Environment=PORT=8787
+# Set the real secret out-of-band, don't commit it:
+#   systemctl edit gym-server --full   (or use an EnvironmentFile=)
+EnvironmentFile=-/etc/gym-server.env
+Restart=on-failure
+RestartSec=2
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/home/piyushjena/.local/share/gym-server
+
+[Install]
+WantedBy=default.target

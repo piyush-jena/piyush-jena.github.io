@@ -1,0 +1,89 @@
+name: Build a bottlerocket-project-website branch preview
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch of piyush-jena/bottlerocket-project-website to build"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  HUGO_VERSION: 0.156.0
+
+jobs:
+  build-and-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Slugify branch name
+        id: slug
+        run: |
+          slug=$(echo "${{ inputs.branch }}" | sed -E 's/[^a-zA-Z0-9._-]/-/g')
+          echo "slug=$slug" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout this site (to commit the build into)
+        uses: actions/checkout@v4
+        with:
+          path: own-site
+
+      - name: Checkout bottlerocket-project-website@${{ inputs.branch }}
+        uses: actions/checkout@v4
+        with:
+          repository: piyush-jena/bottlerocket-project-website
+          ref: ${{ inputs.branch }}
+          submodules: recursive
+          fetch-depth: 0
+          path: br-site
+
+      - name: Checkout bottlerocket-os/bottlerocket (content dependency)
+        uses: actions/checkout@v4
+        with:
+          repository: bottlerocket-os/bottlerocket
+          path: br-site/bottlerocket
+
+      - name: Install Hugo CLI
+        run: |
+          wget -O "${{ runner.temp }}/hugo.deb" "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
+          sudo dpkg -i "${{ runner.temp }}/hugo.deb"
+
+      - name: Install Dart Sass
+        run: sudo snap install dart-sass
+
+      - name: Install Node.js dependencies
+        working-directory: br-site
+        run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
+
+      - name: Build with Hugo
+        working-directory: br-site
+        env:
+          HUGO_ENVIRONMENT: production
+          HUGO_ENV: production
+        run: |
+          dest="$GITHUB_WORKSPACE/own-site/site/previews/bottlerocket/${{ steps.slug.outputs.slug }}"
+          rm -rf "$dest"
+          mkdir -p "$dest"
+          hugo \
+            --gc \
+            --minify \
+            --baseURL "https://piyush-jena.github.io/previews/bottlerocket/${{ steps.slug.outputs.slug }}/" \
+            --destination "$dest"
+
+      - name: Commit and push the built preview
+        working-directory: own-site
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add "site/previews/bottlerocket/${{ steps.slug.outputs.slug }}"
+          if git diff --cached --quiet; then
+            echo "no changes, branch built identically to what's already there"
+            exit 0
+          fi
+          git commit -m "bottlerocket preview: ${{ inputs.branch }}"
+          git push
