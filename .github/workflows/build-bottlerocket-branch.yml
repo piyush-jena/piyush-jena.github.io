@@ -94,6 +94,18 @@ jobs:
             --baseURL "https://piyush-jena.github.io/previews/bottlerocket/current/" \
             --destination "$dest"
 
+      - name: Normalize sidebar anchor IDs for subpath hosting
+        # The Docsy theme derives sidebar nav element IDs from the full
+        # RelPermalink (which includes the /previews/bottlerocket/current
+        # subpath), but its auto-expand scripts reference the root-relative
+        # IDs. Under a subpath they diverge and the sidebar never expands.
+        # Strip the subpath prefix from the generated IDs so both match, the
+        # same as a root deploy like bottlerocket.dev.
+        run: |
+          dest="$GITHUB_WORKSPACE/own-site/site/previews/bottlerocket/current"
+          prefix=$(echo "previews/bottlerocket/current" | tr -cd '[:alnum:]')
+          find "$dest" -name '*.html' -print0 | xargs -0 sed -i "s/m-${prefix}/m-/g"
+
       - name: Commit and push the built preview
         working-directory: own-site
         run: |
