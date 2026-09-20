@@ -96,6 +96,11 @@
   color: var(--text-faint);
   background: #05070a;
 }
+/* Respect the hidden attribute — display:flex above would otherwise beat the
+   UA [hidden]{display:none} rule and leave a black box over the iframe. */
+.br-empty[hidden] {
+  display: none;
+}
 
 @media (max-width: 640px) {
   .ipad { border-radius: 18px; padding: 3%; }
