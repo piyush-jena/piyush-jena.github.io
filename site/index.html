@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="assets/css/gym.css" />
   <link rel="stylesheet" href="assets/css/bottlerocket.css" />
   <link rel="stylesheet" href="assets/css/terminal.css" />
+  <link rel="stylesheet" href="assets/css/music.css" />
 </head>
 <body>
   <div class="app">
@@ -206,6 +207,16 @@
     </footer>
   </div>
 
+  <div class="music-dock" id="music-dock" hidden>
+    <button class="music-toggle" id="music-toggle" type="button" aria-label="Mute">
+      <span class="music-eq" aria-hidden="true"><i></i><i></i><i></i></span>
+    </button>
+    <div class="music-meta">
+      <div class="music-now" id="music-now">picking a song…</div>
+      <a class="music-link" id="music-link" href="#" target="_blank" rel="noopener" hidden>open in Apple Music</a>
+    </div>
+  </div>
+
   <button class="cmdk-hint" id="cmdk-hint" type="button">press <kbd>/</kbd> to open a shell</button>
   <div class="cmdk-backdrop" id="cmdk-backdrop">
     <div class="cmdk">
@@ -221,6 +232,7 @@
   <script src="assets/js/config.js"></script>
   <script src="assets/js/router.js"></script>
   <script src="assets/js/github.js"></script>
+  <script src="assets/js/music.js"></script>
   <script src="assets/js/vm.js"></script>
   <script src="assets/js/gym.js"></script>
   <script src="assets/js/bottlerocket.js"></script>

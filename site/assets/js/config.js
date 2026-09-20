@@ -4,6 +4,22 @@ window.SITE = {
   githubUser: "piyush-jena",
   linkedin: "https://www.linkedin.com/in/piyushjena",
 
+  // Apple Music playlist surfaced on the home tab. A random track's 30s
+  // preview plays (see assets/js/music.js). Preview URLs are resolved at
+  // runtime from Apple's public iTunes Search API (no auth, CORS-enabled),
+  // so no login or subscription is needed to hear them.
+  music: {
+    // Public share link to the playlist (the "open in Apple Music" button).
+    // TODO(piyush): paste your playlist URL here; the button hides while blank.
+    playlistUrl: "",
+    // The tracks to shuffle through. Each is looked up on iTunes by
+    // "artist title"; the first matching result's preview clip is used.
+    tracks: [
+      { title: "Nights Like This", artist: "The Kid LAROI" },
+      { title: "Borderline", artist: "Tame Impala" },
+    ],
+  },
+
   // Curated, not auto-generated: real projects worth surfacing.
   // `feature: true` gets the large card. Live stats are fetched client-side
   // in github.js and fall back to these values if the API call fails.
