@@ -1,0 +1,166 @@
+/* Shared "TV in a room" widget — used by both the Linux VM tab and the
+   Bottlerocket branch preview tab. A screen-specific block (vm.css,
+   bottlerocket.css) fills in what actually goes inside .tv-screen-frame. */
+
+.room-scene {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(180deg, #1b1f27 0%, #1b1f27 62%, #262019 62%, #262019 100%);
+  padding: var(--space-8) var(--space-6) var(--space-7);
+  min-height: 560px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.room-scene::before {
+  /* floor planks */
+  content: "";
+  position: absolute;
+  inset: 62% 0 0 0;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(0,0,0,0.12) 0 2px,
+    transparent 2px 92px
+  );
+  pointer-events: none;
+}
+
+.room-decor {
+  position: absolute;
+  bottom: 8%;
+  width: 120px;
+  height: 150px;
+  opacity: 0.9;
+}
+.room-decor.left { left: 6%; }
+.room-decor.right { right: 6%; }
+.room-decor .shelf {
+  position: absolute;
+  bottom: 46px;
+  left: 0; right: 0;
+  height: 8px;
+  background: #3a2c1f;
+  border-radius: 2px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.35);
+}
+.room-decor .plant-pot {
+  position: absolute;
+  bottom: 54px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 34px;
+  height: 26px;
+  background: #4a3524;
+  border-radius: 3px 3px 8px 8px;
+}
+.room-decor .plant-leaf {
+  position: absolute;
+  bottom: 74px;
+  left: 50%;
+  width: 46px;
+  height: 60px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at 50% 100%, #3f6b46 0%, #2e4f34 70%, transparent 72%);
+  border-radius: 50% 50% 20% 20%;
+}
+.room-decor .rug {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110px;
+  height: 20px;
+  background: var(--accent-wash);
+  border: 1px solid var(--accent-dim);
+  border-radius: 50%;
+  opacity: 0.55;
+}
+
+.tv-unit {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.tv-stand {
+  width: 90px;
+  height: 26px;
+  background: linear-gradient(180deg, #14161a, #0b0c0e);
+  clip-path: polygon(20% 0, 80% 0, 100% 100%, 0% 100%);
+  margin-top: -4px;
+}
+.tv-stand-base {
+  width: 160px;
+  height: 8px;
+  background: #0b0c0e;
+  border-radius: 3px;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.45);
+}
+
+.tv-bezel {
+  width: min(820px, 82vw);
+  background: linear-gradient(160deg, #1c1e22, #0e0f11);
+  border: 1px solid #34383f;
+  border-radius: 14px;
+  padding: 16px 16px 20px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);
+}
+.tv-bezel.wide {
+  width: min(1000px, 92vw);
+}
+
+.tv-led {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 4px var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-faint);
+}
+.tv-led .light {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--text-faint);
+}
+.tv-led .light.on { background: var(--ok); box-shadow: 0 0 6px var(--ok); }
+
+.tv-screen-frame {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: #05070a;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 2px #000;
+}
+.tv-screen-frame.tall {
+  aspect-ratio: auto;
+  height: 62vh;
+}
+
+.tv-scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(0,0,0,0.16) 0px,
+    rgba(0,0,0,0.16) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+}
+
+@media (max-width: 640px) {
+  .room-scene { min-height: 420px; padding: var(--space-6) var(--space-3); }
+  .room-decor { display: none; }
+  .tv-screen-frame.tall { height: 52vh; }
+}

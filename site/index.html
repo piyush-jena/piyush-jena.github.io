@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="assets/css/tokens.css" />
   <link rel="stylesheet" href="assets/css/base.css" />
   <link rel="stylesheet" href="assets/css/home.css" />
+  <link rel="stylesheet" href="assets/css/tv.css" />
   <link rel="stylesheet" href="assets/css/vm.css" />
   <link rel="stylesheet" href="assets/css/gym.css" />
   <link rel="stylesheet" href="assets/css/bottlerocket.css" />
@@ -74,11 +75,6 @@
       <!-- LINUX VM -->
       <section class="panel" id="panel-vm">
         <div class="vm-wrap">
-          <div class="vm-caption">
-            <div class="say">I use this to render my work sometimes!</div>
-            <div class="note">a real x86 VM booting in your browser (v86 + WASM). what's running here at any given moment shouldn't be assumed up to date.</div>
-          </div>
-
           <div class="room-scene">
             <div class="room-decor left">
               <div class="shelf"></div>
@@ -118,7 +114,7 @@
             <button class="btn" id="vm-reboot">reboot</button>
             <a class="btn" href="https://github.com/copy/v86" target="_blank" rel="noopener">how this works (v86)</a>
           </div>
-          <p class="vm-meta status-line">~6MB Linux image, boots to a real shell, entirely client-side.</p>
+          <p class="vm-meta status-line">real x86 VM, ~6MB Linux image, boots to a shell entirely client-side. what's running here shouldn't be assumed up to date.</p>
         </div>
       </section>
 
@@ -168,10 +164,34 @@
         <p class="br-intro">Lists every branch of <a href="https://github.com/piyush-jena/bottlerocket-project-website" target="_blank" rel="noopener">bottlerocket-project-website</a>. Already-built branches render inline; anything else needs a manual GitHub Actions run first (I keep this manual on purpose: no token lives in this page).</p>
         <div class="br-list" id="br-list"></div>
         <div class="br-viewer" id="br-viewer" style="display:none;">
-          <div class="br-viewer-bar">
-            <span>previews/bottlerocket/<span id="br-viewer-branch"></span>/</span>
+          <div class="room-scene">
+            <div class="room-decor left">
+              <div class="shelf"></div>
+              <div class="plant-pot"></div>
+              <div class="plant-leaf"></div>
+            </div>
+            <div class="room-decor right">
+              <div class="shelf"></div>
+              <div class="plant-pot"></div>
+              <div class="plant-leaf"></div>
+            </div>
+
+            <div class="tv-unit">
+              <div class="tv-bezel wide">
+                <div class="tv-led">
+                  <span class="light on"></span>
+                  <span>previews/bottlerocket/<span id="br-viewer-branch"></span>/</span>
+                </div>
+                <div class="tv-screen-frame tall">
+                  <iframe id="br-frame" title="Bottlerocket branch preview"></iframe>
+                  <div class="tv-scanlines" aria-hidden="true"></div>
+                </div>
+              </div>
+              <div class="tv-stand"></div>
+              <div class="tv-stand-base"></div>
+              <div class="room-decor" style="position:static;width:auto;height:auto;opacity:1;"><div class="rug"></div></div>
+            </div>
           </div>
-          <iframe id="br-frame" title="Bottlerocket branch preview"></iframe>
         </div>
       </section>
     </main>
