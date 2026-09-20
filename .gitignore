@@ -1,2 +1,7 @@
 .claude/
 .DS_Store
+
+# Local Hugo builds of the pinned bottlerocket preview. The real build is
+# produced and committed by build-bottlerocket-branch.yml (which force-adds
+# past this rule); local builds here are just for previewing.
+/site/previews/

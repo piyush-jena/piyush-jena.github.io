@@ -1,15 +1,27 @@
-name: Build a bottlerocket-project-website branch preview
+name: Build the pinned bottlerocket-project-website preview
 
+# Builds whatever fork + branch is pinned in site/bottlerocket-preview.json
+# into site/previews/bottlerocket/current/. Runs automatically whenever that
+# pointer file changes on main; can also be kicked off by hand.
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - "site/bottlerocket-preview.json"
+      - ".github/workflows/build-bottlerocket-branch.yml"
   workflow_dispatch:
-    inputs:
-      branch:
-        description: "Branch of piyush-jena/bottlerocket-project-website to build"
-        required: true
-        type: string
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
+
+# Share the "pages" concurrency group with deploy.yml so the two never
+# deploy on top of each other.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 defaults:
   run:
@@ -22,22 +34,29 @@ jobs:
   build-and-commit:
     runs-on: ubuntu-latest
     steps:
-      - name: Slugify branch name
-        id: slug
-        run: |
-          slug=$(echo "${{ inputs.branch }}" | sed -E 's/[^a-zA-Z0-9._-]/-/g')
-          echo "slug=$slug" >> "$GITHUB_OUTPUT"
-
       - name: Checkout this site (to commit the build into)
         uses: actions/checkout@v4
         with:
           path: own-site
 
-      - name: Checkout bottlerocket-project-website@${{ inputs.branch }}
+      - name: Read the pinned fork and branch
+        id: pin
+        working-directory: own-site
+        run: |
+          fork=$(jq -r '.fork' site/bottlerocket-preview.json)
+          branch=$(jq -r '.branch' site/bottlerocket-preview.json)
+          if [[ -z "$fork" || "$fork" == "null" || -z "$branch" || "$branch" == "null" ]]; then
+            echo "site/bottlerocket-preview.json must set both 'fork' and 'branch'" >&2
+            exit 1
+          fi
+          echo "fork=$fork" >> "$GITHUB_OUTPUT"
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout ${{ steps.pin.outputs.fork }}@${{ steps.pin.outputs.branch }}
         uses: actions/checkout@v4
         with:
-          repository: piyush-jena/bottlerocket-project-website
-          ref: ${{ inputs.branch }}
+          repository: ${{ steps.pin.outputs.fork }}
+          ref: ${{ steps.pin.outputs.branch }}
           submodules: recursive
           fetch-depth: 0
           path: br-site
@@ -66,13 +85,13 @@ jobs:
           HUGO_ENVIRONMENT: production
           HUGO_ENV: production
         run: |
-          dest="$GITHUB_WORKSPACE/own-site/site/previews/bottlerocket/${{ steps.slug.outputs.slug }}"
+          dest="$GITHUB_WORKSPACE/own-site/site/previews/bottlerocket/current"
           rm -rf "$dest"
           mkdir -p "$dest"
           hugo \
             --gc \
             --minify \
-            --baseURL "https://piyush-jena.github.io/previews/bottlerocket/${{ steps.slug.outputs.slug }}/" \
+            --baseURL "https://piyush-jena.github.io/previews/bottlerocket/current/" \
             --destination "$dest"
 
       - name: Commit and push the built preview
@@ -80,10 +99,31 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add "site/previews/bottlerocket/${{ steps.slug.outputs.slug }}"
+          git add -f "site/previews/bottlerocket/current"
           if git diff --cached --quiet; then
-            echo "no changes, branch built identically to what's already there"
+            echo "no changes, pinned branch built identically to what's already there"
             exit 0
           fi
-          git commit -m "bottlerocket preview: ${{ inputs.branch }}"
+          git commit -m "bottlerocket preview: ${{ steps.pin.outputs.fork }}@${{ steps.pin.outputs.branch }}"
           git push
+
+      # Deploy the freshly built site directly. A GITHUB_TOKEN commit can't
+      # trigger deploy.yml, so this workflow publishes the new build itself.
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: own-site/site
+
+  deploy:
+    needs: build-and-commit
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
