@@ -1,4 +1,4 @@
 {
-  "fork": "bottlerocket-os/bottlerocket-project-website",
-  "branch": "prod"
+  "fork": "piyush-jena/bottlerocket-project-website",
+  "branch": "npm-deps-update"
 }
