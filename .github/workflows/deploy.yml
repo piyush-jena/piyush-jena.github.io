@@ -22,8 +22,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # Deploy the tip of main, not the triggering SHA. This run can be queued
+      # behind build-bottlerocket-branch.yml (shared "pages" group), which
+      # commits a fresh preview build; deploying the older triggering SHA
+      # would overwrite that build with the stale one.
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: main
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
