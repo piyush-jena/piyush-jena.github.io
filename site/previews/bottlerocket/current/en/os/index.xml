@@ -3,7 +3,7 @@
  (function() {
  
  var currentVersion = [];
- var currentURLPrefix = "/en/os/1.64.x";
+ var currentURLPrefix = "/en/os/1.66.x";
  
  
  var docs_location;
